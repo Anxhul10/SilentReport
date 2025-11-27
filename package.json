@@ -20,5 +20,12 @@
   "homepage": "https://github.com/Anxhul10/SilentReport#readme",
   "dependencies": {
     "cyborgdb": "^0.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

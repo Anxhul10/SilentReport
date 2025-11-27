@@ -9,7 +9,8 @@
     "start:node": "node --experimental-strip-types ./src/index.ts",
     "build": "npx tsc",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix"
+    "lint-fix": "eslint --fix",
+    "changeset": "npx @changesets/cli"
   },
   "repository": {
     "type": "git",

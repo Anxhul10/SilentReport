@@ -1,0 +1,24 @@
+{
+  "name": "silentreport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anxhul10/SilentReport.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Anxhul10/SilentReport/issues"
+  },
+  "homepage": "https://github.com/Anxhul10/SilentReport#readme",
+  "dependencies": {
+    "cyborgdb": "^0.14.0"
+  }
+}

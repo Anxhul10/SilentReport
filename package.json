@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "tsc -w"
-  },
+    "watch": "tsc -w",
+    "start:node": "node --experimental-strip-types ./src/index.ts"  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Anxhul10/SilentReport.git"

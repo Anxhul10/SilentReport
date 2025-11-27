@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
-    "start:node": "node --experimental-strip-types ./src/index.ts"  },
+    "start:node": "node --experimental-strip-types ./src/index.ts",
+    "build": "npx tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Anxhul10/SilentReport.git"
@@ -22,7 +24,7 @@
   "dependencies": {
     "config": "^4.1.1",
     "cyborgdb": "^0.14.0",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
@@ -30,5 +32,8 @@
     "prettier": "^3.7.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": "22.11.0"
   }
 }

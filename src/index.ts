@@ -1,6 +1,6 @@
 // import { Client } from 'cyborgdb';
 import { config } from 'dotenv';
-//*eslitnt 
+//*eslitnt
 config();
 
 // const API = process.env.CYBORGDB_API_KEY;

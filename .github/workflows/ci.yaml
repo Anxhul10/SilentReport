@@ -10,9 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v6
-        with: 
+        with:
           node-version: 22.11.0
       - name: install
         run: npm install
       - name: build
         run: npm run build
+      - name: lint checks
+        run: npm run lint

@@ -8,7 +8,8 @@
     "watch": "tsc -w",
     "start:node": "node --experimental-strip-types ./src/index.ts",
     "build": "npx tsc",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,9 @@
   "devDependencies": {
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
-    "prettier": "^3.7.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "3.7.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },

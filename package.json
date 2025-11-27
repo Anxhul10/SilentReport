@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
     "start:node": "node --experimental-strip-types ./src/index.ts",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,8 @@
   "dependencies": {
     "config": "^4.1.1",
     "cyborgdb": "^0.14.0",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "typescript-eslint": "^8.48.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",

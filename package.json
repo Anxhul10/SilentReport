@@ -13,12 +13,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Anxhul10/SilentReport/issues"
   },
   "homepage": "https://github.com/Anxhul10/SilentReport#readme",
   "dependencies": {
+    "config": "^4.1.1",
     "cyborgdb": "^0.14.0"
   },
   "devDependencies": {

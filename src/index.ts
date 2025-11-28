@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
-import * as dotenv from 'dotenv'
+import { createClient } from '@supabase/supabase-js';
+import * as dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 const supabaseUrl: string = 'https://hvhtnhzwubhmmricdpxw.supabase.co';
 const supabaseKey: string = process.env.supabaseKey || 'no key';
 
@@ -10,6 +10,6 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const { data, error } = await supabase
   .from('countries')
   .insert({ id: 2, name: 'Mordor' })
-  .select()
+  .select();
 
 console.log(data);

@@ -15,15 +15,13 @@ export async function CreateIndex() {
   };
 
   try {
-    const index = await client.createIndex({
+    const _index = await client.createIndex({
       indexName,
       indexKey,
       indexConfig,
       embeddingModel: "all-MiniLM-L6-v2", // Embedding model
     });
-    console.log("1111" + index + "&&&&&&&&&");
-    console.log("IVFFlat index with embeddings created successfully");
-  } catch (error: any) {
-    console.error("Index creation failed:", error.message);
+  } catch (error) {
+    console.error("Index creation failed:", error);
   }
 }

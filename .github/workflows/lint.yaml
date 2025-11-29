@@ -1,0 +1,16 @@
+name: lint checks
+on:
+  push:
+jobs:
+  lint:
+    name: lint-checks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 22.11.0
+    - name: install
+      run: npm install
+    - name: lint
+      run: npm run lint

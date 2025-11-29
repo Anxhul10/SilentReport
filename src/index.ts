@@ -1,21 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
+import { Client, type HealthResponse } from "cyborgdb";
+import { CreateIndex } from "./utils/CreateIndex.ts";
 
 dotenv.config();
-const supabaseUrl: string = 'https://hvhtnhzwubhmmricdpxw.supabase.co';
-const supabaseKey: string = process.env.supabaseKey || 'no key';
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const localClient = new Client({ baseUrl: 'http://localhost:8000', apiKey: process.env.CYBORGDB_API_KEY });
 
-const { data, error } = await supabase
-  .from('countries')
-  .insert({ id: 2, name: 'Mordor' })
-  .select();
-
-if (error ) {
-    console.log(error);
+try {
+    const health: HealthResponse = await localClient.getHealth();
+    console.log('Service health status:', health);
+    console.log('Status:', health.status);
+} catch (error) {
+    console.error('Health check failed:', error);
 }
-else {
-    console.log(data);
-}
-console.log(data);
+
+CreateIndex();

@@ -3,7 +3,7 @@ import { Client, type IndexIVFFlat } from "cyborgdb";
 export async function CreateIndex() {
   const client = new Client({
     baseUrl: "http://localhost:8000",
-    apiKey: "cyborg_b2d0dc39206e4613be7d7fdbf42d7060",
+    apiKey: process.env.CYBORGDB_API_KEY,
     verifySsl: false,
   });
   const indexName = "semantic_search_index";
@@ -15,12 +15,13 @@ export async function CreateIndex() {
   };
 
   try {
-    const _index = await client.createIndex({
+    const index = await client.createIndex({
       indexName,
       indexKey,
       indexConfig,
       embeddingModel: "all-MiniLM-L6-v2", // Embedding model
     });
+    console.log(index)
   } catch (error) {
     console.error("Index creation failed:", error);
   }

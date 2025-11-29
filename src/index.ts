@@ -1,7 +1,21 @@
-// import { Client } from 'cyborgdb';
-import { config } from 'dotenv';
-config();
+import { createClient } from '@supabase/supabase-js';
+import * as dotenv from 'dotenv';
 
-// const API = process.env.CYBORGDB_API_KEY;
+dotenv.config();
+const supabaseUrl: string = 'https://hvhtnhzwubhmmricdpxw.supabase.co';
+const supabaseKey: string = process.env.supabaseKey || 'no key';
 
-// const localClient = new Client({baseUrl: 'http://localhost:8000'});
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const { data, error } = await supabase
+  .from('countries')
+  .insert({ id: 2, name: 'Mordor' })
+  .select();
+
+if (error ) {
+    console.log(error);
+}
+else {
+    console.log(data);
+}
+console.log(data);

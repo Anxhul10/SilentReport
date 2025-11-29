@@ -12,4 +12,10 @@ const { data, error } = await supabase
   .insert({ id: 2, name: 'Mordor' })
   .select();
 
+if (error ) {
+    console.log(error);
+}
+else {
+    console.log(data);
+}
 console.log(data);

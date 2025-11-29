@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint-fix": " eslint --fix",
+    "watch": "tsc -w",
+    "start:node": "node --experimental-strip-types ./src/index.ts",
+    "changeset": "npx @changesets/cli"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.86.0",
@@ -29,5 +33,8 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
+  },
+  "engines": {
+    "node": "22.11.0"
   }
 }

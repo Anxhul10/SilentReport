@@ -5,17 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b ",
     "lint": "eslint .",
     "preview": "vite preview",
-    "lint-fix": " eslint --fix",
+    "lint-fix": "prettier . --write && eslint --fix",
     "watch": "tsc -w",
     "start:node": "node --experimental-strip-types ./src/index.ts",
     "changeset": "npx @changesets/cli"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.0",
     "@supabase/supabase-js": "^2.86.0",
-    "eslint-plugin-prettier": "^5.5.4",
+    "cyborgdb": "^0.14.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -27,14 +28,16 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "prettier": "3.7.3",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
   },
   "engines": {
-    "node": "22.11.0"
+    "node": "22.21.1"
   }
 }

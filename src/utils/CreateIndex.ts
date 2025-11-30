@@ -21,7 +21,7 @@ export async function CreateIndex() {
       indexConfig,
       embeddingModel: "all-MiniLM-L6-v2", // Embedding model
     });
-    console.log(index)
+    console.log(index);
   } catch (error) {
     console.error("Index creation failed:", error);
   }

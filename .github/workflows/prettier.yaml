@@ -1,8 +1,6 @@
-name: autofix.ci
+name: prettier ci
 on:
-  pull_request:
   push:
-permissions: {}
 jobs:
   prettier:
     runs-on: ubuntu-latest
@@ -13,7 +11,4 @@ jobs:
           node-version: 22.21.1
       - run: |
           npm install
-          npm run format
-      - uses: autofix-ci/action@v1
-        with:
-          commit-message: "Apply Prettier format"
+          npm run format:ci

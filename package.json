@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b ",
+    "format": "prettier . --write",
     "lint": "eslint .",
     "preview": "vite preview",
     "lint-fix": "prettier . --write && eslint --fix",
@@ -27,7 +28,6 @@
     "@vitejs/plugin-react-swc": "^4.2.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",

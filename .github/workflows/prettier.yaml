@@ -9,6 +9,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.21.1
-      - run: |
-          npm install
-          npm run format:ci
+      - run: npm install
+      - name: prettier checks
+        run: npm run format:ci

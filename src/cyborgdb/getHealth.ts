@@ -1,7 +1,7 @@
 import { Client, type HealthResponse } from 'cyborgdb';
 
-export async function getHealth() {
-    const client = new Client({ baseUrl: 'http://localhost:8000', apiKey: process.env.CYBORGDB_API_KEY });
+export async function getHealth(apiKey: string) {
+    const client = new Client({ baseUrl: 'http://localhost:8000', apiKey });
 
     try {
         const health: HealthResponse = await client.getHealth();

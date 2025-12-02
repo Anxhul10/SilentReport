@@ -1,7 +1,7 @@
 import { Client } from 'cyborgdb';
 
-export async function loadIdx() {
-    const client = new Client({ baseUrl: 'http://localhost:8000', apiKey: process.env.CYBORGDB_API_KEY });
+export async function loadIdx(apiKey: string) {
+    const client = new Client({ baseUrl: 'http://localhost:8000', apiKey });
     // Use the same key that was used to create the index
     const indexKey = new Uint8Array(32); // Your stored 32-byte key
     // Or convert from hex: Buffer.from('your-hex-key', 'hex')

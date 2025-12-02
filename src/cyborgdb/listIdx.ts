@@ -1,8 +1,8 @@
 import 'dotenv/config'
 import { Client } from 'cyborgdb';
 
-export async function listIdx() {
-    const client = new Client({ baseUrl: 'http://localhost:8000', apiKey: process.env.CYBORGDB_API_KEY });
+export async function listIdx(apiKey: string) {
+    const client = new Client({ baseUrl: 'http://localhost:8000',apiKey });
     try {
         const indexes = await client.listIndexes();
         console.log('Available indexes:', indexes);

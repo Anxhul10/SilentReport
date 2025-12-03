@@ -6,8 +6,6 @@
 
 <!-- Bullet points of key changes -->
 
--
-
 ## Reason
 
 <!-- Why this change was needed -->
@@ -16,13 +14,9 @@
 
 <!-- How to verify the changes -->
 
--
-
 ## Related Issues
 
 <!-- Optional: Link to issues or TODOs -->
-
----
 
 ## Checklist
 

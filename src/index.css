@@ -118,3 +118,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.navBar {
+  background-color: #f1f1f1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

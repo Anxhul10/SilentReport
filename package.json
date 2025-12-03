@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr index.ts --outDir dist/server",
+    "build": "npm run build:client && npm run build:server",
     "format": "prettier . --write",
     "format:ci": "prettier . --check",
     "lint": "eslint .",

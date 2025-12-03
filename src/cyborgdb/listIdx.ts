@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Client } from "cyborgdb";
 
 export async function listIdx(apiKey: string) {

@@ -1,10 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
-import { type user } from "../types/user.ts";
+import { type User } from "../types/user.ts";
 
 export async function createUser(
   supabaseKey: string,
   supabaseUrl: string,
-  userData: user,
+  userData: User,
 ) {
   const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -12,8 +12,8 @@ export async function createUser(
     email: userData.email,
     password: userData.password,
   });
-  console.log(data);
   if (error) {
-    console.log(error);
+    throw error;
   }
+  return data;
 }

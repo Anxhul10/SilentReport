@@ -2,7 +2,6 @@ import "./App.css";
 import { NavBarInitial } from "./components/custom/navBar";
 
 function App() {
-
   return (
     <>
       <NavBarInitial></NavBarInitial>

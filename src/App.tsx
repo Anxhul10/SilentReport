@@ -1,6 +1,6 @@
 import "./App.css";
 import { NavBarInitial } from "./components/custom/navBar";
-import { SignupForm } from './components/signup-form';
+import { SignupForm } from "./components/signup-form";
 
 function App() {
   return (
@@ -11,10 +11,12 @@ function App() {
 }
 
 function SignUp() {
-  return <>
-    <div className="signupParent">
-        <SignupForm className="signupChild"/>
-    </div>
-  </>
+  return (
+    <>
+      <div className="signupParent">
+        <SignupForm className="signupChild" />
+      </div>
+    </>
+  );
 }
 export default App;

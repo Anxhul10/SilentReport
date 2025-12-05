@@ -1,16 +1,29 @@
 import "./App.css";
-import { NavBarInitial } from "./components/custom/navBar";
+import { NavBarInitial, NavBar } from "./components/custom/navBar";
 import { SignupForm } from "./components/SignupForm";
 import { LoginForm } from "./components/LoginForm";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <NavBarInitial></NavBarInitial>
+      <BrowserRouter>
+        <nav>
+          <NavBarInitial></NavBarInitial>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
 
+function Home() {
+  return <>homepage</>;
+}
 function SignUp() {
   return (
     <>

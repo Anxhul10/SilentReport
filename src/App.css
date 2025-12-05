@@ -23,6 +23,11 @@
   justify-content: center;
 }
 
+.iconChild {
+  display: flex;
+  margin:10px;
+  gap:20px
+}
 .logo {
   height: 6em;
   padding: 1.5em;

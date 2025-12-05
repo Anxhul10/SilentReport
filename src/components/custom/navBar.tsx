@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { BellIcon } from '../ui/icons/akar-icons-bell';
+import { UserIcon } from '../ui/icons/lucide-user';
 
 interface NavBarProps {
   accountName: string;
@@ -25,20 +27,23 @@ export function NavBarInitial() {
   );
 }
 
-export function NavBar({ accountName }: NavBarProps) {
+export function NavBar() {
   return (
     <>
       <div className="navBar">
         <Link to="/">
           <Button variant="ghost">SilentReport</Button>
         </Link>
-        <div>
-          <Button variant="ghost">notification</Button>
-          <Button
-            variant="ghost"
-          >
-            My Account
-          </Button>
+        <div className="iconChild">
+          <div>
+            <BellIcon>
+            </BellIcon>
+          </div>
+            
+          <div>
+            <UserIcon>  
+            </UserIcon>
+          </div>
         </div>
       </div>
     </>

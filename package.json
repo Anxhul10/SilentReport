@@ -58,5 +58,6 @@
   "engines": {
     "node": "22.21.1",
     "yarn": "4.3.1"
-  }
+  },
+  "packageManager": "npm@10.9.4"
 }

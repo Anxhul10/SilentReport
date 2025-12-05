@@ -1,10 +1,33 @@
 #root {
-  max-width: 100%;
   margin: 0 auto;
   padding: 0rem;
   text-align: center;
 }
 
+.signupParent {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signupChild {
+  width: 500px;
+}
+.loginChild {
+  width: 500px;
+}
+.loginParent {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconChild {
+  display: flex;
+  margin: 10px;
+  gap: 20px;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

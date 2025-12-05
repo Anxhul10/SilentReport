@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { BellIcon } from "../ui/icons/akar-icons-bell";
-import { UserIcon } from "../ui/icons/lucide-user";
 
-interface NavBarProps {
-  accountName: string;
-}
+import { DropDownNotification, DropDownAccount } from "../DropDowns";
 
 export function NavBarInitial() {
   return (
@@ -36,11 +32,10 @@ export function NavBar() {
         </Link>
         <div className="iconChild">
           <div>
-            <BellIcon></BellIcon>
+            <DropDownNotification></DropDownNotification>
           </div>
-
           <div>
-            <UserIcon></UserIcon>
+            <DropDownAccount></DropDownAccount>
           </div>
         </div>
       </div>

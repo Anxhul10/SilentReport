@@ -2,7 +2,7 @@ import "./App.css";
 import { NavBarInitial, NavBar } from "./components/custom/navBar";
 import { SignupForm } from "./components/SignupForm";
 import { LoginForm } from "./components/LoginForm";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (

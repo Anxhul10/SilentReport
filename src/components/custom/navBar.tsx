@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { BellIcon } from '../ui/icons/akar-icons-bell';
-import { UserIcon } from '../ui/icons/lucide-user';
+import { BellIcon } from "../ui/icons/akar-icons-bell";
+import { UserIcon } from "../ui/icons/lucide-user";
 
 interface NavBarProps {
   accountName: string;
@@ -36,13 +36,11 @@ export function NavBar() {
         </Link>
         <div className="iconChild">
           <div>
-            <BellIcon>
-            </BellIcon>
+            <BellIcon></BellIcon>
           </div>
-            
+
           <div>
-            <UserIcon>  
-            </UserIcon>
+            <UserIcon></UserIcon>
           </div>
         </div>
       </div>

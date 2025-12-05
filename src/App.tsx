@@ -1,12 +1,12 @@
 import "./App.css";
 import { NavBarInitial } from "./components/custom/navBar";
-import { SignupForm } from "./components/signup-form";
+import { SignupForm } from "./components/SignupForm";
+import { LoginForm } from "./components/LoginForm";
 
 function App() {
   return (
     <>
       <NavBarInitial></NavBarInitial>
-      <SignUp></SignUp>
     </>
   );
 }
@@ -16,6 +16,16 @@ function SignUp() {
     <>
       <div className="signupParent">
         <SignupForm className="signupChild" />
+      </div>
+    </>
+  );
+}
+
+function Login() {
+  return (
+    <>
+      <div className="loginParent">
+        <LoginForm className="loginChild" />
       </div>
     </>
   );

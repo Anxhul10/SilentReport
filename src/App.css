@@ -13,6 +13,16 @@
 .signupChild {
   width: 500px;
 }
+.loginChild {
+  width: 500px;
+}
+.loginParent {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

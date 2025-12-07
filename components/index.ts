@@ -1,5 +1,9 @@
-import { NavBarInitial, NavBar } from './navBar';
-import { DropDownAccount,DropDownNotification } from './DropDowns';
+import { NavBarInitial, NavBar } from "./NavBar";
+import { DropDownAccount, DropDownNotification } from "./DropDowns";
+import { LoginForm } from "./LoginForm";
+import { SignupForm } from "./SignupForm";
 
-export { DropDownAccount,DropDownNotification }
-export { NavBarInitial , NavBar };
+export { LoginForm };
+export { SignupForm };
+export { DropDownAccount, DropDownNotification };
+export { NavBarInitial, NavBar };

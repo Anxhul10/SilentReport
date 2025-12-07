@@ -11,7 +11,7 @@ import nextTs from "eslint-config-next/typescript";
 export default defineConfig([
   // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
+    "./components",
     ".next/**",
     "out/**",
     "build/**",

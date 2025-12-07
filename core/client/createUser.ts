@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { type User } from "../types/User.ts";
+import { type User } from "../types/User";
 
 export async function createUser(
   supabaseKey: string,

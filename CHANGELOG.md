@@ -1,5 +1,11 @@
 # silentreport
 
+## 1.1.0
+
+### Minor Changes
+
+- clear noise from previous vite configs and adds navbar with login logout options
+
 ## 1.0.0
 
 ### Major Changes

@@ -34,6 +34,7 @@ export default defineConfig([
     },
     ignores: ["./src/components/ui/**"],
     rules: {
+      "react/no-unescaped-entities": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

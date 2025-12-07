@@ -1,7 +1,7 @@
 {
   "name": "silentreport",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "format": "prettier . --write",
@@ -9,7 +9,10 @@
     "lint-fix": "prettier . --write && eslint --fix",
     "watch": "tsc -w",
     "start:node": "tsx index.ts",
-    "cs": "changeset",
+    "cs": "npm run cs1 && npm run cs2 && npm run cs3",
+    "cs1": "changeset",
+    "cs2": "changeset version",
+    "cs3": "changeset publish",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

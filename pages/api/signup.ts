@@ -1,4 +1,4 @@
-import { loginUser } from "../../core/supabase/loginUser";
+import { signUp } from "../../core/supabase/signUp";
 import "dotenv/config";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -8,17 +8,12 @@ export default async function login(
 ) {
   const supabaseUrl = process.env.supabaseUrl || "no key";
   const supabaseKey = process.env.supabaseKey || "no key";
-  const data = await loginUser(
+  const data = await signUp(
     supabaseUrl,
     supabaseKey,
     req.body.email,
     req.body.password,
   );
 
-  if (!data) {
-    // login invalid
-    return res.status(200).json({ status: "invalid" });
-  }
-  // login valid
-  return res.status(200).json({ status: "valid" });
+  return res.status(200).json(data);
 }

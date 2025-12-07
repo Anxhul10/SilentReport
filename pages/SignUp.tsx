@@ -15,11 +15,59 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SignUp({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [_password2, setPassword2] = useState("");
+  const [user, setUser] = useState(false);
+
+  function onSubmit() {
+    fetch("/api/signup", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password: password1 }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status == "200") {
+          setUser(true);
+        }
+      });
+  }
+  if (user) {
+    return (
+      <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className="navBar">
+          <Link href="/">
+            <Button variant="ghost">SilentReport</Button>
+          </Link>
+          <div>
+            <Link href="Login">
+              <Button variant="ghost">Login</Button>
+            </Link>
+            <Link href="SignUp">
+              <Button variant="ghost">Signup</Button>
+            </Link>
+          </div>
+        </div>
+        <Card>
+          <CardContent>please verify email</CardContent>
+        </Card>
+        <FieldDescription className="px-6 text-center">
+          By clicking continue, you agree to our{" "}
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </FieldDescription>
+      </div>
+    );
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="navBar">
@@ -61,27 +109,49 @@ export default function SignUp({
                   type="email"
                   placeholder="GuestUser@example.com"
                   required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      required
+                      onChange={(e) => {
+                        setPassword1(e.target.value);
+                      }}
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
                       Confirm Password
                     </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      required
+                      onChange={(e) => {
+                        setPassword2(e.target.value);
+                      }}
+                    />
                   </Field>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button
+                  type="submit"
+                  onClick={(e) => {
+                    onSubmit();
+                    e.preventDefault();
+                  }}
+                >
+                  Create Account
+                </Button>
                 <FieldDescription className="text-center">
                   Already have an account? <a href="#">Sign in</a>
                 </FieldDescription>

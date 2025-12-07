@@ -2,9 +2,13 @@ import { signUp } from "../../core/supabase/signUp";
 import "dotenv/config";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+type ApiResponse = {
+  status: number;
+};
+
 export default async function login(
   req: NextApiRequest,
-  res: NextApiResponse<Response>,
+  res: NextApiResponse<ApiResponse>,
 ) {
   const supabaseUrl = process.env.supabaseUrl || "no key";
   const supabaseKey = process.env.supabaseKey || "no key";

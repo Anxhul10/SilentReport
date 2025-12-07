@@ -8,10 +8,11 @@ export async function loginUser(
 ) {
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const { data, _error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   });
+  const _dump = error;
   return data.user;
 }
 // wronng {"user":null,"session":null}

@@ -8,11 +8,11 @@ export async function signUp(
 ) {
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const { _data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
   });
-
+  const _dump = data;
   if (error) {
     return { status: 400 };
   }

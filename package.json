@@ -9,6 +9,7 @@
     "lint-fix": "prettier . --write && eslint --fix",
     "watch": "tsc -w",
     "start:node": "tsx index.ts",
+    "cs": "npm run cs1 && npm run cs2 && npm run cs3",
     "cs1": "changeset",
     "cs2": "changeset version",
     "cs3": "changeset publish",

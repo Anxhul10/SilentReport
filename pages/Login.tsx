@@ -36,7 +36,8 @@ export default function Login({
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === "valid") {
+        console.log(data.status + "client");
+        if (data.status === 200) {
           setUserState(true);
         } else {
           setUserState(false);

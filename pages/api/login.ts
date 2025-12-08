@@ -21,8 +21,8 @@ export default async function login(
 
   if (!data) {
     // login invalid
-    return res.status(200).json({ status: 200 });
+    return res.status(400).json({ status: 400 });
   }
   // login valid
-  return res.status(200).json({ status: 400 });
+  return res.status(200).json({ status: 200 });
 }

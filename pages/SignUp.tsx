@@ -25,7 +25,7 @@ export default function SignUp({
   const [password1, setPassword1] = useState("");
   const [_password2, setPassword2] = useState("");
   const [user, setUser] = useState(false);
-
+  const [error, setError] = useState(false);
   function onSubmit() {
     fetch("/api/signup", {
       method: "POST",
@@ -39,6 +39,9 @@ export default function SignUp({
         console.log(data);
         if (data.status == "200") {
           setUser(true);
+          setError(false);
+        } else {
+          setError(true);
         }
       });
   }
@@ -140,6 +143,15 @@ export default function SignUp({
                       }}
                     />
                   </Field>
+                  <div style={{ color: "red" }}>
+                    {!error ? (
+                      ""
+                    ) : (
+                      <div>
+                        wrong email or weak password or Api limit exceeded !
+                      </div>
+                    )}
+                  </div>
                 </Field>
               </Field>
               <Field>

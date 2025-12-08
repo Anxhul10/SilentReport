@@ -18,6 +18,8 @@ export default async function login(
     req.body.email,
     req.body.password,
   );
-
-  return res.status(200).json(data);
+  if (data.status === 200) {
+    return res.status(200).json({ status: 200 });
+  }
+  return res.status(400).json({ status: 400 });
 }

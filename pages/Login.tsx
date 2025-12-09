@@ -36,14 +36,15 @@ export default function Login({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.status + "client");
         if (data.status === 200) {
+          localStorage.setItem("token", data.token);
           setUserState(true);
         } else {
           setUserState(false);
         }
       });
   };
+
   if (userState) {
     return (
       <div className={cn("flex flex-col gap-6", className)} {...props}>

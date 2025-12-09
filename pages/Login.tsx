@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
 import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
+import { SearchBar } from "../components/SearchBar";
+import { Dashboard } from "./Dashboard";
 
 export default function Login({
   className,
@@ -52,6 +54,8 @@ export default function Login({
           <Link href="/DashBoard">
             <Button variant="ghost">SilentReport</Button>
           </Link>
+          <SearchBar></SearchBar>
+
           <div className="iconBlock">
             <div>
               <Link href="Login">
@@ -66,8 +70,7 @@ export default function Login({
             </div>
           </div>
         </div>
-        <Button>change navbar</Button>
-        <div>dashboard</div>
+        <Dashboard></Dashboard>
       </div>
     );
   }

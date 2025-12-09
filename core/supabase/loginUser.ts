@@ -13,7 +13,10 @@ export async function loginUser(
     password: password,
   });
   const _dump = error;
-  return data.user;
+  return {
+    user: data.user,
+    token: data.session?.access_token,
+  };
 }
 // wronng {"user":null,"session":null}
 // right user.full

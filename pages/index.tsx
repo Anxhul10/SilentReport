@@ -4,8 +4,15 @@ import { useState } from "react";
 import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
 
 function Home() {
-  const [flag, setFlag] = useState(false);
-  if (flag) {
+  const [log, setLog] = useState(false);
+  // useEffect(() => {
+  //   fetch("/api/hello")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  // }, []);
+  if (log) {
     return (
       <>
         <div className="navBar">
@@ -28,7 +35,7 @@ function Home() {
         </div>
         <Button
           onClick={() => {
-            setFlag(false);
+            setLog(false);
           }}
         >
           change navbar
@@ -43,7 +50,14 @@ function Home() {
           <Button variant="ghost">SilentReport</Button>
         </Link>
         <div>
-          <Link href="Login">
+          <Link
+            href={{
+              pathname: "Login",
+              query: {
+                search: "search",
+              },
+            }}
+          >
             <Button variant="ghost">Login</Button>
           </Link>
           <Link href="SignUp">
@@ -53,7 +67,7 @@ function Home() {
       </div>
       <Button
         onClick={() => {
-          setFlag(true);
+          setLog(true);
         }}
       >
         change navbar

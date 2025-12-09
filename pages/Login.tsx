@@ -15,11 +15,62 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useState } from "react";
+import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
 
 export default function Login({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userState, setUserState] = useState(false);
+
+  const clickSubmit = () => {
+    fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email, password: password }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          localStorage.setItem("token", data.token);
+          setUserState(true);
+        } else {
+          setUserState(false);
+        }
+      });
+  };
+
+  if (userState) {
+    return (
+      <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className="navBar">
+          <Link href="/DashBoard">
+            <Button variant="ghost">SilentReport</Button>
+          </Link>
+          <div className="iconBlock">
+            <div>
+              <Link href="Login">
+                <DropDownNotification></DropDownNotification>
+              </Link>
+            </div>
+
+            <div>
+              <Link href="SignUp">
+                <DropDownAccount></DropDownAccount>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <Button>change navbar</Button>
+        <div>dashboard</div>
+      </div>
+    );
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="navBar">
@@ -52,13 +103,23 @@ export default function Login({
                   type="email"
                   placeholder="GuestUser@example.com"
                   required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </Field>
               <Field>
                 <Field>
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      required
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -66,7 +127,15 @@ export default function Login({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    clickSubmit();
+                  }}
+                >
+                  Login
+                </Button>
                 <FieldDescription className="text-center">
                   Don't have an account? <a href="#">Sign Up</a>
                 </FieldDescription>

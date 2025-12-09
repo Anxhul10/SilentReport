@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 type ApiResponse = {
   status: number;
+  token: string | undefined;
 };
 
 export default async function login(
@@ -18,11 +19,10 @@ export default async function login(
     req.body.email,
     req.body.password,
   );
-
   if (!data) {
     // login invalid
-    return res.status(400).json({ status: 400 });
+    return res.status(400).json({ status: 400, token: undefined });
   }
   // login valid
-  return res.status(200).json({ status: 200 });
+  return res.status(200).json({ status: 200, token: data.token });
 }

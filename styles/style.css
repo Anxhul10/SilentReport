@@ -145,3 +145,12 @@ body {
   margin: 10px;
   gap: 15px;
 }
+.foot {
+  display: flex;
+  gap: 60px;
+  height: 100%;
+  padding-top: 15px;
+  justify-content: center;
+  padding-bottom: 15px;
+  background: rgb(145, 144, 125);
+}

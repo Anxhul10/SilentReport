@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Homepage } from "./Homepage";
+import { Homepage } from "../components/Homepage";
 import { SearchBar } from "../components/SearchBar";
 
 function Home() {

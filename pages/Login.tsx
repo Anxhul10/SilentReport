@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
 import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
+import { SearchBar } from "../components/SearchBar";
+import Dashboard from "./Dashboard";
 
 export default function Login({
   className,
@@ -49,9 +51,9 @@ export default function Login({
     return (
       <div className={cn("flex flex-col gap-6", className)} {...props}>
         <div className="navBar">
-          <Link href="/DashBoard">
-            <Button variant="ghost">SilentReport</Button>
-          </Link>
+          <Button variant="ghost">SilentReport</Button>
+          <SearchBar></SearchBar>
+
           <div className="iconBlock">
             <div>
               <Link href="Login">
@@ -66,8 +68,7 @@ export default function Login({
             </div>
           </div>
         </div>
-        <Button>change navbar</Button>
-        <div>dashboard</div>
+        <Dashboard></Dashboard>
       </div>
     );
   }

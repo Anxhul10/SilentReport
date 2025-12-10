@@ -138,6 +138,7 @@ body {
   display: flex;
   justify-content: space-between;
   color: black;
+  background-color: rgb(234, 242, 249);
 }
 
 .iconBlock {
@@ -153,4 +154,21 @@ body {
   justify-content: center;
   padding-bottom: 15px;
   background: rgb(145, 144, 125);
+}
+.container {
+  position: relative;
+  text-align: center;
+  color: black;
+  margin-bottom: 5px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.working {
+  margin: 15px;
 }

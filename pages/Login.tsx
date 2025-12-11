@@ -19,6 +19,7 @@ import { useState } from "react";
 import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
 import { SearchBar } from "../components/SearchBar";
 import Dashboard from "./Dashboard";
+import { useRouter } from "next/router";
 
 export default function Login({
   className,
@@ -27,6 +28,7 @@ export default function Login({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userState, setUserState] = useState(false);
+  const router = useRouter();
 
   const clickSubmit = () => {
     fetch("/api/login", {
@@ -39,6 +41,7 @@ export default function Login({
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
+          router.push("/Dashboard");
           localStorage.setItem("token", data.token);
           setUserState(true);
         } else {

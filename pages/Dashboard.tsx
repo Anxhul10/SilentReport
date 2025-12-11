@@ -4,10 +4,20 @@ import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import data from "./data.json";
 
 export default function Dashboard() {
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      router.push("/Login");
+    }
+  });
+
   return (
     <div>
       <SidebarProvider

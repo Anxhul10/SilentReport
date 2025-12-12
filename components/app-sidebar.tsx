@@ -1,22 +1,13 @@
 import * as React from "react";
 import {
-  IconCamera,
-  IconChartBar,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
   IconInnerShadowTop,
   IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
+  IconPencilPlus,
 } from "@tabler/icons-react";
-
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -44,84 +35,9 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
+      title: "Feed",
       url: "#",
       icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
     },
     {
       title: "Search",
@@ -129,26 +45,36 @@ const data = {
       icon: IconSearch,
     },
   ],
+  navSecondary: [
+    {
+      title: "CyborgDB API",
+      url: "#",
+      icon: IconSettings,
+    },
+  ],
   documents: [
     {
-      name: "Data Library",
+      name: "Create Report",
       url: "#",
-      icon: IconDatabase,
+      icon: IconPencilPlus,
     },
     {
-      name: "Reports",
+      name: "View Reports",
       url: "#",
       icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
     },
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  onDashboardParent,
+  onFeedParent,
+  onSearchParent,
+  onCreateReportParent,
+  onViewReportParent,
+  onAPIHitParent,
+  ...props
+}: React.ComponentProps<any>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -158,18 +84,43 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <a href="Dashboard">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">SilentReport</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain
+          items={data.navMain}
+          onDash={() => {
+            onDashboardParent();
+          }}
+          onFeed={() => {
+            onFeedParent();
+          }}
+          onSearch={() => {
+            onSearchParent();
+          }}
+        />
+        <NavDocuments
+          items={data.documents}
+          onCreateReport={() => {
+            onCreateReportParent();
+          }}
+          onViewReport={() => {
+            onViewReportParent();
+          }}
+        />
+        <NavSecondary
+          items={data.navSecondary}
+          className="mt-auto"
+          onAPIHit={() => {
+            onAPIHitParent();
+          }}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

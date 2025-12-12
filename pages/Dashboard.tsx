@@ -90,6 +90,90 @@ export default function Dashboard() {
         </SidebarProvider>
       </div>
     );
+  } else if (index === 3) {
+    return (
+      <div>
+        <SidebarProvider
+          style={
+            {
+              "--sidebar-width": "calc(var(--spacing) * 72)",
+              "--header-height": "calc(var(--spacing) * 12)",
+            } as React.CSSProperties
+          }
+        >
+          <AppSidebar
+            variant="inset"
+            onDashboardParent={() => {
+              setIndex(0);
+            }}
+            onFeedParent={() => {
+              setIndex(1);
+            }}
+            onSearchParent={() => {
+              setIndex(2);
+            }}
+            onCreateReportParent={() => {
+              setIndex(3);
+            }}
+            onViewReportParent={() => {
+              setIndex(4);
+            }}
+          />
+          <SidebarInset>
+            <SiteHeader />
+            <div className="flex flex-1 flex-col">
+              <div className="@container/main flex flex-1 flex-col gap-2">
+                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                  <div className="px-4 lg:px-6">create report...</div>
+                </div>
+              </div>
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+      </div>
+    );
+  } else if (index === 4) {
+    return (
+      <div>
+        <SidebarProvider
+          style={
+            {
+              "--sidebar-width": "calc(var(--spacing) * 72)",
+              "--header-height": "calc(var(--spacing) * 12)",
+            } as React.CSSProperties
+          }
+        >
+          <AppSidebar
+            variant="inset"
+            onDashboardParent={() => {
+              setIndex(0);
+            }}
+            onFeedParent={() => {
+              setIndex(1);
+            }}
+            onSearchParent={() => {
+              setIndex(2);
+            }}
+            onCreateReportParent={() => {
+              setIndex(3);
+            }}
+            onViewReportParent={() => {
+              setIndex(4);
+            }}
+          />
+          <SidebarInset>
+            <SiteHeader />
+            <div className="flex flex-1 flex-col">
+              <div className="@container/main flex flex-1 flex-col gap-2">
+                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                  <div className="px-4 lg:px-6">view report....</div>
+                </div>
+              </div>
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+      </div>
+    );
   }
   return (
     <div>
@@ -111,6 +195,12 @@ export default function Dashboard() {
           }}
           onSearchParent={() => {
             setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
           }}
         />
         <SidebarInset>

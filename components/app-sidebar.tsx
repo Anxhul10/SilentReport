@@ -70,6 +70,8 @@ export function AppSidebar({
   onDashboardParent,
   onFeedParent,
   onSearchParent,
+  onCreateReportParent,
+  onViewReportParent,
   ...props
 }: React.ComponentProps<any>) {
   return (
@@ -102,7 +104,15 @@ export function AppSidebar({
             onSearchParent();
           }}
         />
-        <NavDocuments items={data.documents} />
+        <NavDocuments
+          items={data.documents}
+          onCreateReport={() => {
+            onCreateReportParent();
+          }}
+          onViewReport={() => {
+            onViewReportParent();
+          }}
+        />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

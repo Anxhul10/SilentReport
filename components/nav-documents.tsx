@@ -12,12 +12,16 @@ import {
 
 export function NavDocuments({
   items,
+  onCreateReport,
+  onViewReport,
 }: {
   items: {
     name: string;
     url: string;
     icon: Icon;
   }[];
+  onCreateReport: any;
+  onViewReport: any;
 }) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -25,7 +29,17 @@ export function NavDocuments({
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton
+              asChild
+              onClick={() => {
+                if (item.name === "Create Report") {
+                  onCreateReport();
+                }
+                if (item.name === "View Reports") {
+                  onViewReport();
+                }
+              }}
+            >
               <a href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

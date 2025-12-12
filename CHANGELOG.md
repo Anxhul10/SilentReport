@@ -1,5 +1,11 @@
 # silentreport
 
+## 1.2.0
+
+### Minor Changes
+
+- return differetn html on appsidebar different components
+
 ## 1.1.0
 
 ### Minor Changes

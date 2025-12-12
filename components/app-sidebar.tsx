@@ -72,6 +72,7 @@ export function AppSidebar({
   onSearchParent,
   onCreateReportParent,
   onViewReportParent,
+  onAPIHitParent,
   ...props
 }: React.ComponentProps<any>) {
   return (
@@ -113,7 +114,13 @@ export function AppSidebar({
             onViewReportParent();
           }}
         />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary
+          items={data.navSecondary}
+          className="mt-auto"
+          onAPIHit={() => {
+            onAPIHitParent();
+          }}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

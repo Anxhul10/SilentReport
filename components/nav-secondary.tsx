@@ -13,6 +13,7 @@ import {
 
 export function NavSecondary({
   items,
+  onAPIHit,
   ...props
 }: {
   items: {
@@ -20,6 +21,7 @@ export function NavSecondary({
     url: string;
     icon: Icon;
   }[];
+  onAPIHit: any;
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>
@@ -27,7 +29,12 @@ export function NavSecondary({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton
+                asChild
+                onClick={() => {
+                  onAPIHit();
+                }}
+              >
                 <a href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>

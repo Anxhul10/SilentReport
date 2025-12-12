@@ -66,7 +66,12 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  onDashboardParent,
+  onFeedParent,
+  onSearchParent,
+  ...props
+}: React.ComponentProps<any>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -85,7 +90,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain
+          items={data.navMain}
+          onDash={() => {
+            onDashboardParent();
+          }}
+          onFeed={() => {
+            onFeedParent();
+          }}
+          onSearch={() => {
+            onSearchParent();
+          }}
+        />
         <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>

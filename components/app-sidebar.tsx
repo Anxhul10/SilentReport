@@ -47,7 +47,7 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Settings",
+      title: "CyborgDB API",
       url: "#",
       icon: IconSettings,
     },

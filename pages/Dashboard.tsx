@@ -19,230 +19,15 @@ export default function Dashboard() {
     }
   });
   if (index === 1) {
-    return (
-      <div>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar
-            variant="inset"
-            onDashboardParent={() => {
-              setIndex(0);
-            }}
-            onFeedParent={() => {
-              setIndex(1);
-            }}
-            onSearchParent={() => {
-              setIndex(2);
-            }}
-            onCreateReportParent={() => {
-              setIndex(3);
-            }}
-            onViewReportParent={() => {
-              setIndex(4);
-            }}
-            onAPIHitParent={() => {
-              setIndex(5);
-            }}
-          />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">
-              <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                  <div className="px-4 lg:px-6">feed...</div>
-                </div>
-              </div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
-    );
+    return <Feed setIndex={setIndex} />;
   } else if (index === 2) {
-    return (
-      <div>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar
-            variant="inset"
-            onDashboardParent={() => {
-              setIndex(0);
-            }}
-            onFeedParent={() => {
-              setIndex(1);
-            }}
-            onSearchParent={() => {
-              setIndex(2);
-            }}
-            onCreateReportParent={() => {
-              setIndex(3);
-            }}
-            onViewReportParent={() => {
-              setIndex(4);
-            }}
-            onAPIHitParent={() => {
-              setIndex(5);
-            }}
-          />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">
-              <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                  <div className="px-4 lg:px-6">search...</div>
-                </div>
-              </div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
-    );
+    return <Search setIndex={setIndex} />;
   } else if (index === 3) {
-    return (
-      <div>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar
-            variant="inset"
-            onDashboardParent={() => {
-              setIndex(0);
-            }}
-            onFeedParent={() => {
-              setIndex(1);
-            }}
-            onSearchParent={() => {
-              setIndex(2);
-            }}
-            onCreateReportParent={() => {
-              setIndex(3);
-            }}
-            onViewReportParent={() => {
-              setIndex(4);
-            }}
-            onAPIHitParent={() => {
-              setIndex(5);
-            }}
-          />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">
-              <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                  <div className="px-4 lg:px-6">create report...</div>
-                </div>
-              </div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
-    );
+    return <CreateReport setIndex={setIndex} />;
   } else if (index === 4) {
-    return (
-      <div>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar
-            variant="inset"
-            onDashboardParent={() => {
-              setIndex(0);
-            }}
-            onFeedParent={() => {
-              setIndex(1);
-            }}
-            onSearchParent={() => {
-              setIndex(2);
-            }}
-            onCreateReportParent={() => {
-              setIndex(3);
-            }}
-            onViewReportParent={() => {
-              setIndex(4);
-            }}
-            onAPIHitParent={() => {
-              setIndex(5);
-            }}
-          />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">
-              <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                  <div className="px-4 lg:px-6">view report....</div>
-                </div>
-              </div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
-    );
+    return <ViewReport setIndex={setIndex} />;
   } else if (index === 5) {
-    return (
-      <div>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar
-            variant="inset"
-            onDashboardParent={() => {
-              setIndex(0);
-            }}
-            onFeedParent={() => {
-              setIndex(1);
-            }}
-            onSearchParent={() => {
-              setIndex(2);
-            }}
-            onCreateReportParent={() => {
-              setIndex(3);
-            }}
-            onViewReportParent={() => {
-              setIndex(4);
-            }}
-            onAPIHitParent={() => {
-              setIndex(5);
-            }}
-          />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex flex-1 flex-col">
-              <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                  <div className="px-4 lg:px-6">API ....</div>
-                </div>
-              </div>
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
-      </div>
-    );
+    return <API setIndex={setIndex} />;
   }
   return (
     <div>
@@ -285,6 +70,240 @@ export default function Dashboard() {
                   <ChartAreaInteractive />
                 </div>
                 <DataTable data={data} />
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+function CreateReport({ setIndex }: any) {
+  return (
+    <div>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar
+          variant="inset"
+          onDashboardParent={() => {
+            setIndex(0);
+          }}
+          onFeedParent={() => {
+            setIndex(1);
+          }}
+          onSearchParent={() => {
+            setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
+          }}
+          onAPIHitParent={() => {
+            setIndex(5);
+          }}
+        />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">create report...</div>
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+function ViewReport({ setIndex }: any) {
+  return (
+    <div>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar
+          variant="inset"
+          onDashboardParent={() => {
+            setIndex(0);
+          }}
+          onFeedParent={() => {
+            setIndex(1);
+          }}
+          onSearchParent={() => {
+            setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
+          }}
+          onAPIHitParent={() => {
+            setIndex(5);
+          }}
+        />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">view report....</div>
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
+}
+function Feed({ setIndex }: any) {
+  return (
+    <div>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar
+          variant="inset"
+          onDashboardParent={() => {
+            setIndex(0);
+          }}
+          onFeedParent={() => {
+            setIndex(1);
+          }}
+          onSearchParent={() => {
+            setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
+          }}
+          onAPIHitParent={() => {
+            setIndex(5);
+          }}
+        />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">feed...</div>
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+function Search({ setIndex }: any) {
+  return (
+    <div>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar
+          variant="inset"
+          onDashboardParent={() => {
+            setIndex(0);
+          }}
+          onFeedParent={() => {
+            setIndex(1);
+          }}
+          onSearchParent={() => {
+            setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
+          }}
+          onAPIHitParent={() => {
+            setIndex(5);
+          }}
+        />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">search...</div>
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+function API({ setIndex }: any) {
+  return (
+    <div>
+      <SidebarProvider
+        style={
+          {
+            "--sidebar-width": "calc(var(--spacing) * 72)",
+            "--header-height": "calc(var(--spacing) * 12)",
+          } as React.CSSProperties
+        }
+      >
+        <AppSidebar
+          variant="inset"
+          onDashboardParent={() => {
+            setIndex(0);
+          }}
+          onFeedParent={() => {
+            setIndex(1);
+          }}
+          onSearchParent={() => {
+            setIndex(2);
+          }}
+          onCreateReportParent={() => {
+            setIndex(3);
+          }}
+          onViewReportParent={() => {
+            setIndex(4);
+          }}
+          onAPIHitParent={() => {
+            setIndex(5);
+          }}
+        />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="px-4 lg:px-6">API ....</div>
               </div>
             </div>
           </div>

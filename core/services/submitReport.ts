@@ -1,8 +1,12 @@
 import { Database } from "@/database.types";
-import { type SupabaseClient } from "@supabase/supabase-js";
+import { type SupabaseClient, createClient } from "@supabase/supabase-js";
+import "dotenv/config";
+
+const supabaseUrl = process.env.supabaseUrl || "no key";
+const supabaseKey = process.env.supabaseKey || "no key";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function submitReport(
-  supabase: SupabaseClient<Database>,
   user_id: string,
   title: string,
   description: string,
@@ -12,7 +16,10 @@ export async function submitReport(
       .from("reports")
       .insert({ title, description, created_by: user_id })
       .select();
-    return data;
+    if (data) {
+      return { status: 200 };
+    }
+    return { status: 400 };
   } catch (error) {
     console.log(error);
   }

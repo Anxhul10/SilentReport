@@ -22,8 +22,22 @@ export function CreateReport({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   function handleSubmit() {
-    console.log(title);
-    console.log(description);
+    const user_id = localStorage.getItem("user_id");
+    fetch("/api/createReport", {
+      method: "POST",
+      body: JSON.stringify({ user_id, title, description }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          console.log("create report success");
+        } else {
+          console.log("create report unsuccessfull");
+        }
+      });
   }
   return (
     <PageLayout setIndex={setIndex}>

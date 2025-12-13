@@ -8,8 +8,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
 import { CreateReport } from "@/pages/_components/CreateReport";
+import { ViewReportContainer } from "@/pages/_components/ViewReportContainer";
 
 import data from "./data.json";
+
+const temp = [
+  {
+    title: "corruption: corruption at hospital",
+    created_at: "1/1/2001",
+  },
+  {
+    title: "fraud: fake medical billing",
+    created_at: "12/3/2004",
+  },
+];
 
 export default function Dashboard() {
   const [index, setIndex] = useState(0);
@@ -27,15 +39,31 @@ export default function Dashboard() {
   // 4. View Report
   // 5. API
   if (index === 1) {
-    return <PageLayout setIndex={setIndex}>Feed..</PageLayout>;
+    return (
+      <PageLayout fullPage={false} setIndex={setIndex}>
+        Feed..
+      </PageLayout>
+    );
   } else if (index === 2) {
-    return <PageLayout setIndex={setIndex}>search....</PageLayout>;
+    return (
+      <PageLayout fullPage={false} setIndex={setIndex}>
+        search....
+      </PageLayout>
+    );
   } else if (index === 3) {
     return <CreateReport setIndex={setIndex} />;
   } else if (index === 4) {
-    return <PageLayout setIndex={setIndex}>view report ....</PageLayout>;
+    return (
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <ViewReport></ViewReport>
+      </PageLayout>
+    );
   } else if (index === 5) {
-    return <PageLayout setIndex={setIndex}>API....</PageLayout>;
+    return (
+      <PageLayout fullPage={false} setIndex={setIndex}>
+        API....
+      </PageLayout>
+    );
   }
   return (
     <div>
@@ -84,5 +112,20 @@ export default function Dashboard() {
         </SidebarInset>
       </SidebarProvider>
     </div>
+  );
+}
+
+function ViewReport() {
+  return (
+    <>
+      {temp.map((val) => {
+        return (
+          <ViewReportContainer
+            title={val.title}
+            created_at={val.created_at}
+          ></ViewReportContainer>
+        );
+      })}
+    </>
   );
 }

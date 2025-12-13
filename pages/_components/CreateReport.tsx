@@ -40,7 +40,7 @@ export function CreateReport({
       });
   }
   return (
-    <PageLayout setIndex={setIndex}>
+    <PageLayout setIndex={setIndex} fullPage={false}>
       <CardHeader>
         <CardTitle>Create a Report</CardTitle>
         <CardDescription></CardDescription>

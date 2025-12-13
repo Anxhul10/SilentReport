@@ -1,6 +1,9 @@
+import { Database } from "@/database.types";
+import { type SupabaseClient } from "@supabase/supabase-js";
+
 export async function submitReport(
-  supabase: any,
-  user_id: any,
+  supabase: SupabaseClient<Database>,
+  user_id: string,
   title: string,
   description: string,
 ) {

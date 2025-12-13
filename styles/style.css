@@ -172,3 +172,7 @@ body {
 .working {
   margin: 15px;
 }
+.text-muted {
+  color: #6b7280;
+  font-weight: 400;
+}

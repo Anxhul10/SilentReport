@@ -1,4 +1,4 @@
-import { loginUser } from "../../core/supabase/loginUser";
+import { loginUser } from "../../core/services/loginUser";
 import "dotenv/config";
 import type { NextApiRequest, NextApiResponse } from "next";
 

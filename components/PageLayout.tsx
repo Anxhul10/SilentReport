@@ -5,9 +5,11 @@ import { Card } from "@/components/ui/card";
 
 export function PageLayout({
   setIndex,
+  fullPage,
   children,
 }: {
   setIndex: (index: number) => void;
+  fullPage: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -47,7 +49,11 @@ export function PageLayout({
             <div className="@container/main flex flex-1 flex-col gap-2">
               <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 <div className="px-4 lg:px-6">
-                  <Card className="w-full h-160">{children}</Card>
+                  {fullPage === true ? (
+                    <Card className="w-full h-full flex">{children}</Card>
+                  ) : (
+                    <Card className="w-full h-160 flex">{children}</Card>
+                  )}
                 </div>
               </div>
             </div>

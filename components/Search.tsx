@@ -2,7 +2,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 
-export function Search({ setIndex }: any) {
+export function Search({ setIndex }: { setIndex: (index: number) => void }) {
   return (
     <div>
       <SidebarProvider

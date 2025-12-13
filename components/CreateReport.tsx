@@ -2,7 +2,11 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 
-export function CreateReport({ setIndex }: any) {
+export function CreateReport({
+  setIndex,
+}: {
+  setIndex: (index: number) => void;
+}) {
   return (
     <div>
       <SidebarProvider

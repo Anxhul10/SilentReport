@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
 import { CreateReport } from "@/pages/_components/CreateReport";
 import { ViewReportContainer } from "@/pages/_components/ViewReportContainer";
+import { type IRecordArray } from "@/types/Record";
 
 import data from "./data.json";
-
 const temp = [
   {
     title: "corruption: corruption at hospital",
@@ -22,16 +22,24 @@ const temp = [
     created_at: "12/3/2004",
   },
 ];
-
 export default function Dashboard() {
+  const [record, setRecord] = useState<IRecordArray[]>([]);
+  const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
   const router = useRouter();
   useEffect(() => {
+    fetch("/api/reports")
+      .then((response) => response.json())
+      .then((data) => {
+        setRecord(data.data);
+        setLoading(false);
+      });
     const token = localStorage.getItem("token");
     if (token === null) {
       router.push("/Login");
     }
   });
+
   // 0. Dashboard
   // 1. Feed
   // 2. Search
@@ -52,10 +60,16 @@ export default function Dashboard() {
     );
   } else if (index === 3) {
     return <CreateReport setIndex={setIndex} />;
-  } else if (index === 4) {
+  } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <ViewReport></ViewReport>
+        loading ....
+      </PageLayout>
+    );
+  } else if (index === 4 && !loading) {
+    return (
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <ViewReport record={record}></ViewReport>
       </PageLayout>
     );
   } else if (index === 5) {
@@ -115,14 +129,15 @@ export default function Dashboard() {
   );
 }
 
-function ViewReport() {
+function ViewReport({ record }: { record: Array<IRecordArray> }) {
+  console.log(record);
   return (
     <>
-      {temp.map((val) => {
+      {record.map((val: any) => {
         return (
           <ViewReportContainer
             title={val.title}
-            created_at={val.created_at}
+            created_at={val.created_by}
           ></ViewReportContainer>
         );
       })}

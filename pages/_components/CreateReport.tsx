@@ -11,13 +11,20 @@ import { Input } from "@/components/ui/input";
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
 import { Label } from "@/components/ui/label";
-import { Toogle } from "@/pages/_lib/Toggle";
+import { Toogle } from "@/pages/_components/Toggle";
+import { useState } from "react";
 
 export function CreateReport({
   setIndex,
 }: {
   setIndex: (index: number) => void;
 }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  function handleSubmit() {
+    console.log(title);
+    console.log(description)
+  }
   return (
     <PageLayout setIndex={setIndex}>
       <CardHeader>
@@ -36,6 +43,9 @@ export function CreateReport({
                 id="report"
                 type="report"
                 placeholder="eg - Corruption: Bribe demanded for hospital admission"
+                onChange={(e)=>{
+                  setTitle(e.target.value)
+                }}
                 required
               />
             </div>
@@ -47,6 +57,9 @@ export function CreateReport({
                 <InputGroupTextarea
                   className="h-50"
                   placeholder="A staff member asked for extra money to approve a patient’s admission despite available beds."
+                  onChange={(e)=>{
+                    setDescription(e.target.value)
+                  }}
                 />
               </InputGroup>
             </div>
@@ -54,7 +67,7 @@ export function CreateReport({
         </form>
       </CardContent>
       <div className="flex justify-center">
-        <Button className="w-30">submit</Button>
+        <Button className="w-30" onClick={()=>{handleSubmit()}}>submit</Button>
       </div>
     </PageLayout>
   );

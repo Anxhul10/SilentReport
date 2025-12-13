@@ -6,11 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { CreateReport } from "../components/CreateReport";
-import { ViewReport } from "../components/ViewReport";
-import { Feed } from "../components/Feed";
-import { API } from "../components/API";
-import { Search } from "../components/Search";
+import { PageLayout } from "../components/PageLayout";
 
 import data from "./data.json";
 
@@ -24,15 +20,15 @@ export default function Dashboard() {
     }
   });
   if (index === 1) {
-    return <Feed setIndex={setIndex} />;
+    return <PageLayout setIndex={setIndex}>Feed....</PageLayout>;
   } else if (index === 2) {
-    return <Search setIndex={setIndex} />;
+    return <PageLayout setIndex={setIndex}>search....</PageLayout>;
   } else if (index === 3) {
-    return <CreateReport setIndex={setIndex} />;
+    return <PageLayout setIndex={setIndex}>create report....</PageLayout>;
   } else if (index === 4) {
-    return <ViewReport setIndex={setIndex} />;
+    return <PageLayout setIndex={setIndex}>view report ....</PageLayout>;
   } else if (index === 5) {
-    return <API setIndex={setIndex} />;
+    return <PageLayout setIndex={setIndex}>API....</PageLayout>;
   }
   return (
     <div>

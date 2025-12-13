@@ -38,7 +38,7 @@ export default function Dashboard() {
     if (token === null) {
       router.push("/Login");
     }
-  });
+  }, []);
 
   // 0. Dashboard
   // 1. Feed
@@ -133,13 +133,18 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
   console.log(record);
   return (
     <>
-      {record.map((val: any) => {
-        return (
-          <ViewReportContainer
-            title={val.title}
-            created_at={val.created_by}
-          ></ViewReportContainer>
-        );
+      {record.map((val: IRecordArray) => {
+        if (
+          localStorage.getItem("user_id") !== undefined &&
+          val.created_by === localStorage.getItem("user_id")
+        ) {
+          return (
+            <ViewReportContainer
+              title={val.title}
+              created_at={val.created_by}
+            ></ViewReportContainer>
+          );
+        }
       })}
     </>
   );

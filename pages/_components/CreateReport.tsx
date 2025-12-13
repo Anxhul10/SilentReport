@@ -19,11 +19,11 @@ export function CreateReport({
 }: {
   setIndex: (index: number) => void;
 }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   function handleSubmit() {
     console.log(title);
-    console.log(description)
+    console.log(description);
   }
   return (
     <PageLayout setIndex={setIndex}>
@@ -43,8 +43,8 @@ export function CreateReport({
                 id="report"
                 type="report"
                 placeholder="eg - Corruption: Bribe demanded for hospital admission"
-                onChange={(e)=>{
-                  setTitle(e.target.value)
+                onChange={(e) => {
+                  setTitle(e.target.value);
                 }}
                 required
               />
@@ -57,8 +57,8 @@ export function CreateReport({
                 <InputGroupTextarea
                   className="h-50"
                   placeholder="A staff member asked for extra money to approve a patient’s admission despite available beds."
-                  onChange={(e)=>{
-                    setDescription(e.target.value)
+                  onChange={(e) => {
+                    setDescription(e.target.value);
                   }}
                 />
               </InputGroup>
@@ -67,7 +67,14 @@ export function CreateReport({
         </form>
       </CardContent>
       <div className="flex justify-center">
-        <Button className="w-30" onClick={()=>{handleSubmit()}}>submit</Button>
+        <Button
+          className="w-30"
+          onClick={() => {
+            handleSubmit();
+          }}
+        >
+          submit
+        </Button>
       </div>
     </PageLayout>
   );

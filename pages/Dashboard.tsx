@@ -12,16 +12,7 @@ import { ViewReportContainer } from "@/pages/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 
 import data from "./data.json";
-const temp = [
-  {
-    title: "corruption: corruption at hospital",
-    created_at: "1/1/2001",
-  },
-  {
-    title: "fraud: fake medical billing",
-    created_at: "12/3/2004",
-  },
-];
+
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +29,7 @@ export default function Dashboard() {
     if (token === null) {
       router.push("/Login");
     }
-  }, []);
+  }, [index]);
 
   // 0. Dashboard
   // 1. Feed
@@ -59,7 +50,7 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 3) {
-    return <CreateReport setIndex={setIndex} />;
+    return <CreateReport setIndex={setIndex} callback={() => {}} />;
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>

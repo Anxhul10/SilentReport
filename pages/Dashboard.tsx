@@ -7,7 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
-import { CreateReport } from "@/pages/_lib/CreateReport";
+import { CreateReport } from "@/pages/_components/CreateReport";
 
 import data from "./data.json";
 

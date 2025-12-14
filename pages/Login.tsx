@@ -41,6 +41,7 @@ export default function Login({
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
+          localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("token", data.token);
           setUserState(true);
           router.push("/Dashboard");

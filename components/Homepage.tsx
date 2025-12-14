@@ -6,8 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 export function Homepage() {
+  const router = useRouter();
   return (
     <>
       <div>
@@ -17,9 +19,20 @@ export function Homepage() {
             src="/background.png"
           />
           <div className="centered">
-            <h1 className="m-1 scroll-m-20 text-center font-extrabold tracking-tight text-balance text-[clamp(1.5rem,4vw,3rem)]">
+            <h1 className="m-10 scroll-m-20 text-center font-extrabold tracking-tight text-balance text-[clamp(1.5rem,4vw,3rem)]">
               CyborgDb X SilentReport
             </h1>
+            <CardFooter className="flex-col gap-2">
+              <div className="text-center m-1">
+                <Button
+                  onClick={() => {
+                    router.push("/Anonymous");
+                  }}
+                >
+                  Create an Anonymous Report
+                </Button>
+              </div>
+            </CardFooter>
             <h2 className="relative mt-10 mr-2 ml-2 scroll-m-20 text-center tracking-tight text-balance text-[clamp(1.2rem,3.5vw,2.4rem)]">
               Anonymous & Encrypted Whistleblower System for Healthcare
             </h2>
@@ -39,11 +52,6 @@ export function Homepage() {
           Anonymous reporting is allowed — but without an account, you won’t
           have the ability to update or remove your report later.
         </h4>
-        <CardFooter className="flex-col gap-2">
-          <div className="text-center m-15">
-            <Button>Create an Anonymous Report</Button>
-          </div>
-        </CardFooter>
 
         <Card className="w-full max-w-150 lg:max-w-230 mx-auto mt-4 mb-4 px-4">
           <CardHeader>

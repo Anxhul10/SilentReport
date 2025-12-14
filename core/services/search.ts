@@ -13,7 +13,7 @@ interface ISearch {
   description: string;
 }
 
-export async function search(query: string): Promise<ISearch[]> {
+export async function search(query: `%${string}%`): Promise<ISearch[]> {
   const { data, error } = await supabase
     .from("reports")
     .select()
@@ -23,5 +23,3 @@ export async function search(query: string): Promise<ISearch[]> {
   }
   return data ?? [];
 }
-const res = await search("%co%");
-console.log(res);

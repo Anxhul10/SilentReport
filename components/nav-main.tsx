@@ -8,7 +8,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function NavMain({ onDash, onFeed, onSearch, items }: any) {
+export function NavMain({ onDash, onSearch, items }: any) {
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -20,9 +20,7 @@ export function NavMain({ onDash, onFeed, onSearch, items }: any) {
                 onClick={() => {
                   if (item.title === "Dashboard") {
                     onDash();
-                  } else if (item.title === "Feed") {
-                    onFeed();
-                  } else if (item.title === "Search") {
+                  } else if (item.title === "Explore Reports") {
                     onSearch();
                   }
                 }}

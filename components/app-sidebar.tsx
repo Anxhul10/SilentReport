@@ -35,12 +35,7 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Feed",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Search",
+      title: "Explore Reports",
       url: "#",
       icon: IconSearch,
     },
@@ -97,9 +92,6 @@ export function AppSidebar({
           items={data.navMain}
           onDash={() => {
             onDashboardParent();
-          }}
-          onFeed={() => {
-            onFeedParent();
           }}
           onSearch={() => {
             onSearchParent();

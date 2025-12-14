@@ -10,6 +10,7 @@ import { PageLayout } from "../components/PageLayout";
 import CreateReport from "@/pages/_components/CreateReport";
 import ViewReportContainer from "@/pages/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
+import Search from "@/pages/_components/Search";
 
 import data from "./data.json";
 
@@ -37,16 +38,10 @@ export default function Dashboard() {
   // 3. Create Report
   // 4. View Report
   // 5. API
-  if (index === 1) {
+  if (index === 2) {
     return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        Feed..
-      </PageLayout>
-    );
-  } else if (index === 2) {
-    return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        search....
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <Search></Search>
       </PageLayout>
     );
   } else if (index === 3) {
@@ -85,9 +80,6 @@ export default function Dashboard() {
           onDashboardParent={() => {
             setIndex(0);
           }}
-          onFeedParent={() => {
-            setIndex(1);
-          }}
           onSearchParent={() => {
             setIndex(2);
           }}
@@ -121,7 +113,6 @@ export default function Dashboard() {
 }
 
 function ViewReport({ record }: { record: Array<IRecordArray> }) {
-  console.log(record);
   return (
     <>
       {record.map((val: IRecordArray) => {
@@ -133,7 +124,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
             <ViewReportContainer
               key={val.id}
               title={val.title}
-              created_at={val.created_by}
+              created_at={val.inserted_at}
             ></ViewReportContainer>
           );
         }

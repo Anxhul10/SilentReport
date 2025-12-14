@@ -1,8 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import "dotenv/config";
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.supabaseUrl || "no key";
-const supabaseKey = process.env.supabaseKey || "no key";
+const supabaseUrl: string = process.env.supabaseUrl || "no key";
+const supabaseKey: string = process.env.supabaseKey || "no key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function getReport() {

@@ -86,7 +86,7 @@ export default function SignUp({
           </Link>
         </div>
       </div>
-      <Card>
+      <Card className="mx-80 my-20">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create your account</CardTitle>
           <CardDescription>

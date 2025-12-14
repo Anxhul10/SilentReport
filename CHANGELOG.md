@@ -1,5 +1,11 @@
 # silentreport
 
+## 2.0.0
+
+### Major Changes
+
+- add search functionality on homepage and login and limit search data on homepage , add create report using anonymouse users
+
 ## 1.3.0
 
 ### Minor Changes

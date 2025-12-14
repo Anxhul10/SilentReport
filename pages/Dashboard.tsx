@@ -37,13 +37,8 @@ export default function Dashboard() {
   // 3. Create Report
   // 4. View Report
   // 5. API
-  if (index === 1) {
-    return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        Feed..
-      </PageLayout>
-    );
-  } else if (index === 2) {
+  console.log(index);
+  if (index === 2) {
     return (
       <PageLayout fullPage={false} setIndex={setIndex}>
         search....
@@ -84,9 +79,6 @@ export default function Dashboard() {
           variant="inset"
           onDashboardParent={() => {
             setIndex(0);
-          }}
-          onFeedParent={() => {
-            setIndex(1);
           }}
           onSearchParent={() => {
             setIndex(2);

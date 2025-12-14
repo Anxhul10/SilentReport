@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { submitReport } from "@/core/services/submitReport";
-
+interface IRes {
+  status: number;
+}
 export default async function createReport(
   req: NextApiRequest,
-  res: NextApiResponse<any>,
+  res: NextApiResponse<IRes>,
 ) {
   const user_id = req.body.user_id;
   const title = req.body.title;

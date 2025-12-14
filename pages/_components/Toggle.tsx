@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function Toogle() {
+export default function Toogle() {
   return (
     <>
       <div>

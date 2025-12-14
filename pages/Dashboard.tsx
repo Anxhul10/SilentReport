@@ -7,8 +7,8 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
-import { CreateReport } from "@/pages/_components/CreateReport";
-import { ViewReportContainer } from "@/pages/_components/ViewReportContainer";
+import CreateReport from "@/pages/_components/CreateReport";
+import ViewReportContainer from "@/pages/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 
 import data from "./data.json";
@@ -50,7 +50,7 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 3) {
-    return <CreateReport setIndex={setIndex} callback={() => {}} />;
+    return <CreateReport setIndex={setIndex} />;
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
@@ -131,6 +131,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
         ) {
           return (
             <ViewReportContainer
+              key={val.id}
               title={val.title}
               created_at={val.created_by}
             ></ViewReportContainer>

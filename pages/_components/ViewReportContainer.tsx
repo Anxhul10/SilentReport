@@ -1,6 +1,6 @@
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 
-export function ViewReportContainer({
+export default function ViewReportContainer({
   title,
   created_at,
 }: {

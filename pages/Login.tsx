@@ -91,7 +91,7 @@ export default function Login({
           </Link>
         </div>
       </div>
-      <Card>
+      <Card className="mx-80 my-20">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Login to your account</CardTitle>
           <CardDescription>

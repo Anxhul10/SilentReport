@@ -1,5 +1,11 @@
 # silentreport
 
+## 1.3.0
+
+### Minor Changes
+
+- renmaes supabase to service add create and listen to DB with realtime UI updates for view Reports and create Reports
+
 ## 1.2.0
 
 ### Minor Changes

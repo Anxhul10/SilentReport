@@ -8,7 +8,7 @@ export default async function searchHandler(
   res: NextApiResponse<ISearch[] | null>,
 ) {
   try {
-    const data = await search("%" + req.body.query + "%");
+    const data = await search(`%${req.body.query}%`);
     return res.status(200).json(data);
   } catch (error) {
     console.log("error at pages/api/search" + error);

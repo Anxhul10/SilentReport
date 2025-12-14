@@ -10,6 +10,7 @@ import { PageLayout } from "../components/PageLayout";
 import CreateReport from "@/pages/_components/CreateReport";
 import ViewReportContainer from "@/pages/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
+import Search from "@/pages/_components/Search";
 
 import data from "./data.json";
 
@@ -37,11 +38,10 @@ export default function Dashboard() {
   // 3. Create Report
   // 4. View Report
   // 5. API
-  console.log(index);
   if (index === 2) {
     return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        search....
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <Search></Search>
       </PageLayout>
     );
   } else if (index === 3) {
@@ -113,7 +113,6 @@ export default function Dashboard() {
 }
 
 function ViewReport({ record }: { record: Array<IRecordArray> }) {
-  console.log(record);
   return (
     <>
       {record.map((val: IRecordArray) => {

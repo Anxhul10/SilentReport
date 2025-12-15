@@ -86,96 +86,100 @@ export default function SignUp({
           </Link>
         </div>
       </div>
-      <Card className="mx-80 my-20">
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create your account</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Guest User"
-                  required
-                />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="GuestUser@example.com"
-                  required
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-              </Field>
-              <Field>
-                <Field className="grid grid-cols-2 gap-4">
+      <div className="signup-card">
+        <div>
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-xl">Create your account</CardTitle>
+              <CardDescription>
+                Enter your email below to create your account
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form>
+                <FieldGroup>
                   <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <FieldLabel htmlFor="name">Full Name</FieldLabel>
                     <Input
-                      id="password"
-                      type="password"
+                      id="name"
+                      type="text"
+                      placeholder="Guest User"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="GuestUser@example.com"
                       required
                       onChange={(e) => {
-                        setPassword1(e.target.value);
+                        setEmail(e.target.value);
                       }}
                     />
                   </Field>
                   <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
-                    <Input
-                      id="confirm-password"
-                      type="password"
-                      required
-                      onChange={(e) => {
-                        setPassword2(e.target.value);
-                      }}
-                    />
-                  </Field>
-                  <div style={{ color: "red" }}>
-                    {!error ? (
-                      ""
-                    ) : (
-                      <div>
-                        wrong email or weak password or Api limit exceeded !
+                    <Field className="grid grid-cols-2 gap-4">
+                      <Field>
+                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                        <Input
+                          id="password"
+                          type="password"
+                          required
+                          onChange={(e) => {
+                            setPassword1(e.target.value);
+                          }}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel htmlFor="confirm-password">
+                          Confirm Password
+                        </FieldLabel>
+                        <Input
+                          id="confirm-password"
+                          type="password"
+                          required
+                          onChange={(e) => {
+                            setPassword2(e.target.value);
+                          }}
+                        />
+                      </Field>
+                      <div style={{ color: "red" }}>
+                        {!error ? (
+                          ""
+                        ) : (
+                          <div>
+                            wrong email or weak password or Api limit exceeded !
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </Field>
-              </Field>
-              <Field>
-                <Button
-                  type="submit"
-                  onClick={(e) => {
-                    onSubmit();
-                    e.preventDefault();
-                  }}
-                >
-                  Create Account
-                </Button>
-                <FieldDescription className="text-center">
-                  Already have an account? <a href="#">Sign in</a>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </form>
-        </CardContent>
-      </Card>
-      <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+                    </Field>
+                  </Field>
+                  <Field>
+                    <Button
+                      type="submit"
+                      onClick={(e) => {
+                        onSubmit();
+                        e.preventDefault();
+                      }}
+                    >
+                      Create Account
+                    </Button>
+                    <FieldDescription className="text-center">
+                      Already have an account? <a href="#">Sign in</a>
+                    </FieldDescription>
+                  </Field>
+                </FieldGroup>
+              </form>
+            </CardContent>
+          </Card>
+          <FieldDescription className="px-6 text-center">
+            By clicking continue, you agree to our{" "}
+            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          </FieldDescription>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,29 +1,39 @@
-import { PageLayout } from "../../components/PageLayout";
-import {
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../../components/ui/card";
+import { CardHeader, CardTitle, CardContent } from "../../components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
-
-import { Label } from "@/components/ui/label";
-import Toogle from "@/pages/_components/Toggle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function API({
   setIndex,
 }: {
   setIndex: (index: number) => void;
 }) {
-  const [isAPIUpdated, setisAPIUpdated] = useState(false);
-  const [APIExist, setAPIExist] = useState(false);
+  const [state, updateState] = useState(false);
   const [updateAPI, setUpdateAPI] = useState("");
   const [input, setInput] = useState("");
-
+  const [isAPIPresent, setAPIPresent] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      const user_id = localStorage.getItem("user_id");
+      fetch("/api/checkAPI", {
+        method: "POST",
+        body: JSON.stringify({ user_id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            console.log("api present");
+            setAPIPresent(true);
+          } else {
+            console.log("api donot exist");
+          }
+        });
+    }, 200);
+  }, []);
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
     fetch("/api/saveCyborgAPI", {
@@ -38,7 +48,7 @@ export default function API({
         if (data.status === 200) {
           console.log("api saved success");
         } else if (data.status === 500) {
-          setAPIExist(true);
+          setAPIPresent(true);
         } else {
           console.log("api save unsuccessfull");
         }
@@ -57,15 +67,15 @@ export default function API({
       .then((data) => {
         if (data.status === 200) {
           handleSubmit();
-
-          setisAPIUpdated(true);
+          updateState(true);
+          setAPIPresent(true);
           console.log("api saved success");
         } else {
           console.log("api save unsuccessfull");
         }
       });
   }
-  if (APIExist) {
+  if (isAPIPresent) {
     return (
       <div>
         <CardHeader>
@@ -96,8 +106,8 @@ export default function API({
             </div>
           </div>
         </CardContent>
-        {isAPIUpdated ? (
-          <div className="text-green-500 m-5">API updated !!</div>
+        {state ? (
+          <div className="text-green-500 m-5">API updated successfully !!</div>
         ) : (
           <div className="text-red-500 m-5">API already Exist !!</div>
         )}

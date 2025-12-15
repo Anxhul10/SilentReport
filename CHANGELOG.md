@@ -1,5 +1,11 @@
 # silentreport
 
+## 2.1.0
+
+### Minor Changes
+
+- fix alignments of login, signup and homepage
+
 ## 2.0.0
 
 ### Major Changes

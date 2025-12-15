@@ -162,12 +162,6 @@ body {
   padding-bottom: 15px;
   background: rgb(145, 144, 125);
 }
-.container {
-  position: relative;
-  text-align: center;
-  color: black;
-  margin-bottom: 5px;
-}
 
 /* Centered text */
 .centered {
@@ -182,4 +176,17 @@ body {
 .text-muted {
   color: #6b7280;
   font-weight: 400;
+}
+
+.image-parent {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  margin-top: 40px;
 }

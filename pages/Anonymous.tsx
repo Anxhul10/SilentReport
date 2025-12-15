@@ -20,7 +20,7 @@ export default function Anonymous() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   function handleSubmit() {
-    const user_id = "anonymous";
+    const user_id = "d85ba6c3-7122-43ca-9fce-4cc42a2f6735";
     fetch("/api/createReport", {
       method: "POST",
       body: JSON.stringify({ user_id, title, description }),

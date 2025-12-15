@@ -77,7 +77,7 @@ export default function Login({
     );
   }
   return (
-    <div>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="navBar">
         <Link href="/">
           <Button variant="ghost">SilentReport</Button>

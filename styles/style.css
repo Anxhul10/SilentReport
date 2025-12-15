@@ -190,3 +190,12 @@ body {
   text-align: center;
   margin-top: 40px;
 }
+
+.temp {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  margin-top: 10%;
+  margin-right: 30%;
+  margin-left: 30%;
+}

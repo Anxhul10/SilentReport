@@ -77,7 +77,7 @@ export default function Login({
     );
   }
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div>
       <div className="navBar">
         <Link href="/">
           <Button variant="ghost">SilentReport</Button>
@@ -91,68 +91,133 @@ export default function Login({
           </Link>
         </div>
       </div>
-      <Card className="mx-80 my-20">
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="GuestUser@example.com"
-                  required
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-              </Field>
-              <Field>
+      <div className="temp">
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">Login to your account</CardTitle>
+            <CardDescription>
+              Enter your email below to login to your account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="GuestUser@example.com"
+                    required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </Field>
                 <Field>
                   <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input
-                      id="password"
-                      type="password"
-                      required
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                    />
+                    <Field>
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <Input
+                        id="password"
+                        type="password"
+                        required
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                      />
+                    </Field>
                   </Field>
+                  <FieldDescription>
+                    Must be at least 8 characters long.
+                  </FieldDescription>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
-              </Field>
-              <Field>
-                <Button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    clickSubmit();
-                  }}
-                >
-                  Login
-                </Button>
-                <FieldDescription className="text-center">
-                  Don't have an account? <a href="#">Sign Up</a>
-                </FieldDescription>
-              </Field>
-            </FieldGroup>
-          </form>
-        </CardContent>
-      </Card>
-      <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </FieldDescription>
+                <Field>
+                  <Button
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      clickSubmit();
+                    }}
+                  >
+                    Login
+                  </Button>
+                  <FieldDescription className="text-center">
+                    Don't have an account? <a href="#">Sign Up</a>
+                  </FieldDescription>
+                </Field>
+              </FieldGroup>
+            </form>
+          </CardContent>
+        </Card>
+        <FieldDescription className="px-6 text-center">
+          By clicking continue, you agree to our{" "}
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </FieldDescription>
+      </div>
     </div>
   );
 }
+
+//  <Card>
+//         <CardHeader className="text-center">
+//           <CardTitle className="text-xl">Login to your account</CardTitle>
+//           <CardDescription>
+//             Enter your email below to login to your account
+//           </CardDescription>
+//         </CardHeader>
+//         <CardContent>
+//           <form>
+//             <FieldGroup>
+//               <Field>
+//                 <FieldLabel htmlFor="email">Email</FieldLabel>
+//                 <Input
+//                   id="email"
+//                   type="email"
+//                   placeholder="GuestUser@example.com"
+//                   required
+//                   onChange={(e) => {
+//                     setEmail(e.target.value);
+//                   }}
+//                 />
+//               </Field>
+//               <Field>
+//                 <Field>
+//                   <Field>
+//                     <FieldLabel htmlFor="password">Password</FieldLabel>
+//                     <Input
+//                       id="password"
+//                       type="password"
+//                       required
+//                       onChange={(e) => {
+//                         setPassword(e.target.value);
+//                       }}
+//                     />
+//                   </Field>
+//                 </Field>
+//                 <FieldDescription>
+//                   Must be at least 8 characters long.
+//                 </FieldDescription>
+//               </Field>
+//               <Field>
+//                 <Button
+//                   type="submit"
+//                   onClick={(e) => {
+//                     e.preventDefault();
+//                     clickSubmit();
+//                   }}
+//                 >
+//                   Login
+//                 </Button>
+//                 <FieldDescription className="text-center">
+//                   Don't have an account? <a href="#">Sign Up</a>
+//                 </FieldDescription>
+//               </Field>
+//             </FieldGroup>
+//           </form>
+//         </CardContent>
+//       </Card>
+//       <FieldDescription className="px-6 text-center">
+//         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+//         and <a href="#">Privacy Policy</a>.
+//       </FieldDescription>

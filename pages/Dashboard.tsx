@@ -11,7 +11,7 @@ import CreateReport from "@/pages/_components/CreateReport";
 import ViewReportContainer from "@/pages/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import Search from "@/pages/_components/Search";
-
+import API from "@/pages/_components/API";
 import data from "./data.json";
 
 export default function Dashboard() {
@@ -60,8 +60,8 @@ export default function Dashboard() {
     );
   } else if (index === 5) {
     return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        API....
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <API setIndex={setIndex}></API>
       </PageLayout>
     );
   }

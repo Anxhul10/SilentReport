@@ -66,7 +66,7 @@ function Mid() {
       <CardHeader>
         <CardTitle>
           <h2 className="relative mt-10 mr-2  ml-2 scroll-m-20 text-center text-4xl  tracking-tight text-balance">
-            How SlientReport works...
+            How SilentReport works...
           </h2>
         </CardTitle>
         <CardDescription className="text-2xl m-8">

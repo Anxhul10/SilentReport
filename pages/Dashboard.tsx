@@ -61,7 +61,7 @@ export default function Dashboard() {
   } else if (index === 5) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <API setIndex={setIndex}></API>
+        <API></API>
       </PageLayout>
     );
   }

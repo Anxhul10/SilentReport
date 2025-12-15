@@ -1,4 +1,3 @@
-import { encrypt } from "@/core/cyper";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { deleteAPI } from "@/core/services/deleteAPI";
 

@@ -4,11 +4,7 @@ import { Input } from "@/components/ui/input";
 
 import { useState, useEffect } from "react";
 
-export default function API({
-  setIndex,
-}: {
-  setIndex: (index: number) => void;
-}) {
+export default function API() {
   const [state, updateState] = useState(false);
   const [updateAPI, setUpdateAPI] = useState("");
   const [input, setInput] = useState("");

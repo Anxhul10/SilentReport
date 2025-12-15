@@ -7,6 +7,6 @@ export function encrypt(API: string): string {
 }
 
 export function decrypt(API: string): string {
-  var bytes = CryptoJS.AES.decrypt(API, secretkey);
+  const bytes = CryptoJS.AES.decrypt(API, secretkey);
   return bytes.toString(CryptoJS.enc.Utf8);
 }

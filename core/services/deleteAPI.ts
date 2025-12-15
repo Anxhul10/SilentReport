@@ -12,6 +12,7 @@ export async function deleteAPI(API: string, user_id: string) {
       .delete()
       .eq(user_id, API)
       .select();
+    const _dump = data;
     if (error === null) {
       return { status: 200 };
     }

@@ -38,8 +38,8 @@ export function ChartAreaInteractive() {
         for (const t of data.data) {
           if (t.created_by === user_id) {
             total++;
-            if (t.type === "public") pub++;
-            if (t.type === "private") priv++;
+            if (t.visibility === "PUBLIC") pub++;
+            if (t.visibility === "PRIVATE") priv++;
           }
         }
 
@@ -82,8 +82,8 @@ export function ChartAreaInteractive() {
 
         {/* Trust message */}
         <p className="text-xs text-muted-foreground">
-          Private reports are encrypted end-to-end and visible only to
-          authorized reviewers.
+          All reports are encrypted and the user is not always anoynomous
+          whether signed up or not
         </p>
       </CardContent>
     </Card>

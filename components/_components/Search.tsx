@@ -1,4 +1,4 @@
-import ViewReportContainer from "@/pages/_components/ViewReportContainer";
+import ViewReportContainer from "@/components/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,13 +39,17 @@ export default function Search() {
         </div>
       </div>
       {searchData.map((val: IRecordArray) => {
-        return (
-          <ViewReportContainer
-            key={val.id}
-            title={val.title}
-            created_at={val.inserted_at}
-          ></ViewReportContainer>
-        );
+        if (val.visibility === "PUBLIC") {
+          return (
+            <ViewReportContainer
+              key={val.id}
+              title={val.title}
+              created_at={val.inserted_at}
+              description={val.description}
+              visibility={val.visibility}
+            ></ViewReportContainer>
+          );
+        }
       })}
     </>
   );

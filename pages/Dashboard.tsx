@@ -46,7 +46,9 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 3) {
-    return <CreateReport setIndex={setIndex} />;
+    return (
+      <CreateReport edit={false} header={"Create Report"} setIndex={setIndex} />
+    );
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
@@ -129,6 +131,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
               created_at={val.inserted_at}
               description={val.description}
               visibility={val.visibility}
+              filter={true}
             ></ViewReportContainer>
           );
         }

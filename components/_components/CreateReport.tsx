@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
 import { Label } from "@/components/ui/label";
-import Toogle from "@/pages/_components/Toggle";
+import Toogle from "@/components/_components/Toggle";
 import { useState } from "react";
 import {
   Field,

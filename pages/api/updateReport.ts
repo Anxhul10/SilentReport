@@ -12,7 +12,6 @@ export default async function updateReportHandler(
   const title = req.body.title;
   const description = req.body.description;
   const visibility = req.body.visibility;
-
   const status = await updateReport(report_id, title, description, visibility);
   if (status?.status === 200) {
     return res.status(200).json({ status: 200 });

@@ -1,4 +1,4 @@
-import ViewReportContainer from "@/pages/_components/ViewReportContainer";
+import ViewReportContainer from "@/components/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

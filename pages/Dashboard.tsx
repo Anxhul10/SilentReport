@@ -6,11 +6,11 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
-import CreateReport from "@/pages/_components/CreateReport";
-import ViewReportContainer from "@/pages/_components/ViewReportContainer";
+import CreateReport from "@/components/_components/CreateReport";
+import ViewReportContainer from "@/components/_components//ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
-import Search from "@/pages/_components/Search";
-import API from "@/pages/_components/API";
+import Search from "@/components/_components//Search";
+import API from "@/components/_components//API";
 // import data from "./data.json";
 
 export default function Dashboard() {

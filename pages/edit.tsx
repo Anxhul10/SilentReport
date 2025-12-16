@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import CreateReport from "@/pages/_components/CreateReport";
+import CreateReport from "@/components/_components/CreateReport";
 
 export default function Edit() {
   const [loading, _setLoading] = useState(true);

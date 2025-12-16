@@ -23,7 +23,7 @@ export default function ViewReportContainer({
   description: string;
   visibility: string;
   filter?: boolean;
-  id: string;
+  id?: string;
 }) {
   const router = useRouter();
   function processTitle(title: string) {

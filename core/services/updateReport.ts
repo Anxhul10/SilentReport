@@ -5,7 +5,7 @@ const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function submitReport(
+export async function updateReport(
   report_id: string,
   title: string,
   description: string,

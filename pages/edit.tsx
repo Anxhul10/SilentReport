@@ -13,18 +13,16 @@ export default function Edit() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
 
-  const [data, setData] = useState<ReportQuery | null>(null);
-  useEffect(() => {
-    const { id, title, description, visibility } = router.query;
-    if (
-      typeof title === "string" &&
-      typeof description === "string" &&
-      typeof visibility === "string" &&
-      typeof id === "string"
-    ) {
-      setData({ id, title, description, visibility });
-    }
-  }, [router.query]);
+  const { id, title, description, visibility } = router.query;
+
+  const data =
+    typeof id === "string" &&
+    typeof title === "string" &&
+    typeof description === "string" &&
+    typeof visibility === "string"
+      ? { id, title, description, visibility }
+      : null;
+
   // 0. Dashboard
   // 1. Feed
   // 2. Search

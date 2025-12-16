@@ -4,45 +4,28 @@ import CreateReport from "@/pages/_components/CreateReport";
 import { type IRecordArray, type IQuery } from "@/types/Record";
 
 type ReportQuery = {
+  id?: string;
   title?: string;
   description?: string;
   visibility?: string;
 };
 export default function edit() {
-  const [record, setRecord] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
   const router = useRouter();
-  const visibility = "public";
-  const title = "d";
-  const description = "fsf";
+
   const [data, setData] = useState<ReportQuery | null>(null);
   useEffect(() => {
-    const { title, description, visibility } = router.query;
-
+    const { id, title, description, visibility } = router.query;
     if (
       typeof title === "string" &&
       typeof description === "string" &&
-      typeof visibility === "string"
+      typeof visibility === "string" &&
+      typeof id === "string"
     ) {
-      setData({ title, description, visibility });
+      setData({ id, title, description, visibility });
     }
   }, [router.query]);
-
-  //   useEffect(() => {
-  //     fetch("/api/reports")
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log(data.data);
-  //         setRecord(data.data);
-  //         setLoading(false);
-  //       });
-  //     const token = localStorage.getItem("token");
-  //     if (token === null) {
-  //       router.push("/Login");
-  //     }
-  //   }, [index]);
-
   // 0. Dashboard
   // 1. Feed
   // 2. Search
@@ -67,6 +50,7 @@ export default function edit() {
       edit={true}
       header={"Edit Report"}
       setIndex={setIndex}
+      report_id={data.id}
       title_to_edit={data?.title}
       description_to_edit={data?.description}
       visibility_to_edit={data?.visibility}

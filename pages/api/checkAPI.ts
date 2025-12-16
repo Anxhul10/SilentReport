@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { submitReport } from "@/core/services/submitReport";
+import { getAPI } from "@/core/services/getAPI";
+
 interface IRes {
   status: number;
 }
@@ -8,10 +9,7 @@ export default async function createReport(
   res: NextApiResponse<IRes>,
 ) {
   const user_id = req.body.user_id;
-  const title = req.body.title;
-  const description = req.body.description;
-  const visibility = req.body.visibility;
-  const data = await submitReport(user_id, title, description, visibility);
+  const data = await getAPI(user_id);
   if (data?.status === 200) {
     return res.status(200).json({ status: 200 });
   }

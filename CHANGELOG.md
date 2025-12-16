@@ -1,5 +1,11 @@
 # silentreport
 
+## 3.0.0
+
+### Major Changes
+
+- add edit edit, private, public . fixes ui alignments , and refactor layouts components from pages to components to fix next js builds
+
 ## 2.1.0
 
 ### Minor Changes

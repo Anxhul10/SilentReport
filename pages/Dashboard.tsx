@@ -1,18 +1,17 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../components/PageLayout";
-import CreateReport from "@/pages/_components/CreateReport";
-import ViewReportContainer from "@/pages/_components/ViewReportContainer";
+import CreateReport from "@/components/_components/CreateReport";
+import ViewReportContainer from "@/components/_components//ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
-import Search from "@/pages/_components/Search";
-
-import data from "./data.json";
+import Search from "@/components/_components//Search";
+import API from "@/components/_components//API";
+// import data from "./data.json";
 
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
@@ -23,6 +22,7 @@ export default function Dashboard() {
     fetch("/api/reports")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.data);
         setRecord(data.data);
         setLoading(false);
       });
@@ -45,7 +45,9 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 3) {
-    return <CreateReport setIndex={setIndex} />;
+    return (
+      <CreateReport edit={false} header={"Create Report"} setIndex={setIndex} />
+    );
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
@@ -60,8 +62,8 @@ export default function Dashboard() {
     );
   } else if (index === 5) {
     return (
-      <PageLayout fullPage={false} setIndex={setIndex}>
-        API....
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        <API></API>
       </PageLayout>
     );
   }
@@ -102,7 +104,8 @@ export default function Dashboard() {
                 <div className="px-4 lg:px-6">
                   <ChartAreaInteractive />
                 </div>
-                <DataTable data={data} />
+                {/* to be used later */}
+                {/* <DataTable data={data} /> */}
               </div>
             </div>
           </div>
@@ -123,8 +126,12 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
           return (
             <ViewReportContainer
               key={val.id}
+              id={val.id}
               title={val.title}
               created_at={val.inserted_at}
+              description={val.description}
+              visibility={val.visibility}
+              filter={true}
             ></ViewReportContainer>
           );
         }

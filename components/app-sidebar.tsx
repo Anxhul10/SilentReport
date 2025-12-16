@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   IconDashboard,
   IconInnerShadowTop,
-  IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
@@ -21,45 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
-    },
-    {
-      title: "Explore Reports",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  navSecondary: [
-    {
-      title: "CyborgDB API",
-      url: "#",
-      icon: IconSettings,
-    },
-  ],
-  documents: [
-    {
-      name: "Create Report",
-      url: "#",
-      icon: IconPencilPlus,
-    },
-    {
-      name: "View Reports",
-      url: "#",
-      icon: IconReport,
-    },
-  ],
-};
+import { useState, useEffect } from "react";
 
 export function AppSidebar({
   onDashboardParent,
@@ -70,6 +31,67 @@ export function AppSidebar({
   onAPIHitParent,
   ...props
 }: React.ComponentProps<any>) {
+  const [email, setEmail] = useState("");
+  const data = {
+    user: {
+      name: "",
+      email: email,
+      avatar: "/avatars/shadcn.jpg",
+    },
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "#",
+        icon: IconDashboard,
+      },
+      {
+        title: "Explore Reports",
+        url: "#",
+        icon: IconSearch,
+      },
+    ],
+    navSecondary: [
+      {
+        title: "CyborgDB API",
+        url: "#",
+        icon: IconSettings,
+      },
+    ],
+    documents: [
+      {
+        name: "Create Report",
+        url: "#",
+        icon: IconPencilPlus,
+      },
+      {
+        name: "View Reports",
+        url: "#",
+        icon: IconReport,
+      },
+    ],
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      const user_id = localStorage.getItem("user_id");
+      fetch("/api/getEmail", {
+        method: "POST",
+        body: JSON.stringify({ user_id }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 200) {
+            console.log("api present");
+            setEmail(data.email);
+          } else {
+            console.log("api donot exist");
+          }
+        });
+    }, 200);
+  }, []);
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

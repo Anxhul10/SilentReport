@@ -5,18 +5,18 @@ const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function submitReport(
-  user_id: string,
+export async function updateReport(
+  report_id: string,
   title: string,
   description: string,
   visibility: string,
 ) {
   try {
-    const { data } = await supabase
+    const { error } = await supabase
       .from("reports")
-      .insert({ title, description, created_by: user_id, visibility })
-      .select();
-    if (data) {
+      .update({ title, visibility, description })
+      .eq("id", report_id);
+    if (error === null) {
       return { status: 200 };
     }
     return { status: 400 };

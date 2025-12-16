@@ -5,19 +5,15 @@ const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function submitReport(
-  user_id: string,
-  title: string,
-  description: string,
-  visibility: string,
-) {
+export async function getAPI(user_id: string) {
   try {
-    const { data } = await supabase
-      .from("reports")
-      .insert({ title, description, created_by: user_id, visibility })
-      .select();
-    if (data) {
-      return { status: 200 };
+    const { data, error } = await supabase
+      .from("cyborg_api")
+      .select("user_id, api")
+      .eq("user_id", user_id);
+
+    if (error === null) {
+      return { status: 200, api: data[0].api };
     }
     return { status: 400 };
   } catch (error) {

@@ -39,16 +39,18 @@ export default function Search() {
         </div>
       </div>
       {searchData.map((val: IRecordArray) => {
-        return (
-          <ViewReportContainer
-            key={val.id}
-            title={val.title}
-            created_at={val.inserted_at}
-            description={val.description}
-            visibility={val.visibility}
-            filter={true}
-          ></ViewReportContainer>
-        );
+        if (val.visibility === "PUBLIC") {
+          return (
+            <ViewReportContainer
+              key={val.id}
+              title={val.title}
+              created_at={val.inserted_at}
+              description={val.description}
+              visibility={val.visibility}
+              filter={true}
+            ></ViewReportContainer>
+          );
+        }
       })}
     </>
   );

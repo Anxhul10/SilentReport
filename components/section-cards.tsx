@@ -9,8 +9,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { useEffect } from "react";
 export function SectionCards() {
+  let reports = 0;
+  let public_reports = 0;
+  let private_reports = 0;
+
+  useEffect(() => {
+    setTimeout(() => {
+      const user_id = localStorage.getItem("user_id");
+      fetch("/api/reports")
+        .then((response) => response.json())
+        .then((data) => {
+          for (const t of data.data) {
+            if (user_id == t.created_by) {
+              reports = reports + 1;
+              if (t.type === "public") {
+                public_reports = public_reports + 1;
+              }
+              if (t.type === "private") {
+                private_reports = private_reports + 1;
+              }
+            }
+          }
+        });
+    }, 200);
+  }, []);
+
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">

@@ -9,11 +9,12 @@ export async function submitReport(
   user_id: string,
   title: string,
   description: string,
+  visibility: string,
 ) {
   try {
     const { data } = await supabase
       .from("reports")
-      .insert({ title, description, created_by: user_id })
+      .insert({ title, description, created_by: user_id, visibility })
       .select();
     if (data) {
       return { status: 200 };

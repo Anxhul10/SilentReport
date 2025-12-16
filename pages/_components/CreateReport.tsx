@@ -32,11 +32,12 @@ export default function CreateReport({
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [visibility, setVisibility] = useState("PUBLIC");
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
     fetch("/api/createReport", {
       method: "POST",
-      body: JSON.stringify({ user_id, title, description }),
+      body: JSON.stringify({ user_id, title, description, visibility }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -90,7 +91,54 @@ export default function CreateReport({
             </div>
           </div>
         </form>
-        <Visibility></Visibility>
+        <FieldSet className="m-2">
+          <FieldGroup>
+            <FieldSet>
+              <FieldLegend>Choose Visibility</FieldLegend>
+              <FieldDescription>
+                Choose the visibility for your report
+              </FieldDescription>
+              <RadioGroup defaultValue="kubernetes">
+                <FieldLabel htmlFor="kubernetes-r2h">
+                  <Field orientation="horizontal">
+                    <FieldContent>
+                      <FieldTitle>Public</FieldTitle>
+                      <FieldDescription>
+                        This report will be visible to everyone
+                      </FieldDescription>
+                    </FieldContent>
+                    <RadioGroupItem
+                      value="kubernetes"
+                      id="kubernetes-r2h"
+                      aria-label="Kubernetes"
+                      onClick={() => {
+                        setVisibility("PUBLIC");
+                      }}
+                    />
+                  </Field>
+                </FieldLabel>
+                <FieldLabel htmlFor="vm-z4k">
+                  <Field orientation="horizontal">
+                    <FieldContent>
+                      <FieldTitle>Private</FieldTitle>
+                      <FieldDescription>
+                        This report will be visible to you only
+                      </FieldDescription>
+                    </FieldContent>
+                    <RadioGroupItem
+                      value="vm"
+                      id="vm-z4k"
+                      aria-label="Virtual Machine"
+                      onClick={() => {
+                        setVisibility("PRIVATE");
+                      }}
+                    />
+                  </Field>
+                </FieldLabel>
+              </RadioGroup>
+            </FieldSet>
+          </FieldGroup>
+        </FieldSet>
       </CardContent>
       <div className="flex justify-center">
         <Button
@@ -103,52 +151,5 @@ export default function CreateReport({
         </Button>
       </div>
     </PageLayout>
-  );
-}
-
-function Visibility() {
-  return (
-    <FieldSet className="m-2">
-      <FieldGroup>
-        <FieldSet>
-          <FieldLegend>Choose Visibility</FieldLegend>
-          <FieldDescription>
-            Choose the visibility for your report
-          </FieldDescription>
-          <RadioGroup defaultValue="kubernetes">
-            <FieldLabel htmlFor="kubernetes-r2h">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>Public</FieldTitle>
-                  <FieldDescription>
-                    This report will be visible to everyone
-                  </FieldDescription>
-                </FieldContent>
-                <RadioGroupItem
-                  value="kubernetes"
-                  id="kubernetes-r2h"
-                  aria-label="Kubernetes"
-                />
-              </Field>
-            </FieldLabel>
-            <FieldLabel htmlFor="vm-z4k">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>Private</FieldTitle>
-                  <FieldDescription>
-                    This report will be visible to you only
-                  </FieldDescription>
-                </FieldContent>
-                <RadioGroupItem
-                  value="vm"
-                  id="vm-z4k"
-                  aria-label="Virtual Machine"
-                />
-              </Field>
-            </FieldLabel>
-          </RadioGroup>
-        </FieldSet>
-      </FieldGroup>
-    </FieldSet>
   );
 }

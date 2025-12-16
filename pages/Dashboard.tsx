@@ -23,6 +23,7 @@ export default function Dashboard() {
     fetch("/api/reports")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.data);
         setRecord(data.data);
         setLoading(false);
       });
@@ -126,6 +127,8 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
               key={val.id}
               title={val.title}
               created_at={val.inserted_at}
+              description={val.description}
+              visibility={val.visibility}
             ></ViewReportContainer>
           );
         }

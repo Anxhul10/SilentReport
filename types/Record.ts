@@ -4,4 +4,5 @@ export interface IRecordArray {
   description: string;
   created_by: string;
   inserted_at: string;
+  visibility: string;
 }

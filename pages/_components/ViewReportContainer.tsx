@@ -13,19 +13,28 @@ export default function ViewReportContainer({
   created_at,
   description,
   visibility,
+  filter,
 }: {
   title: string;
   created_at: string;
   description: string;
   visibility: string;
+  filter?: boolean;
 }) {
+  function processTitle(title: string) {
+    const data = [];
+    for (let i = 0; i < 45; i++) {
+      data.push(title[i]);
+    }
+    return data;
+  }
   return (
     <div className="w-9/10 h-auto">
       <Card className="@container/card ml-15">
         <CardHeader>
           <CardDescription>Report Overview</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {title}
+            {processTitle(title)}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">{visibility}</Badge>

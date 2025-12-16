@@ -44,6 +44,9 @@ export default function Search() {
             key={val.id}
             title={val.title}
             created_at={val.inserted_at}
+            description={val.description}
+            visibility={val.visibility}
+            filter={true}
           ></ViewReportContainer>
         );
       })}

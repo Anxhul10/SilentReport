@@ -1,13 +1,7 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateReport from "@/pages/_components/CreateReport";
 
-type ReportQuery = {
-  id?: string;
-  title?: string;
-  description?: string;
-  visibility?: string;
-};
 export default function Edit() {
   const [loading, _setLoading] = useState(true);
   const [index, setIndex] = useState(0);

@@ -126,7 +126,7 @@ export default function CreateReport({
                       </FieldDescription>
                     </FieldContent>
                     <RadioGroupItem
-                      value="kubernetes"
+                      value="public-radio"
                       id="kubernetes-r2h"
                       aria-label="Kubernetes"
                       onClick={() => {
@@ -144,7 +144,7 @@ export default function CreateReport({
                       </FieldDescription>
                     </FieldContent>
                     <RadioGroupItem
-                      value="vm"
+                      value="private-radio"
                       id="vm-z4k"
                       aria-label="Virtual Machine"
                       onClick={() => {

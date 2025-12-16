@@ -24,15 +24,32 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
+function processData(data: string | undefined): string {
+  if (data === undefined) {
+    return "";
+  }
+  return data;
+}
 export default function CreateReport({
   setIndex,
+  header,
+  edit,
+  title_to_edit,
+  description_to_edit,
+  visibility_to_edit,
 }: {
   setIndex: (index: number) => void;
+  header: string;
+  edit: boolean;
+  title_to_edit?: string;
+  description_to_edit?: string;
+  visibility_to_edit?: string;
 }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [visibility, setVisibility] = useState("PUBLIC");
+  const [title, setTitle] = useState(processData(title_to_edit));
+  const [description, setDescription] = useState(
+    processData(description_to_edit),
+  );
+  const [visibility, setVisibility] = useState(processData(visibility_to_edit));
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
     fetch("/api/createReport", {
@@ -54,7 +71,7 @@ export default function CreateReport({
   return (
     <PageLayout setIndex={setIndex} fullPage={true}>
       <CardHeader>
-        <CardTitle>Create a Report</CardTitle>
+        <CardTitle>{header}</CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -68,7 +85,7 @@ export default function CreateReport({
               <Input
                 id="report"
                 type="report"
-                placeholder="eg - Corruption: Bribe demanded for hospital admission"
+                value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -141,14 +158,25 @@ export default function CreateReport({
         </FieldSet>
       </CardContent>
       <div className="flex justify-center">
-        <Button
-          className="w-30"
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          submit
-        </Button>
+        {edit ? (
+          <Button
+            className="w-30"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            edit
+          </Button>
+        ) : (
+          <Button
+            className="w-30"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            submit
+          </Button>
+        )}
       </div>
     </PageLayout>
   );

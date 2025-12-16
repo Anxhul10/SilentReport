@@ -45,7 +45,15 @@ export default function ViewReportContainer({
               <Button
                 className="size-6 ml-2"
                 onClick={() => {
-                  router.push("/edit");
+                  router.push({
+                    pathname: "/edit",
+                    query: {
+                      title,
+                      created_at,
+                      description,
+                      visibility,
+                    },
+                  });
                 }}
               >
                 edit

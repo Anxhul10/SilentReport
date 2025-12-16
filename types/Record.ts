@@ -6,3 +6,10 @@ export interface IRecordArray {
   inserted_at: string;
   visibility: string;
 }
+
+export interface IQuery {
+  title: string;
+  description: string;
+  created_by: string;
+  visibility: string;
+}

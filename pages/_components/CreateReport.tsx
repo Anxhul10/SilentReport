@@ -99,6 +99,7 @@ export default function CreateReport({
               <InputGroup>
                 <InputGroupTextarea
                   className="h-50"
+                  value={description}
                   placeholder="A staff member asked for extra money to approve a patient’s admission despite available beds."
                   onChange={(e) => {
                     setDescription(e.target.value);

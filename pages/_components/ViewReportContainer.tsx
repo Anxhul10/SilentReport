@@ -16,12 +16,14 @@ export default function ViewReportContainer({
   description,
   visibility,
   filter,
+  id,
 }: {
   title: string;
   created_at: string;
   description: string;
   visibility: string;
   filter?: boolean;
+  id: string;
 }) {
   const router = useRouter();
   function processTitle(title: string) {
@@ -48,6 +50,7 @@ export default function ViewReportContainer({
                   router.push({
                     pathname: "/edit",
                     query: {
+                      id,
                       title,
                       created_at,
                       description,

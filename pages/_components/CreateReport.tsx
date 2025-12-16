@@ -34,6 +34,7 @@ export default function CreateReport({
   setIndex,
   header,
   edit,
+  report_id,
   title_to_edit,
   description_to_edit,
   visibility_to_edit,
@@ -41,6 +42,7 @@ export default function CreateReport({
   setIndex: (index: number) => void;
   header: string;
   edit: boolean;
+  report_id?: any;
   title_to_edit?: string;
   description_to_edit?: string;
   visibility_to_edit?: string;
@@ -66,6 +68,24 @@ export default function CreateReport({
         } else {
           console.log("create report unsuccessfull");
         }
+      });
+  }
+  function update() {
+    fetch("/api/updateReport", {
+      method: "POST",
+      body: JSON.stringify({
+        id: report_id,
+        title,
+        description,
+        visibility,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
       });
   }
   return (
@@ -116,7 +136,7 @@ export default function CreateReport({
               <FieldDescription>
                 Choose the visibility for your report
               </FieldDescription>
-              <RadioGroup defaultValue="kubernetes">
+              <RadioGroup defaultValue={visibility}>
                 <FieldLabel htmlFor="kubernetes-r2h">
                   <Field orientation="horizontal">
                     <FieldContent>
@@ -163,7 +183,7 @@ export default function CreateReport({
           <Button
             className="w-30"
             onClick={() => {
-              handleSubmit();
+              update();
             }}
           >
             edit

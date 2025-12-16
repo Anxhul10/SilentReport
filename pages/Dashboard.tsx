@@ -127,6 +127,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
           return (
             <ViewReportContainer
               key={val.id}
+              id={val.id}
               title={val.title}
               created_at={val.inserted_at}
               description={val.description}

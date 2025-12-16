@@ -5,7 +5,7 @@ const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function getUser(user_id: string) {
+export async function getEmail(user_id: string) {
   const { data, error } = await supabase.auth.admin.getUserById(user_id);
   if (error) {
     return { status: 200, email: undefined };

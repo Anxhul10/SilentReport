@@ -42,7 +42,7 @@ export default function CreateReport({
   setIndex: (index: number) => void;
   header: string;
   edit: boolean;
-  report_id?: any;
+  report_id?: string;
   title_to_edit?: string;
   description_to_edit?: string;
   visibility_to_edit?: string;

@@ -47,7 +47,6 @@ export default function Search() {
               created_at={val.inserted_at}
               description={val.description}
               visibility={val.visibility}
-              filter={true}
             ></ViewReportContainer>
           );
         }

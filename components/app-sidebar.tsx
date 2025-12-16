@@ -34,7 +34,6 @@ export function AppSidebar({
   const [email, setEmail] = useState("");
   const data = {
     user: {
-      name: email[0],
       email: email,
       avatar: "/avatars/shadcn.jpg",
     },

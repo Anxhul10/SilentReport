@@ -7,6 +7,8 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
 
 export default function ViewReportContainer({
   title,
@@ -21,6 +23,7 @@ export default function ViewReportContainer({
   visibility: string;
   filter?: boolean;
 }) {
+  const router = useRouter();
   function processTitle(title: string) {
     const data = [];
     for (let i = 0; i < 45; i++) {
@@ -38,6 +41,16 @@ export default function ViewReportContainer({
           </CardTitle>
           <CardAction>
             <Badge variant="outline">{visibility}</Badge>
+            {filter && (
+              <Button
+                className="size-6 ml-2"
+                onClick={() => {
+                  router.push("/edit");
+                }}
+              >
+                edit
+              </Button>
+            )}
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">

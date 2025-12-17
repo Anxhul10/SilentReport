@@ -1,14 +1,14 @@
+import "dotenv/config";
 import { Client, type HealthResponse } from "cyborgdb";
 
-export async function getHealth(apiKey: string) {
-  const client = new Client({ baseUrl: "http://localhost:8000", apiKey });
+const apiKey = process.env.CYBORGDB_APIKEY || "no key";
+const client = new Client({ baseUrl: "http://localhost:8000", apiKey });
 
+export async function getHealth(): Promise<HealthResponse> {
   try {
     const health: HealthResponse = await client.getHealth();
-    console.log("Service health status:", health);
-    console.log("Status:", health.status);
-    // Typical output: { status: 'healthy', api_version: 'v1', version: '1.2.3' }
+    return health;
   } catch (error) {
-    console.error("Health check failed:", error);
+    throw error;
   }
 }

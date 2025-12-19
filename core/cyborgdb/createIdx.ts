@@ -1,17 +1,25 @@
+import "dotenv/config";
 import { Client } from "cyborgdb";
 
-export async function createIdx(apiKey: string) {
-  const client = new Client({ baseUrl: "http://localhost:8000", apiKey });
-
-  const indexName = "my_vector_index";
-  const indexKey: Uint8Array = client.generateKey(); // Generate secure 32-byte key
-
+interface IIndex {
+  message: string;
+  indexKeyBase64: string;
+}
+const client = new Client({
+  baseUrl: process.env.baseURL ?? "",
+  apiKey: process.env.CYBORGDB_API_KEY,
+});
+export async function createIdx(
+  indexName: string,
+): Promise<IIndex | undefined> {
+  const indexKey: Uint8Array = client.generateKey();
+  const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
   try {
-    const index = await client.createIndex({
+    const _index = await client.createIndex({
       indexName,
       indexKey,
     });
-    console.log("Index created successfully:", index);
+    return { message: "Index created successfully", indexKeyBase64 };
   } catch (error) {
     console.error("Failed to create index:", error);
   }

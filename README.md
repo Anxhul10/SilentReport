@@ -1,0 +1,5 @@
+export CYBORGDB_DB_TYPE=postgres
+
+export CYBORGDB_CONNECTION_STRING="host=<YOUR_DB_HOST> port=5432 dbname=<YOUR_DB_NAME> user=<YOUR_DB_USER> password=<YOUR_DB_PASSWORD> sslmode=require"
+
+export CYBORGDB_API_KEY=<YOUR_CYBORGDB_API_KEY>

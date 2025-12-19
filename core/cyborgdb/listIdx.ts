@@ -1,17 +1,18 @@
+import "dotenv/config";
 import { Client } from "cyborgdb";
 
-export async function listIdx(apiKey: string) {
-  const client = new Client({ baseUrl: "http://localhost:8000", apiKey });
+const client = new Client({
+  baseUrl: process.env.baseURL ?? "",
+  apiKey: process.env.CYBORGDB_API_KEY,
+});
+
+export async function listIdx(): Promise<Array<string> | undefined> {
   try {
     const indexes = await client.listIndexes();
-    console.log("Available indexes:", indexes);
-    // Output: ['my_vector_index', 'semantic_search', 'document_embeddings']
-
     if (indexes.length === 0) {
-      console.log("No indexes found. Create your first index!");
-    } else {
-      console.log(`Found ${indexes.length} indexes`);
+      return undefined;
     }
+    return indexes;
   } catch (error) {
     console.error("Failed to list indexes:", error);
   }

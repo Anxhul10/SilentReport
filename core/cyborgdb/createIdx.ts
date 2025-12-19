@@ -19,6 +19,7 @@ export async function createIdx(
       indexName,
       indexKey,
     });
+    // save key and code on url
     return { message: "Index created successfully", indexKeyBase64 };
   } catch (error) {
     console.error("Failed to create index:", error);

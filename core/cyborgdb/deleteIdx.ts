@@ -1,21 +1,27 @@
+import "dotenv/config";
 import { Client } from "cyborgdb";
 
+const client = new Client({
+  baseUrl: process.env.baseURL ?? "",
+  apiKey: process.env.CYBORGDB_API_KEY,
+});
+interface IDeleteIdx {
+  status?: string;
+  message: string | undefined;
+}
 export async function deleteIdx(
-  apiKey: string,
-  key2Delete: Uint8Array,
+  indexKeyBase64: string,
   indexName: string,
-) {
-  // Create a client
-  const client = new Client({
-    baseUrl: "http://localhost:8000",
-    apiKey,
-  });
-  const indexKey = key2Delete;
+): Promise<IDeleteIdx | undefined> {
+  try {
+    const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+    const index = await client.loadIndex({
+      indexName,
+      indexKey,
+    });
 
-  const index = await client.loadIndex({
-    indexName,
-    indexKey,
-  });
-
-  await index.deleteIndex();
+    return await index.deleteIndex();
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -51,6 +51,7 @@ export default function CreateReport({
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
   const [loading, setLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
   const [description, setDescription] = useState(
     processData(description_to_edit),
   );
@@ -93,6 +94,12 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.status === "success") {
+          toast.success("edited successfully!");
+        } else {
+          toast.error("failed to edit");
+        }
+        setEditLoading(false);
         console.log(data);
       });
   }
@@ -192,9 +199,10 @@ export default function CreateReport({
             className="w-30"
             onClick={() => {
               update();
+              setEditLoading(true);
             }}
           >
-            edit
+            {editLoading ? <Spinner /> : <div>edit</div>}
           </Button>
         ) : (
           <Button

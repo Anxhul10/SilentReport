@@ -13,7 +13,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = useState("90d");
+  const [_timeRange, setTimeRange] = useState("90d");
 
   const [reports, setReports] = useState(0);
   const [publicReports, setPublicReports] = useState(0);

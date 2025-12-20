@@ -13,8 +13,8 @@ const client = new Client({
   apiKey: process.env.CYBORGDB_API_KEY,
 });
 
-const indexName = "service";
-const indexKeyBase64 = "ErqfDz5/5hQftrpgLl1eqHZL+0YWI51AvNhYNESjD54=";
+const indexName = "reports";
+const indexKeyBase64 = process.env.indexKeyBase64;
 
 function getDate() {
   const today = new Date();
@@ -41,6 +41,20 @@ app.get("/deleteIndex", async (req, res) => {
   }
 });
 
+app.get("/reports-exists", async (req, res) => {
+  try {
+    const indexs = await client.listIndexes();
+    for (const idx of indexs) {
+      if (idx === "reports") {
+        return res.status(200).json({ exist: true });
+      }
+    }
+    return res.status(200).json({ exist: false });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 app.get("/listIndex", async (req, res) => {
   try {
     const indexes = await client.listIndexes();
@@ -53,6 +67,7 @@ app.get("/listIndex", async (req, res) => {
 
 app.post("/createIndex", async (req, res) => {
   try {
+    const indexName = req.body.indexName;
     const indexKey = client.generateKey();
     const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
 
@@ -65,7 +80,9 @@ app.post("/createIndex", async (req, res) => {
       },
       embeddingModel: "sentence-transformers/all-mpnet-base-v2",
     });
-    console.log(indexKeyBase64);
+    console.log("#######################################################");
+    console.log("indexKeyBase64" + indexKeyBase64);
+    console.log("#######################################################");
     res.status(200).json({
       message: "Index created successfully",
       indexKeyBase64,

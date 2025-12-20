@@ -19,11 +19,35 @@ export default function Dashboard() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
   useEffect(() => {
-    fetch("/api/reports")
+    // fetch("/api/reports")
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data.data);
+    //     setRecord(data.data);
+    //     setLoading(false);
+    //   });
+    fetch("http://localhost:4000/query", {
+      method: "POST",
+      body: JSON.stringify({ queryContents: localStorage.getItem("user_id") }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.data);
-        setRecord(data.data);
+        const result = [];
+        for (const t of data.results) {
+          result.push({
+            id: t.id,
+            title: t.metadata.title,
+            description: t.metadata.description,
+            visibility: t.metadata.visibility,
+            created_by: t.metadata.created_by,
+            inserted_at: t.metadata.inserted_at,
+          });
+          console.log();
+        }
+        setRecord(result);
         setLoading(false);
       });
     const token = localStorage.getItem("token");
@@ -128,10 +152,10 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
               key={val.id}
               id={val.id}
               title={val.title}
-              created_at={val.inserted_at}
               description={val.description}
               visibility={val.visibility}
               filter={true}
+              created_at={val.inserted_at}
             ></ViewReportContainer>
           );
         }

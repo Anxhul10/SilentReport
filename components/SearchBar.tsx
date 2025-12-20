@@ -7,13 +7,13 @@ import {
 } from "@/components/ui/input-group";
 import { type IRecordArray } from "@/types/Record";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
-
+import { Spinner } from "@/components/ui/spinner";
 import { useEffect, useState } from "react";
 
 export function SearchBar() {
   const [input, setInput] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (!input) return;
     fetch("http://localhost:4000/query", {
@@ -37,6 +37,7 @@ export function SearchBar() {
           });
         }
         setSearchData(result);
+        setLoading(false);
       });
     // fetch("/api/search", {
     //   method: "POST",
@@ -78,12 +79,25 @@ export function SearchBar() {
           placeholder="Search..."
           onChange={(e) => {
             setInput(e.target.value);
+            setLoading(true);
           }}
         />
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
       </InputGroup>
+      {loading && (
+        <div className="flex justify-center">
+          <Card className="w-full h-auto">
+            <CardTitle className="ml-5">
+              <Spinner />
+            </CardTitle>
+            <CardDescription className="flex justify-end mr-4 ml-4">
+              Loading...
+            </CardDescription>
+          </Card>
+        </div>
+      )}
       {searchData.map((val: IRecordArray) => {
         return (
           <div className="flex justify-center">

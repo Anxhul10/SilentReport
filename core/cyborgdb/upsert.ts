@@ -16,7 +16,6 @@ interface IItems {
   metadata: {
     title?: string;
     description?: string;
-    prefix?: string;
     timeLimit?: string;
     visibility?: string;
   };

@@ -70,9 +70,11 @@ export default function CreateReport({
       });
   }
   function update() {
-    fetch("/api/updateReport", {
+    const user_id = localStorage.getItem("user_id");
+    fetch("http://localhost:4000/update", {
       method: "POST",
       body: JSON.stringify({
+        user_id,
         id: report_id,
         title,
         description,

@@ -1,5 +1,8 @@
 import "dotenv/config";
 import { createClient } from "@supabase/supabase-js";
+import { upsert } from "@/core/cyborgdb/upsert";
+import { checkIdxExists } from "@/core/cyborgdb/checkIdxExists";
+import { createIdx } from "@/core/cyborgdb/createIdx";
 
 const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
@@ -10,16 +13,31 @@ export async function submitReport(
   title: string,
   description: string,
   visibility: string,
+  _timeLimit?: string,
 ) {
   try {
-    const { data } = await supabase
-      .from("reports")
-      .insert({ title, description, created_by: user_id, visibility })
-      .select();
-    if (data) {
-      return { status: 200 };
+    if (process.env.reports === undefined) {
+      console.log("please enter reports: indexKeyBase64 value in .env ");
     }
-    return { status: 400 };
+    const indexExists = await checkIdxExists("reports");
+    if (!indexExists.result) {
+      const indexKeyBase64 = await createIdx("reports");
+      console.log("save this in env " + indexKeyBase64);
+    }
+    // check if reports index already exists
+    const items = [
+      {
+        id: user_id,
+        contents: `${title} ${description}`,
+        metadata: {
+          title,
+          description,
+          visibility,
+        },
+      },
+    ];
+    await upsert(process.env.reports!, "reports", items);
+    return { status: 200 };
   } catch (error) {
     console.log(error);
   }

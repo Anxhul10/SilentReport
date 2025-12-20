@@ -41,16 +41,24 @@ app.post("/createIndex", async (req, res) => {
 });
 
 app.post("/upsert", async (req, res) => {
+  const indexName = req.body.indexName;
+  const indexKeyBase64 = req.body.indexKeyBase64;
+  const items = req.body.items;
+  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+
+  const index = await client.loadIndex({
+    indexName,
+    indexKey,
+  });
   try {
-    const { indexName, indexKeyBase64, items } = req.body;
-
-    const index = await client.index(indexName, indexKeyBase64);
-    await index.upsert(items);
-
-    res.json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Upsert failed" });
+    const result = await index.upsert({
+      items,
+    });
+    console.log("Text-only upsert successful");
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Upsert failed ", error);
+    res.status(500).json(error);
   }
 });
 

@@ -14,10 +14,14 @@ interface IItems {
   id: string;
   contents: string;
   metadata: {
-    category: string;
-    severity?: string;
+    title?: string;
+    description?: string;
+    prefix?: string;
+    timeLimit?: string;
+    visibility?: string;
   };
 }
+
 export async function upsert(
   indexKeyBase64: string,
   indexName: string,

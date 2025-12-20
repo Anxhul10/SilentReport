@@ -15,8 +15,11 @@ import Toogle from "@/components/_components//Toggle";
 import { useState } from "react";
 import Link from "next/link";
 import { SearchBar } from "@/components/SearchBar";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 export default function Anonymous() {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   function handleSubmit() {
@@ -36,9 +39,11 @@ export default function Anonymous() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setLoading(false);
         if (data.status === "success") {
-          console.log("loading stop");
+          toast.success("Reports created successfullly !");
+        } else {
+          toast.error("Something went wrong creating report");
         }
       });
   }
@@ -112,9 +117,10 @@ export default function Anonymous() {
             className="w-30"
             onClick={() => {
               handleSubmit();
+              setLoading(true);
             }}
           >
-            submit
+            {loading ? <Spinner /> : <div> submit</div>}
           </Button>
         </div>
       </Card>

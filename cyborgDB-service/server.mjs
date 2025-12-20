@@ -14,13 +14,45 @@ const client = new Client({
 });
 
 const indexName = "service";
-const indexKeyBase64 = "2Ex56WuT6pwTaYCvfeCdpXSdwt7gNftnu0J4ImWFT10";
+const indexKeyBase64 = "ErqfDz5/5hQftrpgLl1eqHZL+0YWI51AvNhYNESjD54=";
 
-let id = 0;
+function getDate() {
+  const today = new Date();
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  let year = today.getFullYear();
+  day = day < 10 ? "0" + day : day;
+  month = month < 10 ? "0" + month : month;
+
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
+}
+app.get("/deleteIndex", async (req, res) => {
+  try {
+    const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+    const index = await client.loadIndex({
+      indexName,
+      indexKey,
+    });
+    const response = await index.deleteIndex();
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+app.get("/listIndex", async (req, res) => {
+  try {
+    const indexes = await client.listIndexes();
+    res.status(200).json(indexes);
+  } catch (error) {
+    console.error("Failed to list indexes:", error);
+    res.status(500).json(error);
+  }
+});
+
 app.post("/createIndex", async (req, res) => {
   try {
-    const indexName = req.body.indexName;
-
     const indexKey = client.generateKey();
     const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
 
@@ -51,10 +83,12 @@ app.post("/upsert", async (req, res) => {
   const visibility = req.body.visibility;
   const items = [
     {
-      id: user_id,
+      id: Date.now().toString(),
       contents: `${title} and ${description}`,
       metadata: {
         title,
+        inserted_at: getDate(),
+        created_by: user_id,
         description,
         visibility,
       },
@@ -79,9 +113,7 @@ app.post("/upsert", async (req, res) => {
 });
 
 app.post("/query", async (req, res) => {
-  const indexKeyBase64 = req.body.indexKeyBase64;
   const queryContents = req.body.queryContents;
-  const indexName = req.body.indexName;
 
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
   const index = await client.loadIndex({ indexName, indexKey });

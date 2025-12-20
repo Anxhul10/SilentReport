@@ -1,4 +1,5 @@
-# SilentReport 🛡️  
+# SilentReport 🛡️
+
 **Encrypted Whistleblower System for Healthcare**
 
 SilentReport is a secure whistleblower platform designed to protect highly sensitive healthcare disclosures.  
@@ -58,6 +59,7 @@ indexKeyBase64=<GENERATED_BASE64_KEY>
 On the first run, CyborgDB generates an `indexKeyBase64`.
 
 Steps:
+
 1. Run all services
 2. Copy the printed `indexKeyBase64` from logs
 3. Add it to `.env.local`

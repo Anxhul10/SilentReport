@@ -81,6 +81,16 @@ app.post("/upsert", async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const visibility = req.body.visibility;
+  if (
+    user_id === "" ||
+    title === " " ||
+    description === "" ||
+    visibility === ""
+  ) {
+    return res
+      .status(500)
+      .json({ message: "title , description, visibility or user_id is empty" });
+  }
   const items = [
     {
       id: Date.now().toString(),

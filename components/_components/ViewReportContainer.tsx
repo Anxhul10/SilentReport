@@ -77,9 +77,7 @@ export default function ViewReportContainer({
               })
             )}
           </div>
-          <div className="text-muted-foreground">
-            Created-at: {created_at.split("T")[0]}
-          </div>
+          <div className="text-muted-foreground">Created-at: {created_at}</div>
         </CardFooter>
       </Card>
       {/* <Card className="w-9/10 h-auto">

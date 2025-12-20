@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "sonner";
 import {
   Field,
   FieldDescription,
@@ -20,6 +21,7 @@ import { DropDownNotification, DropDownAccount } from "../components/DropDowns";
 import { SearchBar } from "../components/SearchBar";
 import Dashboard from "./Dashboard";
 import { useRouter } from "next/router";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Login({
   className,
@@ -28,6 +30,7 @@ export default function Login({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userState, setUserState] = useState(false);
+  const [load, setLoad] = useState(false);
   const router = useRouter();
 
   const clickSubmit = () => {
@@ -40,12 +43,15 @@ export default function Login({
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoad(false);
         if (data.status === 200) {
+          toast.success("signed up successfully");
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("token", data.token);
           setUserState(true);
           router.push("/Dashboard");
         } else {
+          toast.error("something went wrong!!");
           setUserState(false);
         }
       });
@@ -138,9 +144,10 @@ export default function Login({
                     onClick={(e) => {
                       e.preventDefault();
                       clickSubmit();
+                      setLoad(true);
                     }}
                   >
-                    Login
+                    {load ? <Spinner /> : <div>Login</div>}
                   </Button>
                   <FieldDescription className="text-center">
                     Don't have an account? <a href="#">Sign Up</a>

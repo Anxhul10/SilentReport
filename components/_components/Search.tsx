@@ -2,47 +2,82 @@ import ViewReportContainer from "@/components/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { useEffect, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import { useEffect, useState, useId } from "react";
 
 export default function Search() {
+  const id = useId();
   const [inputStr, setInputStr] = useState("");
-  const [searchData, setSearchData] = useState([]);
-  useEffect(() => {
+  const [searchData, setSearchData] = useState<IRecordArray[]>([]);
+  const [loading, setLoading] = useState(false);
+  function runSearch() {
     if (!inputStr) return;
-    fetch("/api/search", {
+    // fetch("/api/search", {
+    //   method: "POST",
+    //   body: JSON.stringify({ query: inputStr }),
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setSearchData(data);
+    //   });
+    fetch("http://localhost:4000/search", {
       method: "POST",
-      body: JSON.stringify({ query: inputStr }),
+      body: JSON.stringify({ queryContents: inputStr }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        setSearchData(data);
+        console.log(data);
+        const result = [];
+        for (const t of data.results) {
+          result.push({
+            id: t.id,
+            title: t.metadata.title,
+            description: t.metadata.description,
+            visibility: t.metadata.visibility,
+            created_by: t.metadata.created_by,
+            inserted_at: t.metadata.inserted_at,
+          });
+        }
+        console.log(result);
+        setSearchData(result);
+        setLoading(false);
       });
-  }, [inputStr]);
+  }
 
   return (
     <>
       <div className="flex ">
         <div className="w-full ml-11">
           <Input
-            placeholder="type here..."
+            placeholder="Enter the report title"
             onChange={(e) => {
               setInputStr(e.target.value);
             }}
           />
         </div>
         <div className="ml-10 mr-11">
-          <Button>Search</Button>
+          <Button
+            onClick={() => {
+              runSearch();
+              setLoading(true);
+            }}
+          >
+            {loading ? <Spinner /> : <div>Search</div>}
+          </Button>
         </div>
       </div>
+
       {searchData.map((val: IRecordArray) => {
         if (val.visibility === "PUBLIC") {
           return (
             <ViewReportContainer
-              key={val.id}
+              key={id}
               title={val.title}
               created_at={val.inserted_at}
               description={val.description}

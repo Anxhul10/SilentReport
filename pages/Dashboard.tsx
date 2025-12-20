@@ -4,13 +4,15 @@ import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import { PageLayout } from "../components/PageLayout";
 import CreateReport from "@/components/_components/CreateReport";
 import ViewReportContainer from "@/components/_components//ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
+import { Spinner } from "@/components/ui/spinner";
+
 // import data from "./data.json";
 
 export default function Dashboard() {
@@ -19,17 +21,43 @@ export default function Dashboard() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
   useEffect(() => {
-    fetch("/api/reports")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.data);
-        setRecord(data.data);
-        setLoading(false);
-      });
+    if (index !== 4) return;
     const token = localStorage.getItem("token");
     if (token === null) {
       router.push("/Login");
     }
+    // fetch("/api/reports")
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data.data);
+    //     setRecord(data.data);
+    //     setLoading(false);
+    //   });
+    const userId = localStorage.getItem("user_id");
+    if (!userId) return;
+    fetch("http://localhost:4000/query", {
+      method: "POST",
+      body: JSON.stringify({ queryContents: userId }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const result = [];
+        for (const t of data.results) {
+          result.push({
+            id: t.id,
+            title: t.metadata.title,
+            description: t.metadata.description,
+            visibility: t.metadata.visibility,
+            created_by: t.metadata.created_by,
+            inserted_at: t.metadata.inserted_at,
+          });
+        }
+        setRecord(result);
+        setLoading(false);
+      });
   }, [index]);
 
   // 0. Dashboard
@@ -51,7 +79,9 @@ export default function Dashboard() {
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        loading ....
+        <div className="m-5 flex ">
+          <Spinner />
+        </div>
       </PageLayout>
     );
   } else if (index === 4 && !loading) {
@@ -116,6 +146,7 @@ export default function Dashboard() {
 }
 
 function ViewReport({ record }: { record: Array<IRecordArray> }) {
+  const id = useId();
   return (
     <>
       {record.map((val: IRecordArray) => {
@@ -125,13 +156,13 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
         ) {
           return (
             <ViewReportContainer
-              key={val.id}
+              key={id}
               id={val.id}
               title={val.title}
-              created_at={val.inserted_at}
               description={val.description}
               visibility={val.visibility}
               filter={true}
+              created_at={val.inserted_at}
             ></ViewReportContainer>
           );
         }

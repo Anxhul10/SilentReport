@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 export default function SignUp({
   className,
@@ -26,6 +28,7 @@ export default function SignUp({
   const [_password2, setPassword2] = useState("");
   const [user, setUser] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   function onSubmit() {
     fetch("/api/signup", {
       method: "POST",
@@ -36,11 +39,13 @@ export default function SignUp({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setLoading(false);
         if (data.status == "200") {
+          toast.success("Account created successfully");
           setUser(true);
           setError(false);
         } else {
+          toast.error("something went wrong");
           setError(true);
         }
       });
@@ -162,9 +167,10 @@ export default function SignUp({
                       onClick={(e) => {
                         onSubmit();
                         e.preventDefault();
+                        setLoading(true);
                       }}
                     >
-                      Create Account
+                      {loading ? <Spinner /> : <div> Create Account</div>}
                     </Button>
                     <FieldDescription className="text-center">
                       Already have an account? <a href="#">Sign in</a>

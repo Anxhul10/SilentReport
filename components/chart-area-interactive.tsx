@@ -10,15 +10,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+import { Spinner } from "@/components/ui/spinner";
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = useState("90d");
+  const [_timeRange, setTimeRange] = useState("90d");
 
   const [reports, setReports] = useState(0);
   const [publicReports, setPublicReports] = useState(0);
   const [privateReports, setPrivateReports] = useState(0);
-
+  const [reportL, setReportL] = useState(true);
   React.useEffect(() => {
     if (isMobile) {
       setTimeRange("7d");
@@ -28,24 +28,33 @@ export function ChartAreaInteractive() {
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
 
-    fetch("/api/reports")
-      .then((res) => res.json())
+    fetch("http://localhost:4000/query", {
+      method: "POST",
+      body: JSON.stringify({ queryContents: user_id }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
-        let total = 0;
-        let pub = 0;
-        let priv = 0;
-
-        for (const t of data.data) {
-          if (t.created_by === user_id) {
-            total++;
-            if (t.visibility === "PUBLIC") pub++;
-            if (t.visibility === "PRIVATE") priv++;
+        let private_count = 0;
+        let public_count = 0;
+        let count = 0;
+        for (const t of data.results) {
+          if (user_id === t.metadata.created_by) {
+            if (t.metadata.visibility === "PUBLIC") {
+              public_count = public_count + 1;
+            }
+            if (t.metadata.visibility === "PRIVATE") {
+              private_count = private_count + 1;
+            }
+            count = count + 1;
           }
         }
-
-        setReports(total);
-        setPublicReports(pub);
-        setPrivateReports(priv);
+        setPublicReports(public_count);
+        setPrivateReports(private_count);
+        setReports(count);
+        setReportL(false);
       });
   }, []);
 
@@ -61,7 +70,11 @@ export function ChartAreaInteractive() {
       <CardContent className="space-y-4">
         {/* Total */}
         <div>
-          <div className="text-3xl font-semibold">{reports}</div>
+          {reportL ? (
+            <Spinner />
+          ) : (
+            <div className="text-3xl font-semibold">{reports}</div>
+          )}
           <p className="text-sm text-muted-foreground">
             Total reports submitted
           </p>
@@ -70,12 +83,20 @@ export function ChartAreaInteractive() {
         {/* Breakdown */}
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg border p-3">
-            <div className="text-xl font-medium">{publicReports}</div>
+            {reportL ? (
+              <Spinner />
+            ) : (
+              <div className="text-xl font-medium">{publicReports}</div>
+            )}
             <p className="text-sm text-muted-foreground">Public reports</p>
           </div>
 
           <div className="rounded-lg border p-3">
-            <div className="text-xl font-medium">{privateReports}</div>
+            {reportL ? (
+              <Spinner />
+            ) : (
+              <div className="text-xl font-medium">{privateReports}</div>
+            )}
             <p className="text-sm text-muted-foreground">Private reports</p>
           </div>
         </div>

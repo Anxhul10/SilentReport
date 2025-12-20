@@ -7,6 +7,8 @@ import {
 } from "../../components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
@@ -48,13 +50,15 @@ export default function CreateReport({
   visibility_to_edit?: string;
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
+  const [loading, setLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
   const [description, setDescription] = useState(
     processData(description_to_edit),
   );
   const [visibility, setVisibility] = useState(processData(visibility_to_edit));
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
-    fetch("/api/createReport", {
+    fetch("http://localhost:4000/upsert", {
       method: "POST",
       body: JSON.stringify({ user_id, title, description, visibility }),
       headers: {
@@ -63,17 +67,22 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
-          console.log("create report success");
+        setLoading(false);
+        console.log(data);
+        if (data.status === "success") {
+          console.log("loading stop");
+          toast.success("created report !!");
         } else {
-          console.log("create report unsuccessfull");
+          toast.error("cant create a report! something went wrong");
         }
       });
   }
   function update() {
-    fetch("/api/updateReport", {
+    const user_id = localStorage.getItem("user_id");
+    fetch("http://localhost:4000/update", {
       method: "POST",
       body: JSON.stringify({
+        user_id,
         id: report_id,
         title,
         description,
@@ -85,6 +94,12 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.status === "success") {
+          toast.success("edited successfully!");
+        } else {
+          toast.error("failed to edit");
+        }
+        setEditLoading(false);
         console.log(data);
       });
   }
@@ -184,18 +199,20 @@ export default function CreateReport({
             className="w-30"
             onClick={() => {
               update();
+              setEditLoading(true);
             }}
           >
-            edit
+            {editLoading ? <Spinner /> : <div>edit</div>}
           </Button>
         ) : (
           <Button
             className="w-30"
             onClick={() => {
               handleSubmit();
+              setLoading(true);
             }}
           >
-            submit
+            {loading ? <Spinner /> : <div> submit</div>}
           </Button>
         )}
       </div>

@@ -15,25 +15,35 @@ import Toogle from "@/components/_components//Toggle";
 import { useState } from "react";
 import Link from "next/link";
 import { SearchBar } from "@/components/SearchBar";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 export default function Anonymous() {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   function handleSubmit() {
-    const user_id = "d85ba6c3-7122-43ca-9fce-4cc42a2f6735";
-    fetch("/api/createReport", {
+    const user_id = "d85ba6c3-7122-43ca-9fce-4cc42a2f6735"; // random value
+
+    fetch("http://localhost:4000/upsert", {
       method: "POST",
-      body: JSON.stringify({ user_id, title, description }),
+      body: JSON.stringify({
+        user_id,
+        title,
+        description,
+        visibility: "PUBLIC",
+      }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
-          console.log("create anonymous report success");
+        setLoading(false);
+        if (data.status === "success") {
+          toast.success("Reports created successfullly !");
         } else {
-          console.log("create anonymous report unsuccessfull");
+          toast.error("Something went wrong creating report");
         }
       });
   }
@@ -107,9 +117,10 @@ export default function Anonymous() {
             className="w-30"
             onClick={() => {
               handleSubmit();
+              setLoading(true);
             }}
           >
-            submit
+            {loading ? <Spinner /> : <div> submit</div>}
           </Button>
         </div>
       </Card>

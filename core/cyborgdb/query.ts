@@ -17,11 +17,9 @@ export async function query(
     const results = await index.query({
       queryContents,
       topK: 5,
-      filters: {
-        category: "education",
-      },
       include: ["distance", "metadata", "contents"],
     });
+
     return results;
   } catch (error) {
     console.error("Content search failed:", error);

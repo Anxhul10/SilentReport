@@ -6,7 +6,7 @@ import { createIdx } from "@/core/cyborgdb/createIdx";
 
 const supabaseUrl: string = process.env.supabaseUrl || "no key";
 const supabaseKey: string = process.env.supabaseKey || "no key";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const _supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function submitReport(
   user_id: string,

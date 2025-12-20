@@ -54,7 +54,7 @@ export default function CreateReport({
   const [visibility, setVisibility] = useState(processData(visibility_to_edit));
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
-    fetch("/api/createReport", {
+    fetch("http://localhost:4000/upsert", {
       method: "POST",
       body: JSON.stringify({ user_id, title, description, visibility }),
       headers: {
@@ -63,17 +63,18 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status === 200) {
-          console.log("create report success");
-        } else {
-          console.log("create report unsuccessfull");
+        console.log(data);
+        if (data.status === "success") {
+          console.log("loading stop");
         }
       });
   }
   function update() {
-    fetch("/api/updateReport", {
+    const user_id = localStorage.getItem("user_id");
+    fetch("http://localhost:4000/update", {
       method: "POST",
       body: JSON.stringify({
+        user_id,
         id: report_id,
         title,
         description,

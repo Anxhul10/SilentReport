@@ -4,7 +4,7 @@ import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import { PageLayout } from "../components/PageLayout";
 import CreateReport from "@/components/_components/CreateReport";
 import ViewReportContainer from "@/components/_components//ViewReportContainer";
@@ -19,6 +19,11 @@ export default function Dashboard() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
   useEffect(() => {
+    if (index !== 4) return;
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      router.push("/Login");
+    }
     // fetch("/api/reports")
     //   .then((response) => response.json())
     //   .then((data) => {
@@ -26,9 +31,11 @@ export default function Dashboard() {
     //     setRecord(data.data);
     //     setLoading(false);
     //   });
+    const userId = localStorage.getItem("user_id");
+    if (!userId) return;
     fetch("http://localhost:4000/query", {
       method: "POST",
-      body: JSON.stringify({ queryContents: localStorage.getItem("user_id") }),
+      body: JSON.stringify({ queryContents: userId }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -49,10 +56,6 @@ export default function Dashboard() {
         setRecord(result);
         setLoading(false);
       });
-    const token = localStorage.getItem("token");
-    if (token === null) {
-      router.push("/Login");
-    }
   }, [index]);
 
   // 0. Dashboard
@@ -139,6 +142,7 @@ export default function Dashboard() {
 }
 
 function ViewReport({ record }: { record: Array<IRecordArray> }) {
+  const id = useId();
   return (
     <>
       {record.map((val: IRecordArray) => {
@@ -148,7 +152,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
         ) {
           return (
             <ViewReportContainer
-              key={val.id}
+              key={id}
               id={val.id}
               title={val.title}
               description={val.description}

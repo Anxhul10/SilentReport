@@ -1,4 +1,4 @@
-# SilentReport 🛡️
+# SilentReport
 
 **Encrypted Whistleblower System for Healthcare**
 
@@ -7,7 +7,7 @@ It ensures that sensitive data is cryptographically unreadable—even to databas
 
 ---
 
-## 🧩 Tech Stack
+## Tech Stack
 
 - **Node.js**: `v22.21.1`
 - **Package Manager**: `npm`
@@ -17,7 +17,7 @@ It ensures that sensitive data is cryptographically unreadable—even to databas
 
 ---
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 - Node.js `22.21.1`
 - npm
@@ -27,100 +27,55 @@ It ensures that sensitive data is cryptographically unreadable—even to databas
 
 ---
 
-## 📦 Installation
-
-```bash
-git clone <repository-url>
-cd silent-report
+## Installation
+1. clone the repo
+```
+git clone git@github.com:Anxhul10/SilentReport.git
+cd SilentReport
+```
+2. install dependencies
+```
 npm install
 ```
+3. setup cyborgdb-service
 
----
-
-## 🔐 Environment Variables
-
-> ⚠️ Do **not** commit real credentials
-
-Create a `.env.local` file:
-
-```env
-CYBORGDB_DB_TYPE=postgres
-CYBORGDB_CONNECTION_STRING="host=<YOUR_HOST> port=5432 dbname=postgres user=postgres password=<YOUR_PASSWORD> sslmode=require"
-CYBORGDB_API_KEY=<YOUR_CYBORGDB_API_KEY>
-
-# Required after first run
-indexKeyBase64=<GENERATED_BASE64_KEY>
 ```
+export CYBORGDB_DB_TYPE=postgres
 
----
+export CYBORGDB_CONNECTION_STRING="host=db.<your-project>.supabase.co port=5432 dbname=postgres user=postgres password=<YOUR_PASSWORD> sslmode=require"
 
-## 🧠 First-Time Run (Important)
+export CYBORGDB_API_KEY="your api key"
+cyborgdb-service
+```
+4. Start the Cyborg API server
+```
+npm run c-server
+```
+> [!NOTE]
+> If you see any errors related to imports types please use node `22.21.1` node version or more.
 
-On the first run, CyborgDB generates an `indexKeyBase64`.
-
-Steps:
-
-1. Run all services
-2. Copy the printed `indexKeyBase64` from logs
-3. Add it to `.env.local`
-4. Restart all services
-
-Without this key, queries and basic operations will fail.
-
----
-
-## ▶️ Running the Application
-
-This project requires **three services** running in parallel.
-
-### 1️⃣ Start the Next.js App
-
-```bash
+5. run the application
+```
 npm run dev
 ```
+> [!NOTE]
+> Ensure the steps 3, 4, 5 are running to run the whole application
 
 ---
 
-### 2️⃣ Start CyborgDB SDK Server
+## Environment Variables
 
-```bash
-npm run server-c
+
+Create a `.env` file:
+
+```env
+baseURL=http://localhost:8000
+CYBORGDB_API_KEY=API_KEY
+// On the first run, CyborgDB generates an `indexKeyBase64`
+indexKeyBase64=YOUR_KEY_HERE
+supabaseUrl=YOUR_SUPABASE_URL
+supabaseKey=YOUR_SUPABASE_KEY
 ```
-
-> CyborgDB SDK must run separately.  
-> Running it inside Next.js causes ECMAScript module errors.
-
----
-
-### 3️⃣ Start CyborgDB Service
-
-Export environment variables:
-
-```bash
-export CYBORGDB_DB_TYPE=postgres
-export CYBORGDB_CONNECTION_STRING="host=<YOUR_HOST> port=5432 dbname=postgres user=postgres password=<YOUR_PASSWORD> sslmode=require"
-export CYBORGDB_API_KEY=<YOUR_CYBORGDB_API_KEY>
-```
-
-Run the service:
-
-```bash
-cyborg-service
-```
-
----
-
-## 🧹 Linting (Mandatory)
-
-Before pushing changes:
-
-```bash
-npm run lint
-```
-
-All lint errors must be fixed before pushing.
-
----
 
 ## 🔍 How SilentReport Works
 
@@ -133,7 +88,7 @@ Even database administrators cannot read the stored data.
 
 ---
 
-## 🛡️ Security Highlights
+## Security Highlights
 
 - No plaintext sensitive data
 - Human-incomprehensible encrypted storage
@@ -142,7 +97,7 @@ Even database administrators cannot read the stored data.
 
 ---
 
-## 📝 Notes
+## Notes
 
 - Never expose API keys or index keys
 - Restart services after changing environment variables
@@ -150,7 +105,7 @@ Even database administrators cannot read the stored data.
 
 ---
 
-## 📄 License
+## License
 
 MIT License (or specify otherwise)
 

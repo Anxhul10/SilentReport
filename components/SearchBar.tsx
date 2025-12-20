@@ -12,25 +12,47 @@ import { useEffect, useState } from "react";
 
 export function SearchBar() {
   const [input, setInput] = useState("");
-  const [searchData, setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState<IRecordArray[]>([]);
 
   useEffect(() => {
     if (!input) return;
-    fetch("/api/search", {
+    fetch("http://localhost:4000/query", {
       method: "POST",
-      body: JSON.stringify({ query: input }),
+      body: JSON.stringify({ queryContents: input }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.length < 5) {
-          setSearchData(data);
-        } else {
-          setSearchData(data.slice(0, 4));
+        const result = [];
+        for (const t of data.results) {
+          result.push({
+            id: t.id,
+            title: t.metadata.title,
+            description: t.metadata.description,
+            visibility: t.metadata.visibility,
+            created_by: t.metadata.created_by,
+            inserted_at: t.metadata.inserted_at,
+          });
         }
+        setSearchData(result);
       });
+    // fetch("/api/search", {
+    //   method: "POST",
+    //   body: JSON.stringify({ query: input }),
+    //   headers: {
+    //     "Content-type": "application/json; charset=UTF-8",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.length < 5) {
+    //       setSearchData(data);
+    //     } else {
+    //       setSearchData(data.slice(0, 4));
+    //     }
+    //   });
   }, [input]);
   if (input === "") {
     return (

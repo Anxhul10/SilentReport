@@ -7,6 +7,8 @@ import {
 } from "../../components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
@@ -48,6 +50,7 @@ export default function CreateReport({
   visibility_to_edit?: string;
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
+  const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState(
     processData(description_to_edit),
   );
@@ -63,9 +66,13 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoading(false);
         console.log(data);
         if (data.status === "success") {
           console.log("loading stop");
+          toast.success("created report !!");
+        } else {
+          toast.error("cant create a report! something went wrong");
         }
       });
   }
@@ -194,9 +201,10 @@ export default function CreateReport({
             className="w-30"
             onClick={() => {
               handleSubmit();
+              setLoading(true);
             }}
           >
-            submit
+            {loading ? <Spinner /> : <div> submit</div>}
           </Button>
         )}
       </div>

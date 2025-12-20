@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { Client, VectorItem, UpsertResponse } from "cyborgdb";
+import { Client } from "cyborgdb";
 
 const client = new Client({
   baseUrl: process.env.baseURL ?? "",

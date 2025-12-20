@@ -8,12 +8,13 @@ import {
 import { type IRecordArray } from "@/types/Record";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 
 export function SearchBar() {
   const [input, setInput] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(false);
+  const id = useId();
   useEffect(() => {
     if (!input) return;
     fetch("http://localhost:4000/query", {
@@ -88,7 +89,7 @@ export function SearchBar() {
       </InputGroup>
       {loading && (
         <div className="flex justify-center">
-          <Card className="w-full h-auto">
+          <Card className="w-full h-auto " key={id}>
             <CardTitle className="ml-5">
               <Spinner />
             </CardTitle>
@@ -101,7 +102,7 @@ export function SearchBar() {
       {searchData.map((val: IRecordArray) => {
         return (
           <div className="flex justify-center">
-            <Card className="w-full h-auto">
+            <Card className="w-full h-auto" key={id}>
               <CardTitle className="ml-5">{val.title}</CardTitle>
               <CardDescription className="flex justify-end mr-4 ml-4">
                 created at - {val.inserted_at}

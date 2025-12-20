@@ -15,9 +15,14 @@ export async function createIdx(
   const indexKey: Uint8Array = client.generateKey();
   const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
   try {
-    const _index = await client.createIndex({
+    await client.createIndex({
       indexName,
       indexKey,
+      indexConfig: {
+        type: "ivf",
+        dimension: 768,
+      },
+      embeddingModel: "sentence-transformers/all-mpnet-base-v2",
     });
     // save key and code on url
     return { message: "Index created successfully", indexKeyBase64 };

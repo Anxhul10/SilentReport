@@ -13,6 +13,10 @@ const client = new Client({
   apiKey: process.env.CYBORGDB_API_KEY,
 });
 
+const indexName = "service";
+const indexKeyBase64 = "2Ex56WuT6pwTaYCvfeCdpXSdwt7gNftnu0J4ImWFT10";
+
+let id = 0;
 app.post("/createIndex", async (req, res) => {
   try {
     const indexName = req.body.indexName;
@@ -41,9 +45,21 @@ app.post("/createIndex", async (req, res) => {
 });
 
 app.post("/upsert", async (req, res) => {
-  const indexName = req.body.indexName;
-  const indexKeyBase64 = req.body.indexKeyBase64;
-  const items = req.body.items;
+  const user_id = req.body.user_id;
+  const title = req.body.title;
+  const description = req.body.description;
+  const visibility = req.body.visibility;
+  const items = [
+    {
+      id: user_id,
+      contents: `${title} and ${description}`,
+      metadata: {
+        title,
+        description,
+        visibility,
+      },
+    },
+  ];
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
 
   const index = await client.loadIndex({

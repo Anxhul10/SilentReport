@@ -27,7 +27,7 @@ It ensures that sensitive data is cryptographically unreadable—even to databas
 
 ---
 
-## 📦 Installation
+## Installation
 1. clone the repo
 ```
 git clone git@github.com:Anxhul10/SilentReport.git
@@ -72,7 +72,9 @@ Create a `.env` file:
 baseURL=http://localhost:8000
 CYBORGDB_API_KEY=API_KEY
 // On the first run, CyborgDB generates an `indexKeyBase64`
-indexKeyBase64="YOUR_KEY_HERE"
+indexKeyBase64=YOUR_KEY_HERE
+supabaseUrl=YOUR_SUPABASE_URL
+supabaseKey=YOUR_SUPABASE_KEY
 ```
 
 ## 🔍 How SilentReport Works

@@ -10,18 +10,32 @@ interface IUpsert {
   status: string;
   message?: string;
 }
-
+interface IItems {
+  id: string;
+  contents: string;
+  metadata: {
+    category: string;
+    severity?: string;
+  };
+}
 export async function upsert(
   indexKeyBase64: string,
   indexName: string,
-  vectorItems: VectorItem[],
+  items: IItems[],
 ): Promise<IUpsert | undefined> {
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-  const index = await client.loadIndex({ indexName, indexKey });
+
+  const index = await client.loadIndex({
+    indexName,
+    indexKey,
+  });
   try {
-    const result: UpsertResponse = await index.upsert({ items: vectorItems });
+    const result = await index.upsert({
+      items,
+    });
+    console.log("Text-only upsert successful");
     return result;
-  } catch (error: any) {
-    console.error("Upsert failed:", error.message);
+  } catch (error) {
+    console.error("Upsert failed ", error);
   }
 }

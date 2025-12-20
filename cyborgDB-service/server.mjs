@@ -84,7 +84,7 @@ app.post("/upsert", async (req, res) => {
   const items = [
     {
       id: Date.now().toString(),
-      contents: `${title} and ${description}`,
+      contents: `${title} and ${user_id}`,
       metadata: {
         title,
         inserted_at: getDate(),
@@ -158,6 +158,27 @@ app.post("/query", async (req, res) => {
       queryContents,
       topK: 5,
       include: ["distance", "metadata", "contents"],
+    });
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Content search failed:", error);
+    res.status(500).json(error);
+  }
+});
+app.post("/search", async (req, res) => {
+  const queryContents = req.body.queryContents;
+
+  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const index = await client.loadIndex({ indexName, indexKey });
+  try {
+    const results = await index.query({
+      queryContents,
+      topK: 5,
+      filters: {
+        visibility: "PUBLIC", // must exist in metadata
+      },
+      include: ["metadata", "contents"],
     });
 
     res.status(200).json(results);

@@ -45,7 +45,6 @@ export default function Dashboard() {
             created_by: t.metadata.created_by,
             inserted_at: t.metadata.inserted_at,
           });
-          console.log();
         }
         setRecord(result);
         setLoading(false);

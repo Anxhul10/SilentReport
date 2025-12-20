@@ -11,6 +11,8 @@ import ViewReportContainer from "@/components/_components//ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
+import { Spinner } from "@/components/ui/spinner";
+
 // import data from "./data.json";
 
 export default function Dashboard() {
@@ -77,7 +79,9 @@ export default function Dashboard() {
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        loading ....
+        <div className="m-5 flex ">
+          <Spinner />
+        </div>
       </PageLayout>
     );
   } else if (index === 4 && !loading) {

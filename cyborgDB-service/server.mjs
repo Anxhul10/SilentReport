@@ -62,6 +62,26 @@ app.post("/upsert", async (req, res) => {
   }
 });
 
+app.post("/query", async (req, res) => {
+  const indexKeyBase64 = req.body.indexKeyBase64;
+  const queryContents = req.body.queryContents;
+  const indexName = req.body.indexName;
+
+  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const index = await client.loadIndex({ indexName, indexKey });
+  try {
+    const results = await index.query({
+      queryContents,
+      topK: 5,
+      include: ["distance", "metadata", "contents"],
+    });
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Content search failed:", error);
+    res.status(500).json(error);
+  }
+});
 app.listen(4000, () => {
   console.log("CyborgDB service running on :4000");
 });

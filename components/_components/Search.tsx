@@ -2,15 +2,15 @@ import ViewReportContainer from "@/components/_components/ViewReportContainer";
 import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
+import { Spinner } from "@/components/ui/spinner";
 import { useEffect, useState, useId } from "react";
 
 export default function Search() {
   const id = useId();
   const [inputStr, setInputStr] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
-  const [isClicked, setClick] = useState(false);
-  useEffect(() => {
+  const [loading, setLoading] = useState(false);
+  function runSearch() {
     if (!inputStr) return;
     // fetch("/api/search", {
     //   method: "POST",
@@ -23,7 +23,6 @@ export default function Search() {
     //   .then((data) => {
     //     setSearchData(data);
     //   });
-
     fetch("http://localhost:4000/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: inputStr }),
@@ -47,9 +46,9 @@ export default function Search() {
         }
         console.log(result);
         setSearchData(result);
-        setClick(false);
+        setLoading(false);
       });
-  }, [isClicked]);
+  }
 
   return (
     <>
@@ -65,10 +64,11 @@ export default function Search() {
         <div className="ml-10 mr-11">
           <Button
             onClick={() => {
-              setClick(true);
+              runSearch();
+              setLoading(true);
             }}
           >
-            Search
+            {loading ? <Spinner /> : <div>Search</div>}
           </Button>
         </div>
       </div>

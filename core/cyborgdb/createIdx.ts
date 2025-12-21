@@ -30,3 +30,9 @@ export async function createIdx(
     console.error("Failed to create index:", error);
   }
 }
+
+const idxName = "reports";
+const res = await createIdx(idxName);
+console.log("#######################################################");
+console.log(res);
+console.log("#######################################################");

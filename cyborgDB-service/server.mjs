@@ -67,6 +67,11 @@ app.get("/listIndex", async (req, res) => {
 
 app.post("/createIndex", async (req, res) => {
   try {
+    if (process.env.indexKeyBase64) {
+      return res.status(409).json({
+        message: "Index already exists. Creation is not allowed again.",
+      });
+    }
     const indexName = req.body.indexName;
     const indexKey = client.generateKey();
     const indexKeyBase64 = Buffer.from(indexKey).toString("base64");

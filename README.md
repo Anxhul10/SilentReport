@@ -28,15 +28,20 @@ It ensures that sensitive data is cryptographically unreadable—even to databas
 ---
 
 ## Installation
+
 1. clone the repo
+
 ```
 git clone git@github.com:Anxhul10/SilentReport.git
 cd SilentReport
 ```
+
 2. install dependencies
+
 ```
 npm install
 ```
+
 3. setup cyborgdb-service
 
 ```
@@ -47,24 +52,28 @@ export CYBORGDB_CONNECTION_STRING="host=db.<your-project>.supabase.co port=5432 
 export CYBORGDB_API_KEY="your api key"
 cyborgdb-service
 ```
+
 4. Start the Cyborg API server
+
 ```
 npm run c-server
 ```
+
 > [!NOTE]
 > If you see any errors related to imports types please use node `22.21.1` node version or more.
 
 5. run the application
+
 ```
 npm run dev
 ```
+
 > [!NOTE]
 > Ensure the steps 3, 4, 5 are running to run the whole application
 
 ---
 
 ## Environment Variables
-
 
 Create a `.env` file:
 

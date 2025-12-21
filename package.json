@@ -15,10 +15,11 @@
     "cs3": "changeset publish",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3005",
     "lint": "eslint",
     "tsx": "tsx",
-    "c-server": "nodemon ./cyborgDB-service/server.mjs"
+    "c-server": "nodemon ./cyborgDB-service/server.mjs",
+    "g-index": "npm run tsx core/cyborgdb/createIdx.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -84,7 +84,7 @@ npm run c-server
 6. run the application
 
 ```
-npm run dev
+npm run start
 ```
 
 > [!NOTE]

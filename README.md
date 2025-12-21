@@ -1,3 +1,7 @@
+# Demo Video ( along with installation )
+
+https://github.com/user-attachments/assets/1327669f-088c-4a9a-aea4-3fd6f70f31b1
+
 # SilentReport
 
 **Encrypted Whistleblower System for Healthcare**
@@ -42,7 +46,7 @@ cd SilentReport
 npm install
 ```
 
-3. setup cyborgdb-service
+3. setup cyborgdb-service ( important )
 
 ```
 export CYBORGDB_DB_TYPE=postgres
@@ -52,8 +56,23 @@ export CYBORGDB_CONNECTION_STRING="host=db.<your-project>.supabase.co port=5432 
 export CYBORGDB_API_KEY="your api key"
 cyborgdb-service
 ```
+4. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
 
-4. Start the Cyborg API server
+```
+npm run g-index
+```
+
+6. set the env
+```env
+baseURL=http://localhost:8000
+CYBORGDB_API_KEY=API_KEY
+// On the first run, CyborgDB generates an `indexKeyBase64`
+indexKeyBase64=YOUR_KEY_HERE
+supabaseUrl=YOUR_SUPABASE_URL
+supabaseKey=YOUR_SUPABASE_KEY
+```
+  
+5. Start the Cyborg API server
 
 ```
 npm run c-server
@@ -62,7 +81,7 @@ npm run c-server
 > [!NOTE]
 > If you see any errors related to imports types please use node `22.21.1` node version or more.
 
-5. run the application
+6. run the application
 
 ```
 npm run dev
@@ -72,19 +91,6 @@ npm run dev
 > Ensure the steps 3, 4, 5 are running to run the whole application
 
 ---
-
-## Environment Variables
-
-Create a `.env` file:
-
-```env
-baseURL=http://localhost:8000
-CYBORGDB_API_KEY=API_KEY
-// On the first run, CyborgDB generates an `indexKeyBase64`
-indexKeyBase64=YOUR_KEY_HERE
-supabaseUrl=YOUR_SUPABASE_URL
-supabaseKey=YOUR_SUPABASE_KEY
-```
 
 ## 🔍 How SilentReport Works
 

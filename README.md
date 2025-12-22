@@ -56,6 +56,7 @@ export CYBORGDB_CONNECTION_STRING="host=db.<your-project>.supabase.co port=5432 
 export CYBORGDB_API_KEY="your api key"
 cyborgdb-service
 ```
+
 4. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
 
 ```
@@ -63,6 +64,7 @@ npm run g-index
 ```
 
 6. set the env
+
 ```env
 baseURL=http://localhost:8000
 CYBORGDB_API_KEY=API_KEY
@@ -71,7 +73,7 @@ indexKeyBase64=YOUR_KEY_HERE
 supabaseUrl=YOUR_SUPABASE_URL
 supabaseKey=YOUR_SUPABASE_KEY
 ```
-  
+
 5. Start the Cyborg API server
 
 ```

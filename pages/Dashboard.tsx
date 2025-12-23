@@ -12,6 +12,14 @@ import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Card,
+  CardHeader,
+  CardAction,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 // import data from "./data.json";
 
@@ -20,6 +28,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
   const router = useRouter();
+  let user_items = 0;
   useEffect(() => {
     if (index !== 4) return;
     const token = localStorage.getItem("token");
@@ -57,6 +66,11 @@ export default function Dashboard() {
         }
         setRecord(result);
         setLoading(false);
+        for (const item of record) {
+          if (item.created_by === localStorage.getItem("user_id")) {
+            user_items++;
+          }
+        }
       });
   }, [index]);
 
@@ -85,6 +99,13 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 4 && !loading) {
+    if (user_items === 0) {
+      return (
+        <PageLayout fullPage={true} setIndex={setIndex}>
+          <div className="m-4">No reports created yet...</div>
+        </PageLayout>
+      );
+    }
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
         <ViewReport record={record}></ViewReport>

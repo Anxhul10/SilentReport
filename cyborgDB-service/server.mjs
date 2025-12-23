@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { Client } from "cyborgdb";
+import { PythonShell } from "python-shell";
 
 const app = express();
 app.use(express.json());
@@ -152,7 +153,7 @@ app.post("/update", async (req, res) => {
   const items = [
     {
       id: req.body.id,
-      contents: `${title} and ${description}`,
+      contents: `Title: ${title}\nDescription: ${description}`,
       metadata: {
         title,
         inserted_at: getDate(), // replaces the inserted with updated date
@@ -197,6 +198,65 @@ app.post("/query", async (req, res) => {
     console.error("Content search failed:", error);
     res.status(500).json(error);
   }
+});
+app.post("/summary", async (req, res) => {
+  const user_id = req.body.user_id;
+  PythonShell.run("./core/langchain/main.py").then((messages) => {
+    console.log(messages);
+    console.log("finished");
+    res.status(200).json({ messages });
+  });
+});
+// endpoint will be used in view reports section
+app.post("/user/getReports", async (req, res) => {
+  const user_id = req.body.user_id;
+  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const index = await client.loadIndex({
+    indexName,
+    indexKey,
+  });
+
+  const reportIds = (await index.listIds()).ids;
+  const reports = await index.get({ ids: reportIds });
+
+  const user_reports = [];
+
+  for (const report of reports) {
+    if (report.metadata.created_by === user_id) {
+      user_reports.push({
+        title: report.metadata.title,
+        description: report.metadata.description,
+        visibility: report.metadata.visibility,
+        timeLimit: report.metadata.timeLimit,
+      });
+    }
+  }
+  res.status(200).json({ reports: user_reports });
+});
+// return only public listed reports
+app.post("/getReports/public", async (req, res) => {
+  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const index = await client.loadIndex({
+    indexName,
+    indexKey,
+  });
+
+  const reportIds = (await index.listIds()).ids;
+  const reports = await index.get({ ids: reportIds });
+  let public_reports = [];
+  for (const report of reports) {
+    if (report.metadata.visibility === "PUBLIC") {
+      public_reports.push([
+        {
+          title: report.metadata.title,
+          description: report.metadata.description,
+          visibility: report.metadata.visibility,
+          timeLimit: report.metadata.timeLimit,
+        },
+      ]);
+    }
+  }
+  res.status(200).json({ reports });
 });
 app.post("/search", async (req, res) => {
   const queryContents = req.body.queryContents;

@@ -28,32 +28,19 @@ export function ChartAreaInteractive() {
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
 
-    fetch("http://localhost:4000/query", {
+    fetch("http://localhost:4000/user/getReports/count", {
       method: "POST",
-      body: JSON.stringify({ queryContents: user_id }),
+      body: JSON.stringify({ user_id }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        let private_count = 0;
-        let public_count = 0;
-        let count = 0;
-        for (const t of data.results) {
-          if (user_id === t.metadata.created_by) {
-            if (t.metadata.visibility === "PUBLIC") {
-              public_count = public_count + 1;
-            }
-            if (t.metadata.visibility === "PRIVATE") {
-              private_count = private_count + 1;
-            }
-            count = count + 1;
-          }
-        }
-        setPublicReports(public_count);
-        setPrivateReports(private_count);
-        setReports(count);
+        console.log(data);
+        setPublicReports(data.public_count);
+        setPrivateReports(data.private_count);
+        setReports(data.report_count);
         setReportL(false);
       });
   }, []);

@@ -12,23 +12,14 @@ import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  Card,
-  CardHeader,
-  CardAction,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-
 // import data from "./data.json";
 
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
+  const [userReports, setUserReport] = useState(0);
   const router = useRouter();
-  let user_items = 0;
   useEffect(() => {
     if (index !== 4) return;
     const token = localStorage.getItem("token");
@@ -44,33 +35,20 @@ export default function Dashboard() {
     //   });
     const userId = localStorage.getItem("user_id");
     if (!userId) return;
-    fetch("http://localhost:4000/query", {
+    fetch("http://localhost:4000/user/getReports", {
       method: "POST",
-      body: JSON.stringify({ queryContents: userId }),
+      body: JSON.stringify({ user_id: userId }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        const result = [];
-        for (const t of data.results) {
-          result.push({
-            id: t.id,
-            title: t.metadata.title,
-            description: t.metadata.description,
-            visibility: t.metadata.visibility,
-            created_by: t.metadata.created_by,
-            inserted_at: t.metadata.inserted_at,
-          });
-        }
-        setRecord(result);
+        setRecord(data.reports);
         setLoading(false);
-        for (const item of record) {
-          if (item.created_by === localStorage.getItem("user_id")) {
-            user_items++;
-          }
-        }
+        console.log(record);
+        console.log(userId);
+        setUserReport(data.reports.length);
       });
   }, [index]);
 
@@ -99,7 +77,7 @@ export default function Dashboard() {
       </PageLayout>
     );
   } else if (index === 4 && !loading) {
-    if (user_items === 0) {
+    if (userReports === 0) {
       return (
         <PageLayout fullPage={true} setIndex={setIndex}>
           <div className="m-4">No reports created yet...</div>
@@ -171,22 +149,17 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
   return (
     <>
       {record.map((val: IRecordArray) => {
-        if (
-          localStorage.getItem("user_id") !== undefined &&
-          val.created_by === localStorage.getItem("user_id")
-        ) {
-          return (
-            <ViewReportContainer
-              key={id}
-              id={val.id}
-              title={val.title}
-              description={val.description}
-              visibility={val.visibility}
-              filter={true}
-              created_at={val.inserted_at}
-            ></ViewReportContainer>
-          );
-        }
+        return (
+          <ViewReportContainer
+            key={id}
+            id={val.id}
+            title={val.title}
+            description={val.description}
+            visibility={val.visibility}
+            filter={true}
+            created_at={val.inserted_at}
+          ></ViewReportContainer>
+        );
       })}
     </>
   );

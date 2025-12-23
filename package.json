@@ -4,6 +4,7 @@
   "version": "3.0.0",
   "type": "module",
   "scripts": {
+    "langchain-test": " tsx langchain-runner.ts",
     "format": "prettier . --write",
     "format:ci": "prettier . --check",
     "lint-fix": "prettier . --write && eslint --fix",

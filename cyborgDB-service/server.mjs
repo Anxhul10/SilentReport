@@ -234,7 +234,7 @@ app.post("/user/getReports", async (req, res) => {
   res.status(200).json({ reports: user_reports });
 });
 app.post("/user/getReports/count", async (req, res) => {
-  const user_id = req.body.user_id;
+  const userId = req.body.userId;
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
   const index = await client.loadIndex({
     indexName,
@@ -248,7 +248,7 @@ app.post("/user/getReports/count", async (req, res) => {
   let private_count = 0;
   let report_count = 0;
   for (const report of reports) {
-    if (report.metadata.created_by === user_id) {
+    if (report.metadata.created_by === userId) {
       console.log(report.metadata.visibility);
       if (report.metadata.visibility === "PUBLIC") {
         public_count++;

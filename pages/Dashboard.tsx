@@ -35,7 +35,6 @@ export default function Dashboard() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("from dashboard" + data);
           setCount(data);
         });
     }
@@ -44,13 +43,6 @@ export default function Dashboard() {
     if (token === null) {
       router.push("/Login");
     }
-    // fetch("/api/reports")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data.data);
-    //     setRecord(data.data);
-    //     setLoading(false);
-    //   });
 
     fetch("http://localhost:4000/user/getReports", {
       method: "POST",

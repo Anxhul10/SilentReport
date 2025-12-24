@@ -32,7 +32,6 @@ export function ChartAreaInteractive({
     }
   }, [isMobile, count]);
 
-  console.log(count);
   return (
     <Card className="@container/card">
       <CardHeader>
@@ -73,7 +72,7 @@ export function ChartAreaInteractive({
               <Spinner />
             ) : (
               <div className="text-xl font-medium">
-                {count.count.private_count}
+                {count.count!.private_count}
               </div>
             )}
             <p className="text-sm text-muted-foreground">Private reports</p>

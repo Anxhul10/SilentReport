@@ -3,12 +3,14 @@ import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { useEffect, useState, useId } from "react";
+import { useState, useId } from "react";
+import { toast } from "sonner";
 
 export default function Search() {
   const id = useId();
   const [inputStr, setInputStr] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
+  const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
   function runSearch() {
     if (!inputStr) return;
@@ -49,6 +51,21 @@ export default function Search() {
         setLoading(false);
       });
   }
+  function handleTrain() {
+    setTrainL(true);
+    fetch("http://localhost:4000/public/reports/train")
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.result.status === "success") {
+          console.log("data trained successfully");
+          toast.success("trained !!");
+        } else {
+          console.log("data training failed !!");
+          toast.error("train failed!!");
+        }
+        setTrainL(false);
+      });
+  }
 
   return (
     <>
@@ -61,7 +78,7 @@ export default function Search() {
             }}
           />
         </div>
-        <div className="ml-10 mr-11">
+        <div className="ml-10 mr-5">
           <Button
             onClick={() => {
               runSearch();
@@ -69,6 +86,16 @@ export default function Search() {
             }}
           >
             {loading ? <Spinner /> : <div>Search</div>}
+          </Button>
+        </div>
+        <div>
+          <Button
+            className="mr-5"
+            onClick={() => {
+              handleTrain();
+            }}
+          >
+            {trainL ? <Spinner /> : <div>Train</div>}
           </Button>
         </div>
       </div>

@@ -12,7 +12,11 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { type ICount } from "@/types/Count";
 
-export function ChartAreaInteractive({ count }: { count: { count: ICount } }) {
+export function ChartAreaInteractive({
+  count,
+}: {
+  count: { count: ICount | undefined };
+}) {
   const isMobile = useIsMobile();
   const [loading, setLoading] = useState(false);
   const [_timeRange, setTimeRange] = useState("90d");

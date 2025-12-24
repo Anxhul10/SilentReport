@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
   const [userReports, setUserReport] = useState(0);
-  const [count, setCount] = useState<ICount | undefined>();
+  const [count, setCount] = useState<ICount>();
   const router = useRouter();
   useEffect(() => {
     const userId = localStorage.getItem("user_id");

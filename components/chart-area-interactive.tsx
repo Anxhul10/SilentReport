@@ -18,7 +18,7 @@ export function ChartAreaInteractive({
   count: { count: ICount | undefined };
 }) {
   const isMobile = useIsMobile();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [_timeRange, setTimeRange] = useState("90d");
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export function ChartAreaInteractive({
     } else {
       setLoading(false);
     }
-  }, [isMobile]);
+  }, [isMobile, count]);
 
   console.log(count);
   return (
@@ -48,7 +48,7 @@ export function ChartAreaInteractive({
             <Spinner />
           ) : (
             <div className="text-3xl font-semibold">
-              {count.count.report_count}
+              {count.count!.report_count}
             </div>
           )}
           <p className="text-sm text-muted-foreground">
@@ -62,7 +62,7 @@ export function ChartAreaInteractive({
               <Spinner />
             ) : (
               <div className="text-xl font-medium">
-                {count.count.public_count}
+                {count.count!.public_count}
               </div>
             )}
             <p className="text-sm text-muted-foreground">Public reports</p>

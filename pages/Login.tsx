@@ -45,7 +45,7 @@ export default function Login({
       .then((data) => {
         setLoad(false);
         if (data.status === 200) {
-          toast.success("signed up successfully");
+          toast.success("logged in successfully");
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("token", data.token);
           setUserState(true);

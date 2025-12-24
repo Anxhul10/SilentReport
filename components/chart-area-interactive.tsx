@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -11,40 +10,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-export function ChartAreaInteractive() {
+import { type ICount } from "@/types/Count";
+
+export function ChartAreaInteractive({ count }: { count: { count: ICount } }) {
   const isMobile = useIsMobile();
+  const [loading, setLoading] = useState(false);
   const [_timeRange, setTimeRange] = useState("90d");
 
-  const [reports, setReports] = useState(0);
-  const [publicReports, setPublicReports] = useState(0);
-  const [privateReports, setPrivateReports] = useState(0);
-  const [reportL, setReportL] = useState(true);
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobile) {
       setTimeRange("7d");
     }
+    if (count.count === undefined) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
   }, [isMobile]);
 
-  useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-
-    fetch("http://localhost:4000/user/getReports/count", {
-      method: "POST",
-      body: JSON.stringify({ user_id }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPublicReports(data.public_count);
-        setPrivateReports(data.private_count);
-        setReports(data.report_count);
-        setReportL(false);
-      });
-  }, []);
-
+  console.log(count);
   return (
     <Card className="@container/card">
       <CardHeader>
@@ -55,34 +39,38 @@ export function ChartAreaInteractive() {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Total */}
         <div>
-          {reportL ? (
+          {loading ? (
             <Spinner />
           ) : (
-            <div className="text-3xl font-semibold">{reports}</div>
+            <div className="text-3xl font-semibold">
+              {count.count.report_count}
+            </div>
           )}
           <p className="text-sm text-muted-foreground">
             Total reports submitted
           </p>
         </div>
 
-        {/* Breakdown */}
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg border p-3">
-            {reportL ? (
+            {loading ? (
               <Spinner />
             ) : (
-              <div className="text-xl font-medium">{publicReports}</div>
+              <div className="text-xl font-medium">
+                {count.count.public_count}
+              </div>
             )}
             <p className="text-sm text-muted-foreground">Public reports</p>
           </div>
 
           <div className="rounded-lg border p-3">
-            {reportL ? (
+            {loading ? (
               <Spinner />
             ) : (
-              <div className="text-xl font-medium">{privateReports}</div>
+              <div className="text-xl font-medium">
+                {count.count.private_count}
+              </div>
             )}
             <p className="text-sm text-muted-foreground">Private reports</p>
           </div>

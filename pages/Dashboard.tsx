@@ -12,6 +12,7 @@ import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
+import { type ICount } from "@/types/Count";
 // import data from "./data.json";
 
 export default function Dashboard() {
@@ -19,8 +20,25 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
   const [userReports, setUserReport] = useState(0);
+  const [count, setCount] = useState<ICount | undefined>();
   const router = useRouter();
   useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    if (!userId) return;
+    if (index === 0) {
+      fetch("http://localhost:4000/user/getReports/count", {
+        method: "POST",
+        body: JSON.stringify({ userId }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("from dashboard" + data);
+          setCount(data);
+        });
+    }
     if (index !== 4) return;
     const token = localStorage.getItem("token");
     if (token === null) {
@@ -33,8 +51,7 @@ export default function Dashboard() {
     //     setRecord(data.data);
     //     setLoading(false);
     //   });
-    const userId = localStorage.getItem("user_id");
-    if (!userId) return;
+
     fetch("http://localhost:4000/user/getReports", {
       method: "POST",
       body: JSON.stringify({ user_id: userId }),
@@ -131,7 +148,7 @@ export default function Dashboard() {
               <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 <SectionCards />
                 <div className="px-4 lg:px-6">
-                  <ChartAreaInteractive />
+                  <ChartAreaInteractive count={{ count }} />
                 </div>
                 {/* to be used later */}
                 {/* <DataTable data={data} /> */}

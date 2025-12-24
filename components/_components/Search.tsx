@@ -3,8 +3,9 @@ import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
 import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
 export default function Search() {
   const id = useId();
@@ -12,19 +13,19 @@ export default function Search() {
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
   const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [pubReports, setPubReports] = useState([]);
+  const [reportL, setReportL] = useState(false);
+  useEffect(() => {
+    setReportL(true);
+    fetch("http://localhost:4000/getReports/public")
+      .then((res) => res.json())
+      .then((data) => {
+        setPubReports(data.public_reports);
+        setReportL(false);
+      });
+  }, []);
   function runSearch() {
     if (!inputStr) return;
-    // fetch("/api/search", {
-    //   method: "POST",
-    //   body: JSON.stringify({ query: inputStr }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setSearchData(data);
-    //   });
     fetch("http://localhost:4000/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: inputStr }),
@@ -99,20 +100,68 @@ export default function Search() {
           </Button>
         </div>
       </div>
-
-      {searchData.map((val: IRecordArray) => {
-        if (val.visibility === "PUBLIC") {
-          return (
-            <ViewReportContainer
-              key={id}
-              title={val.title}
-              created_at={val.inserted_at}
-              description={val.description}
-              visibility={val.visibility}
-            ></ViewReportContainer>
-          );
-        }
-      })}
+      {searchData.length === 0 ? (
+        reportL ? (
+          <div className="flex m-10">
+            <div className="mr-4">Loading public reports</div>
+            <Spinner />
+          </div>
+        ) : (
+          pubReports.map((val: IRecordArray) => {
+            return (
+              <ViewReportContainer
+                key={id}
+                title={val.title}
+                created_at={val.inserted_at}
+                description={val.description}
+                visibility={val.visibility}
+              ></ViewReportContainer>
+            );
+          })
+        )
+      ) : (
+        <div>
+          <Separator />
+          <div className="text-muted-foreground bg-blue-300 text-sm text-center m-5">
+            Content based search results
+          </div>
+          {searchData.map((val: IRecordArray) => {
+            if (val.visibility === "PUBLIC") {
+              return (
+                <ViewReportContainer
+                  key={id}
+                  title={val.title}
+                  created_at={val.inserted_at}
+                  description={val.description}
+                  visibility={val.visibility}
+                ></ViewReportContainer>
+              );
+            }
+          })}
+          <Separator />
+          <div className="text-muted-foreground bg-blue-300 text-sm text-center m-5">
+            All Public reports
+          </div>
+          {reportL ? (
+            <div className="flex m-10">
+              <div className="mr-4">Loading public reports</div>
+              <Spinner />
+            </div>
+          ) : (
+            pubReports.map((val: IRecordArray) => {
+              return (
+                <ViewReportContainer
+                  key={id}
+                  title={val.title}
+                  created_at={val.inserted_at}
+                  description={val.description}
+                  visibility={val.visibility}
+                ></ViewReportContainer>
+              );
+            })
+          )}
+        </div>
+      )}
     </>
   );
 }

@@ -14,7 +14,6 @@ import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
 import { type ICount } from "@/types/Count";
 // import data from "./data.json";
-
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +24,10 @@ export default function Dashboard() {
   const router = useRouter();
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      router.push("/Login");
+    }
     if (!userId) return;
     if (index === 0) {
       fetch("http://localhost:4000/user/getReports/count", {
@@ -47,24 +50,22 @@ export default function Dashboard() {
         });
     }
     if (index !== 4) return;
-    const token = localStorage.getItem("token");
-    if (token === null) {
-      router.push("/Login");
-    }
 
-    fetch("http://localhost:4000/user/getReports", {
-      method: "POST",
-      body: JSON.stringify({ user_id: userId }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setRecord(data.reports);
-        setLoading(false);
-        setUserReport(data.reports.length);
-      });
+    if (index === 4 || index === 6) {
+      fetch("http://localhost:4000/user/getReports", {
+        method: "POST",
+        body: JSON.stringify({ user_id: userId }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRecord(data.reports);
+          setLoading(false);
+          setUserReport(data.reports.length);
+        });
+    }
   }, [index]);
 
   // 0. Dashboard
@@ -110,6 +111,22 @@ export default function Dashboard() {
         <API></API>
       </PageLayout>
     );
+  } else if (index === 6) {
+    return (
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        {loading ? (
+          <div className="flex space-x-1.5 m-5">
+            <Spinner />
+            <p className="text-muted-foreground text-sm">
+              Generating summary… CyborgDB securely decrypts the report, then AI
+              analyzes and summarizes the content. This may take a moment.
+            </p>
+          </div>
+        ) : (
+          <div> Summary </div>
+        )}
+      </PageLayout>
+    );
   }
   return (
     <div>
@@ -137,6 +154,9 @@ export default function Dashboard() {
           }}
           onAPIHitParent={() => {
             setIndex(5);
+          }}
+          onSummaryHitParent={() => {
+            setIndex(6);
           }}
         />
         <SidebarInset>

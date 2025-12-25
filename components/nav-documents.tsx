@@ -14,6 +14,7 @@ export function NavDocuments({
   items,
   onCreateReport,
   onViewReport,
+  onSummary,
 }: {
   items: {
     name: string;
@@ -22,6 +23,7 @@ export function NavDocuments({
   }[];
   onCreateReport: any;
   onViewReport: any;
+  onSummary: any;
 }) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -37,6 +39,9 @@ export function NavDocuments({
                 }
                 if (item.name === "View Reports") {
                   onViewReport();
+                }
+                if (item.name === "Summarize created reports") {
+                  onSummary();
                 }
               }}
             >

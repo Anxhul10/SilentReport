@@ -29,6 +29,7 @@ export function AppSidebar({
   onCreateReportParent,
   onViewReportParent,
   onAPIHitParent,
+  onSummaryHitParent,
   ...props
 }: React.ComponentProps<any>) {
   const [email, setEmail] = useState("");
@@ -65,6 +66,11 @@ export function AppSidebar({
       },
       {
         name: "View Reports",
+        url: "#",
+        icon: IconReport,
+      },
+      {
+        name: "Summarize created reports",
         url: "#",
         icon: IconReport,
       },
@@ -126,6 +132,9 @@ export function AppSidebar({
           }}
           onViewReport={() => {
             onViewReportParent();
+          }}
+          onSummary={() => {
+            onSummaryHitParent();
           }}
         />
         <NavSecondary

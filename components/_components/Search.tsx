@@ -97,9 +97,12 @@ export default function Search({ publicReports }: any) {
       </div>
       {searchData.length === 0 ? (
         reportL ? (
-          <div className="flex m-10">
-            <div className="mr-4">Loading public reports</div>
+          <div className="flex space-x-1.5 m-5">
             <Spinner />
+            <p className="text-muted-foreground text-sm">
+              Loading community reports… Public reports are securely retrieved
+              and decrypted via CyborgDB for viewing.
+            </p>
           </div>
         ) : (
           publicReports.publicReports.map((val: IRecordArray) => {

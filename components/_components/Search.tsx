@@ -7,23 +7,20 @@ import { useState, useId, useEffect } from "react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 
-export default function Search() {
+export default function Search({ publicReports }: any) {
   const id = useId();
   const [inputStr, setInputStr] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
   const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [pubReports, setPubReports] = useState([]);
-  const [reportL, setReportL] = useState(false);
+  const [reportL, setReportL] = useState(true);
   useEffect(() => {
-    setReportL(true);
-    fetch("http://localhost:4000/getReports/public")
-      .then((res) => res.json())
-      .then((data) => {
-        setPubReports(data.public_reports);
-        setReportL(false);
-      });
-  }, []);
+    if (publicReports.publicReports.length === 0) {
+      setReportL(true);
+    } else {
+      setReportL(false);
+    }
+  }, [publicReports]);
   function runSearch() {
     if (!inputStr) return;
     fetch("http://localhost:4000/search", {
@@ -35,7 +32,6 @@ export default function Search() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const result = [];
         for (const t of data.results) {
           result.push({
@@ -47,7 +43,6 @@ export default function Search() {
             inserted_at: t.metadata.inserted_at,
           });
         }
-        console.log(result);
         setSearchData(result);
         setLoading(false);
       });
@@ -107,7 +102,7 @@ export default function Search() {
             <Spinner />
           </div>
         ) : (
-          pubReports.map((val: IRecordArray) => {
+          publicReports.publicReports.map((val: IRecordArray) => {
             return (
               <ViewReportContainer
                 key={id}
@@ -148,7 +143,7 @@ export default function Search() {
               <Spinner />
             </div>
           ) : (
-            pubReports.map((val: IRecordArray) => {
+            publicReports.publicReports.map((val: IRecordArray) => {
               return (
                 <ViewReportContainer
                   key={id}

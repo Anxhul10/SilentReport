@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [index, setIndex] = useState(0);
   const [userReports, setUserReport] = useState(0);
   const [count, setCount] = useState<ICount>();
+  const [publicReports, setPublicReports] = useState([]);
   const router = useRouter();
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
@@ -36,6 +37,13 @@ export default function Dashboard() {
         .then((response) => response.json())
         .then((data) => {
           setCount(data);
+        });
+    }
+    if (index === 2) {
+      fetch("http://localhost:4000/getReports/public")
+        .then((res) => res.json())
+        .then((data) => {
+          setPublicReports(data.public_reports);
         });
     }
     if (index !== 4) return;
@@ -55,8 +63,6 @@ export default function Dashboard() {
       .then((data) => {
         setRecord(data.reports);
         setLoading(false);
-        console.log(record);
-        console.log(userId);
         setUserReport(data.reports.length);
       });
   }, [index]);
@@ -70,7 +76,7 @@ export default function Dashboard() {
   if (index === 2) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <Search></Search>
+        <Search publicReports={{ publicReports }}></Search>
       </PageLayout>
     );
   } else if (index === 3) {

@@ -95,6 +95,15 @@ export default function Search({ publicReports }: any) {
           </Button>
         </div>
       </div>
+      {loading ? (
+        <div className="flex space-x-1.5 m-5">
+          <Spinner />
+          <p className="text-muted-foreground text-sm">
+            Searching via content-based similarity. If results vary, refining
+            your query helps improve accuracy over time.
+          </p>
+        </div>
+      ) : null}
       {searchData.length === 0 ? (
         reportL ? (
           <div className="flex space-x-1.5 m-5">

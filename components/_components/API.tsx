@@ -22,10 +22,10 @@ export default function API() {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 200) {
-            console.log("api present");
+            console.log({ message: "supabase API valid" });
             setAPIPresent(true);
           } else {
-            console.log("api donot exist");
+            console.log({ message: "supabase API invalid" });
           }
         });
     }, 200);

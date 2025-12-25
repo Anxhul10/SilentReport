@@ -89,10 +89,10 @@ export function AppSidebar({
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 200) {
-            console.log("api present");
+            console.log({ message: "Valid creadentials" });
             setEmail(data.email);
           } else {
-            console.log("api donot exist");
+            console.log("Invalid credentials");
           }
         });
     }, 200);

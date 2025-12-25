@@ -87,8 +87,12 @@ export default function Dashboard() {
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <div className="m-5 flex ">
+        <div className="flex space-x-1.5 m-5">
           <Spinner />
+          <p className="text-muted-foreground text-sm">
+            Loading your reports… CyborgDB securely decrypts your submitted
+            reports for viewing.
+          </p>
         </div>
       </PageLayout>
     );

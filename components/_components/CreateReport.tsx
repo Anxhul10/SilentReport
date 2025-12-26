@@ -103,6 +103,9 @@ export default function CreateReport({
         console.log(data);
       });
   }
+  function callback() {
+    console.log("callback");
+  }
   function descriptionHit() {
     fetch("/api/fix/description", {
       method: "POST",
@@ -258,6 +261,7 @@ export default function CreateReport({
           <Button
             className="w-30"
             onClick={() => {
+              callback();
               handleSubmit();
               setLoading(true);
             }}

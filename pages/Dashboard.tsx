@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [userReports, setUserReport] = useState(0);
   const [count, setCount] = useState<ICount>();
   const [publicReports, setPublicReports] = useState([]);
-  const [summary, setSummary] = useState<ISummary>();
+  const [summary, setSummary] = useState<Array<ISummary>>([]);
   const [summaryL, setSummaryL] = useState(true);
   const router = useRouter();
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function Dashboard() {
           setLoading(false);
           setUserReport(data.reports.length);
         });
-
+      if (summary.length > 0) return;
       setSummaryL(true);
       fetch("/api/summary", {
         method: "POST",
@@ -85,7 +85,7 @@ export default function Dashboard() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setSummary(data);
+          setSummary([data]);
           setSummaryL(false);
         });
     }
@@ -153,15 +153,15 @@ export default function Dashboard() {
           <div className="m-10">
             <CardTitle>Summary</CardTitle>
             <div className="mt-4 mb-4">
-              <CardDescription>{summary!.summary}</CardDescription>
+              <CardDescription>{summary[0].summary}</CardDescription>
             </div>
             <CardTitle>Key Theme</CardTitle>
             <div className="mb-4 mt-4">
-              <CardDescription>{summary!.keyTheme}</CardDescription>
+              <CardDescription>{summary[0].keyTheme}</CardDescription>
             </div>
             <CardTitle>Notes</CardTitle>
             <div className="mb-4 mt-4">
-              <CardDescription>{summary!.notes}</CardDescription>
+              <CardDescription>{summary[0].notes}</CardDescription>
             </div>
           </div>
         )}

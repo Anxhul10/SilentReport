@@ -75,7 +75,6 @@ export default function Dashboard() {
           setUserReport(data.reports.length);
         });
       if (summary.length > 0) return;
-      setSummaryL(true);
       fetch("/api/summary", {
         method: "POST",
         body: JSON.stringify({ reports: record }),

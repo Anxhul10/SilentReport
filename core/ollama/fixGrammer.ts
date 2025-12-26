@@ -27,7 +27,7 @@ ${text}
   return response.message.content;
 }
 
-export async function fixDescription(text: string): Promise<any> {
+export async function fixDescription(text: string): Promise<string> {
   const response = await ollama.chat({
     model: "qwen2.5:1.5b",
     messages: [

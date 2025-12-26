@@ -7,7 +7,9 @@ import {
 
 export default async function createReport(
   req: NextApiRequest,
-  res: NextApiResponse<any>,
+  res: NextApiResponse<
+    { summary: string; keyTheme: string; notes: string } | { message: string }
+  >,
 ) {
   try {
     const data = req.body.reports;
@@ -24,7 +26,7 @@ export default async function createReport(
       notesPromise,
     ]);
     res.status(200).json({ summary, keyTheme, notes });
-  } catch (error) {
+  } catch (_error) {
     res.status(400).json({ message: "Please install ollama to you machine" });
   }
 }

@@ -4,13 +4,6 @@ import { Homepage } from "@/components/Homepage";
 import { SearchBar } from "@/components/SearchBar";
 
 function Home() {
-  // useEffect(() => {
-  //   fetch("/api/hello")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // }, []);
   return (
     <>
       <div className="navBar">

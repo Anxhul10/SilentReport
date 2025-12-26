@@ -224,7 +224,6 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
   return (
     <>
       {record.map((val: IRecordArray) => {
-        console.log(val.id);
         return (
           <ViewReportContainer
             key={id}

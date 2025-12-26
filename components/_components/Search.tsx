@@ -3,26 +3,26 @@ import { type IRecordArray } from "@/types/Record";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { useEffect, useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
+import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
-export default function Search() {
+export default function Search({ publicReports }: any) {
   const id = useId();
   const [inputStr, setInputStr] = useState("");
   const [searchData, setSearchData] = useState<IRecordArray[]>([]);
+  const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [reportL, setReportL] = useState(true);
+  useEffect(() => {
+    if (publicReports.publicReports.length === 0) {
+      setReportL(true);
+    } else {
+      setReportL(false);
+    }
+  }, [publicReports]);
   function runSearch() {
     if (!inputStr) return;
-    // fetch("/api/search", {
-    //   method: "POST",
-    //   body: JSON.stringify({ query: inputStr }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setSearchData(data);
-    //   });
     fetch("http://localhost:4000/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: inputStr }),
@@ -32,7 +32,6 @@ export default function Search() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const result = [];
         for (const t of data.results) {
           result.push({
@@ -44,9 +43,21 @@ export default function Search() {
             inserted_at: t.metadata.inserted_at,
           });
         }
-        console.log(result);
         setSearchData(result);
         setLoading(false);
+      });
+  }
+  function handleTrain() {
+    setTrainL(true);
+    fetch("http://localhost:4000/public/reports/train")
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.result.status === "success") {
+          toast.success("trained !!");
+        } else {
+          toast.error("train failed!!");
+        }
+        setTrainL(false);
       });
   }
 
@@ -61,7 +72,7 @@ export default function Search() {
             }}
           />
         </div>
-        <div className="ml-10 mr-11">
+        <div className="ml-10 mr-5">
           <Button
             onClick={() => {
               runSearch();
@@ -71,21 +82,91 @@ export default function Search() {
             {loading ? <Spinner /> : <div>Search</div>}
           </Button>
         </div>
+        <div>
+          <Button
+            className="mr-5"
+            onClick={() => {
+              handleTrain();
+            }}
+          >
+            {trainL ? <Spinner /> : <div>Train</div>}
+          </Button>
+        </div>
       </div>
-
-      {searchData.map((val: IRecordArray) => {
-        if (val.visibility === "PUBLIC") {
-          return (
-            <ViewReportContainer
-              key={id}
-              title={val.title}
-              created_at={val.inserted_at}
-              description={val.description}
-              visibility={val.visibility}
-            ></ViewReportContainer>
-          );
-        }
-      })}
+      {loading ? (
+        <div className="flex space-x-1.5 m-5">
+          <Spinner />
+          <p className="text-muted-foreground text-sm">
+            Searching via content-based similarity. If results vary, refining
+            your query helps improve accuracy over time.
+          </p>
+        </div>
+      ) : null}
+      {searchData.length === 0 ? (
+        reportL ? (
+          <div className="flex space-x-1.5 m-5">
+            <Spinner />
+            <p className="text-muted-foreground text-sm">
+              Loading community reports… Public reports are securely retrieved
+              and decrypted via CyborgDB for viewing.
+            </p>
+          </div>
+        ) : (
+          publicReports.publicReports.map((val: IRecordArray) => {
+            return (
+              <ViewReportContainer
+                key={id}
+                title={val.title}
+                created_at={val.inserted_at}
+                description={val.description}
+                visibility={val.visibility}
+              ></ViewReportContainer>
+            );
+          })
+        )
+      ) : (
+        <div>
+          <Separator />
+          <div className="text-muted-foreground bg-blue-300 text-sm text-center m-5">
+            Content based search results
+          </div>
+          {searchData.map((val: IRecordArray) => {
+            if (val.visibility === "PUBLIC") {
+              return (
+                <ViewReportContainer
+                  key={id}
+                  title={val.title}
+                  created_at={val.inserted_at}
+                  description={val.description}
+                  visibility={val.visibility}
+                ></ViewReportContainer>
+              );
+            }
+          })}
+          <Separator />
+          <div className="text-muted-foreground bg-blue-300 text-sm text-center m-5">
+            All Public reports
+          </div>
+          {reportL ? (
+            <div className="flex m-10">
+              <div className="mr-4">Loading public reports</div>
+              <Spinner />
+            </div>
+          ) : (
+            publicReports.publicReports.map((val: IRecordArray) => {
+              return (
+                <ViewReportContainer
+                  key={id}
+                  title={val.title}
+                  created_at={val.inserted_at}
+                  description={val.description}
+                  visibility={val.visibility}
+                ></ViewReportContainer>
+              );
+            })
+          )}
+        </div>
+      )}
     </>
   );
 }

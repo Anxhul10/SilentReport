@@ -29,6 +29,7 @@ export function AppSidebar({
   onCreateReportParent,
   onViewReportParent,
   onAPIHitParent,
+  onSummaryHitParent,
   ...props
 }: React.ComponentProps<any>) {
   const [email, setEmail] = useState("");
@@ -68,6 +69,11 @@ export function AppSidebar({
         url: "#",
         icon: IconReport,
       },
+      {
+        name: "Summarize created reports",
+        url: "#",
+        icon: IconReport,
+      },
     ],
   };
   useEffect(() => {
@@ -83,10 +89,10 @@ export function AppSidebar({
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 200) {
-            console.log("api present");
+            console.log({ message: "Valid creadentials" });
             setEmail(data.email);
           } else {
-            console.log("api donot exist");
+            console.log({ message: "Invalid credentials" });
           }
         });
     }, 200);
@@ -126,6 +132,9 @@ export function AppSidebar({
           }}
           onViewReport={() => {
             onViewReportParent();
+          }}
+          onSummary={() => {
+            onSummaryHitParent();
           }}
         />
         <NavSecondary

@@ -42,6 +42,9 @@ export function PageLayout({
           onAPIHitParent={() => {
             setIndex(5);
           }}
+          onSummaryHitParent={() => {
+            setIndex(6);
+          }}
         />
         <SidebarInset>
           <SiteHeader />

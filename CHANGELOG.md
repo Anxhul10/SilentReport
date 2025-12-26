@@ -1,5 +1,11 @@
 # silentreport
 
+## 4.0.0
+
+### Major Changes
+
+- add ollama summary and fixes edit
+
 ## 3.0.0
 
 ### Major Changes

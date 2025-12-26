@@ -21,7 +21,6 @@ export function DropDownAccount() {
           <DropdownMenuItem
             onClick={(e) => {
               e.preventDefault();
-              console.log("hit profile");
             }}
           >
             Profile
@@ -29,7 +28,6 @@ export function DropDownAccount() {
           <DropdownMenuItem
             onClick={(e) => {
               e.preventDefault();
-              console.log("hit setting");
             }}
           >
             Settings

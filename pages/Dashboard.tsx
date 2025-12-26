@@ -12,56 +12,86 @@ import { type IRecordArray } from "@/types/Record";
 import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
+import { type ICount } from "@/types/Count";
+import { CardTitle, CardDescription } from "@/components/ui/card";
 
+interface ISummary {
+  summary: string;
+  keyTheme: string;
+  notes: string;
+}
 // import data from "./data.json";
-
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
+  const [userReports, setUserReport] = useState(0);
+  const [count, setCount] = useState<ICount>();
+  const [publicReports, setPublicReports] = useState([]);
+  const [summary, setSummary] = useState<Array<ISummary>>([]);
+  const [summaryL, setSummaryL] = useState(true);
   const router = useRouter();
   useEffect(() => {
-    if (index !== 4) return;
+    const userId = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
     if (token === null) {
       router.push("/Login");
     }
-    // fetch("/api/reports")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data.data);
-    //     setRecord(data.data);
-    //     setLoading(false);
-    //   });
-    const userId = localStorage.getItem("user_id");
     if (!userId) return;
-    fetch("http://localhost:4000/query", {
-      method: "POST",
-      body: JSON.stringify({ queryContents: userId }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const result = [];
-        for (const t of data.results) {
-          result.push({
-            id: t.id,
-            title: t.metadata.title,
-            description: t.metadata.description,
-            visibility: t.metadata.visibility,
-            created_by: t.metadata.created_by,
-            inserted_at: t.metadata.inserted_at,
-          });
-        }
-        setRecord(result);
-        setLoading(false);
-      });
+    if (index === 0) {
+      fetch("http://localhost:4000/user/getReports/count", {
+        method: "POST",
+        body: JSON.stringify({ userId }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setCount(data);
+        });
+    }
+    if (index === 2) {
+      fetch("http://localhost:4000/getReports/public")
+        .then((res) => res.json())
+        .then((data) => {
+          setPublicReports(data.public_reports);
+        });
+    }
+    if (index !== 4) return;
+
+    if (index === 4 || index === 6) {
+      fetch("http://localhost:4000/user/getReports", {
+        method: "POST",
+        body: JSON.stringify({ user_id: userId }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setRecord(data.reports);
+          setLoading(false);
+          setUserReport(data.reports.length);
+        });
+      if (summary.length > 0) return;
+      fetch("/api/summary", {
+        method: "POST",
+        body: JSON.stringify({ reports: record }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSummary([data]);
+          setSummaryL(false);
+        });
+    }
   }, [index]);
 
   // 0. Dashboard
-  // 1. Feed
+  // 1. FeedkeyTheme
   // 2. Search
   // 3. Create Report
   // 4. View Report
@@ -69,7 +99,7 @@ export default function Dashboard() {
   if (index === 2) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <Search></Search>
+        <Search publicReports={{ publicReports }}></Search>
       </PageLayout>
     );
   } else if (index === 3) {
@@ -79,12 +109,23 @@ export default function Dashboard() {
   } else if (index === 4 && loading) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        <div className="m-5 flex ">
+        <div className="flex space-x-1.5 m-5">
           <Spinner />
+          <p className="text-muted-foreground text-sm">
+            Loading your reports… CyborgDB securely decrypts your submitted
+            reports for viewing.
+          </p>
         </div>
       </PageLayout>
     );
   } else if (index === 4 && !loading) {
+    if (userReports === 0) {
+      return (
+        <PageLayout fullPage={true} setIndex={setIndex}>
+          <div className="m-4">No reports created yet...</div>
+        </PageLayout>
+      );
+    }
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
         <ViewReport record={record}></ViewReport>
@@ -94,6 +135,35 @@ export default function Dashboard() {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
         <API></API>
+      </PageLayout>
+    );
+  } else if (index === 6) {
+    return (
+      <PageLayout fullPage={true} setIndex={setIndex}>
+        {summaryL ? (
+          <div className="flex space-x-1.5 m-5">
+            <Spinner />
+            <p className="text-muted-foreground text-sm">
+              Generating summary… CyborgDB securely decrypts the report, then AI
+              analyzes and summarizes the content. This may take a moment.
+            </p>
+          </div>
+        ) : (
+          <div className="m-10">
+            <CardTitle>Summary</CardTitle>
+            <div className="mt-4 mb-4">
+              <CardDescription>{summary[0].summary}</CardDescription>
+            </div>
+            <CardTitle>Key Theme</CardTitle>
+            <div className="mb-4 mt-4">
+              <CardDescription>{summary[0].keyTheme}</CardDescription>
+            </div>
+            <CardTitle>Notes</CardTitle>
+            <div className="mb-4 mt-4">
+              <CardDescription>{summary[0].notes}</CardDescription>
+            </div>
+          </div>
+        )}
       </PageLayout>
     );
   }
@@ -124,6 +194,9 @@ export default function Dashboard() {
           onAPIHitParent={() => {
             setIndex(5);
           }}
+          onSummaryHitParent={() => {
+            setIndex(6);
+          }}
         />
         <SidebarInset>
           <SiteHeader />
@@ -132,7 +205,7 @@ export default function Dashboard() {
               <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                 <SectionCards />
                 <div className="px-4 lg:px-6">
-                  <ChartAreaInteractive />
+                  <ChartAreaInteractive count={{ count }} />
                 </div>
                 {/* to be used later */}
                 {/* <DataTable data={data} /> */}
@@ -150,22 +223,17 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
   return (
     <>
       {record.map((val: IRecordArray) => {
-        if (
-          localStorage.getItem("user_id") !== undefined &&
-          val.created_by === localStorage.getItem("user_id")
-        ) {
-          return (
-            <ViewReportContainer
-              key={id}
-              id={val.id}
-              title={val.title}
-              description={val.description}
-              visibility={val.visibility}
-              filter={true}
-              created_at={val.inserted_at}
-            ></ViewReportContainer>
-          );
-        }
+        return (
+          <ViewReportContainer
+            key={id}
+            id={val.id}
+            title={val.title}
+            description={val.description}
+            visibility={val.visibility}
+            filter={true}
+            created_at={val.inserted_at}
+          ></ViewReportContainer>
+        );
       })}
     </>
   );

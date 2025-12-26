@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
-
+import { Badge } from "@/components/ui/badge";
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
 import { Label } from "@/components/ui/label";
@@ -68,9 +68,7 @@ export default function CreateReport({
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        console.log(data);
         if (data.status === "success") {
-          console.log("loading stop");
           toast.success("created report !!");
         } else {
           toast.error("cant create a report! something went wrong");
@@ -100,7 +98,36 @@ export default function CreateReport({
           toast.error("failed to edit");
         }
         setEditLoading(false);
-        console.log(data);
+      });
+  }
+  function descriptionHit() {
+    fetch("/api/fix/description", {
+      method: "POST",
+      body: JSON.stringify({
+        description,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setDescription(data.message);
+      });
+  }
+  function titleHit() {
+    fetch("/api/fix/title", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTitle(data.message);
       });
   }
   return (
@@ -126,6 +153,15 @@ export default function CreateReport({
                 }}
                 required
               />
+              {title.length === 0 ? null : (
+                <Badge
+                  onClick={() => {
+                    titleHit();
+                  }}
+                >
+                  Improve Title
+                </Badge>
+              )}
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
@@ -141,6 +177,15 @@ export default function CreateReport({
                   }}
                 />
               </InputGroup>
+              {description.length === 0 ? null : (
+                <Badge
+                  onClick={() => {
+                    descriptionHit();
+                  }}
+                >
+                  Improve Description
+                </Badge>
+              )}
             </div>
           </div>
         </form>

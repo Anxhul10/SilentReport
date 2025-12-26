@@ -13,6 +13,13 @@ import Search from "@/components/_components//Search";
 import API from "@/components/_components//API";
 import { Spinner } from "@/components/ui/spinner";
 import { type ICount } from "@/types/Count";
+import { CardTitle, CardDescription } from "@/components/ui/card";
+
+interface ISummary {
+  summary: string;
+  keyTheme: string;
+  notes: string;
+}
 // import data from "./data.json";
 export default function Dashboard() {
   const [record, setRecord] = useState<IRecordArray[]>([]);
@@ -21,6 +28,8 @@ export default function Dashboard() {
   const [userReports, setUserReport] = useState(0);
   const [count, setCount] = useState<ICount>();
   const [publicReports, setPublicReports] = useState([]);
+  const [summary, setSummary] = useState<ISummary>();
+  const [summaryL, setSummaryL] = useState(true);
   const router = useRouter();
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
@@ -65,11 +74,25 @@ export default function Dashboard() {
           setLoading(false);
           setUserReport(data.reports.length);
         });
+
+      setSummaryL(true);
+      fetch("/api/summary", {
+        method: "POST",
+        body: JSON.stringify({ reports: record }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSummary(data);
+          setSummaryL(false);
+        });
     }
   }, [index]);
 
   // 0. Dashboard
-  // 1. Feed
+  // 1. FeedkeyTheme
   // 2. Search
   // 3. Create Report
   // 4. View Report
@@ -118,7 +141,7 @@ export default function Dashboard() {
   } else if (index === 6) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
-        {loading ? (
+        {summaryL ? (
           <div className="flex space-x-1.5 m-5">
             <Spinner />
             <p className="text-muted-foreground text-sm">
@@ -127,7 +150,20 @@ export default function Dashboard() {
             </p>
           </div>
         ) : (
-          <div> Summary </div>
+          <div className="m-10">
+            <CardTitle>Summary</CardTitle>
+            <div className="mt-4 mb-4">
+              <CardDescription>{summary!.summary}</CardDescription>
+            </div>
+            <CardTitle>Key Theme</CardTitle>
+            <div className="mb-4 mt-4">
+              <CardDescription>{summary!.keyTheme}</CardDescription>
+            </div>
+            <CardTitle>Notes</CardTitle>
+            <div className="mb-4 mt-4">
+              <CardDescription>{summary!.notes}</CardDescription>
+            </div>
+          </div>
         )}
       </PageLayout>
     );

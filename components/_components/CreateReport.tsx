@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
-
+import { Badge } from "@/components/ui/badge";
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
 
 import { Label } from "@/components/ui/label";
@@ -103,6 +103,38 @@ export default function CreateReport({
         console.log(data);
       });
   }
+  function descriptionHit() {
+    fetch("/api/fix/description", {
+      method: "POST",
+      body: JSON.stringify({
+        description,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setDescription(data.message);
+      });
+  }
+  function titleHit() {
+    fetch("/api/fix/title", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setTitle(data.message);
+      });
+  }
   return (
     <PageLayout setIndex={setIndex} fullPage={true}>
       <CardHeader>
@@ -126,6 +158,15 @@ export default function CreateReport({
                 }}
                 required
               />
+              {title.length === 0 ? null : (
+                <Badge
+                  onClick={() => {
+                    titleHit();
+                  }}
+                >
+                  Improve Title
+                </Badge>
+              )}
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
@@ -141,6 +182,15 @@ export default function CreateReport({
                   }}
                 />
               </InputGroup>
+              {description.length === 0 ? null : (
+                <Badge
+                  onClick={() => {
+                    descriptionHit();
+                  }}
+                >
+                  Improve Description
+                </Badge>
+              )}
             </div>
           </div>
         </form>

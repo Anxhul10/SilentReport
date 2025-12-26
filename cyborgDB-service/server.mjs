@@ -224,10 +224,12 @@ app.post("/user/getReports", async (req, res) => {
   for (const report of reports) {
     if (report.metadata.created_by === user_id) {
       user_reports.push({
+        id: report.id,
         title: report.metadata.title,
         description: report.metadata.description,
         visibility: report.metadata.visibility,
         timeLimit: report.metadata.timeLimit,
+        created_by: user_id,
       });
     }
   }

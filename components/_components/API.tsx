@@ -42,11 +42,11 @@ export default function API() {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === 200) {
-          console.log("api saved success");
+          console.log({ message: "submitted" });
         } else if (data.status === 500) {
           setAPIPresent(true);
         } else {
-          console.log("api save unsuccessfull");
+          console.log({ message: "submit failed" });
         }
       });
   }
@@ -65,9 +65,9 @@ export default function API() {
           handleSubmit();
           updateState(true);
           setAPIPresent(true);
-          console.log("api saved success");
+          console.log({ message: "API updated" });
         } else {
-          console.log("api save unsuccessfull");
+          console.log({ message: "API update failed" });
         }
       });
   }

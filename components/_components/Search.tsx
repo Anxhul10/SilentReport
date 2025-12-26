@@ -53,10 +53,8 @@ export default function Search({ publicReports }: any) {
       .then((resp) => resp.json())
       .then((data) => {
         if (data.result.status === "success") {
-          console.log("data trained successfully");
           toast.success("trained !!");
         } else {
-          console.log("data training failed !!");
           toast.error("train failed!!");
         }
         setTrainL(false);

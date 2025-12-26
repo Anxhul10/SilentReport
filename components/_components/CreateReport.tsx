@@ -68,9 +68,7 @@ export default function CreateReport({
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        console.log(data);
         if (data.status === "success") {
-          console.log("loading stop");
           toast.success("created report !!");
         } else {
           toast.error("cant create a report! something went wrong");
@@ -100,11 +98,7 @@ export default function CreateReport({
           toast.error("failed to edit");
         }
         setEditLoading(false);
-        console.log(data);
       });
-  }
-  function callback() {
-    console.log("callback");
   }
   function descriptionHit() {
     fetch("/api/fix/description", {
@@ -118,7 +112,6 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setDescription(data.message);
       });
   }
@@ -134,7 +127,6 @@ export default function CreateReport({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTitle(data.message);
       });
   }
@@ -261,7 +253,6 @@ export default function CreateReport({
           <Button
             className="w-30"
             onClick={() => {
-              callback();
               handleSubmit();
               setLoading(true);
             }}

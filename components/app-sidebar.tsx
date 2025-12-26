@@ -92,7 +92,7 @@ export function AppSidebar({
             console.log({ message: "Valid creadentials" });
             setEmail(data.email);
           } else {
-            console.log("Invalid credentials");
+            console.log({ message: "Invalid credentials" });
           }
         });
     }, 200);

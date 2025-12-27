@@ -40,21 +40,6 @@ export function SearchBar() {
         setSearchData(result);
         setLoading(false);
       });
-    // fetch("/api/search", {
-    //   method: "POST",
-    //   body: JSON.stringify({ query: input }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.length < 5) {
-    //       setSearchData(data);
-    //     } else {
-    //       setSearchData(data.slice(0, 4));
-    //     }
-    //   });
   }, [input]);
   if (input === "") {
     return (

@@ -23,7 +23,7 @@ export default function Search({ publicReports }: any) {
   }, [publicReports]);
   function runSearch() {
     if (!inputStr) return;
-    fetch("http://localhost:4000/search", {
+    fetch("/api/user/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: inputStr }),
       headers: {

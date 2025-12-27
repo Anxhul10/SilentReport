@@ -52,7 +52,7 @@ export default function Dashboard() {
         });
     }
     if (index === 2) {
-      fetch("http://localhost:4000/getReports/public")
+      fetch("/api/public/reports/get")
         .then((res) => res.json())
         .then((data) => {
           setPublicReports(data.public_reports);

@@ -40,6 +40,7 @@ export default function CreateReport({
   title_to_edit,
   description_to_edit,
   visibility_to_edit,
+  update_sub_report,
 }: {
   setIndex: (index: number) => void;
   header: string;
@@ -48,6 +49,7 @@ export default function CreateReport({
   title_to_edit?: string;
   description_to_edit?: string;
   visibility_to_edit?: string;
+  update_sub_report?: () => void;
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
   const [loading, setLoading] = useState(false);
@@ -70,6 +72,9 @@ export default function CreateReport({
         setLoading(false);
         if (data.status === "success") {
           toast.success("created report !!");
+          if (update_sub_report !== undefined) {
+            update_sub_report();
+          }
         } else {
           toast.error("cant create a report! something went wrong");
         }
@@ -94,6 +99,9 @@ export default function CreateReport({
       .then((data) => {
         if (data.status === "success") {
           toast.success("edited successfully!");
+          if (update_sub_report !== undefined) {
+            update_sub_report();
+          }
         } else {
           toast.error("failed to edit");
         }

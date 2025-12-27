@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [publicReports, setPublicReports] = useState([]);
   const [summary, setSummary] = useState<Array<ISummary>>([]);
   const [summaryL, setSummaryL] = useState(true);
+  const [subReportL, setSubReportL] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
@@ -73,6 +74,7 @@ export default function Dashboard() {
           setRecord(data);
           setLoading(false);
           setUserReport(data.length);
+          setSubReportL(false);
         });
       if (summary.length > 0) return;
       fetch("/api/summary", {
@@ -90,6 +92,9 @@ export default function Dashboard() {
     }
   }, [index]);
 
+  function update_sub_report() {
+    setSubReportL(true);
+  }
   // 0. Dashboard
   // 1. FeedkeyTheme
   // 2. Search
@@ -104,7 +109,12 @@ export default function Dashboard() {
     );
   } else if (index === 3) {
     return (
-      <CreateReport edit={false} header={"Create Report"} setIndex={setIndex} />
+      <CreateReport
+        update_sub_report={update_sub_report}
+        edit={false}
+        header={"Create Report"}
+        setIndex={setIndex}
+      />
     );
   } else if (index === 4 && loading) {
     return (
@@ -129,6 +139,12 @@ export default function Dashboard() {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
         <ViewReport record={record}></ViewReport>
+        {subReportL ? (
+          <div className="ml-15 text-muted-foreground text-sm flex">
+            <div className="mr-5">fetching latest reports </div>
+            <Spinner />
+          </div>
+        ) : null}
       </PageLayout>
     );
   } else if (index === 5) {

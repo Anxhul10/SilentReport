@@ -145,41 +145,41 @@ app.post("/upsert", async (req, res) => {
   }
 });
 
-app.post("/update", async (req, res) => {
-  const user_id = req.body.user_id;
-  const title = req.body.title;
-  const description = req.body.description;
-  const visibility = req.body.visibility;
-  const items = [
-    {
-      id: req.body.id,
-      contents: `Title: ${title}\nDescription: ${description}`,
-      metadata: {
-        title,
-        inserted_at: getDate(), // replaces the inserted with updated date
-        created_by: user_id,
-        description,
-        visibility,
-      },
-    },
-  ];
-  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+// app.post("/update", async (req, res) => {
+//   const user_id = req.body.user_id;
+//   const title = req.body.title;
+//   const description = req.body.description;
+//   const visibility = req.body.visibility;
+//   const items = [
+//     {
+//       id: req.body.id,
+//       contents: `Title: ${title}\nDescription: ${description}`,
+//       metadata: {
+//         title,
+//         inserted_at: getDate(), // replaces the inserted with updated date
+//         created_by: user_id,
+//         description,
+//         visibility,
+//       },
+//     },
+//   ];
+//   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
 
-  const index = await client.loadIndex({
-    indexName,
-    indexKey,
-  });
-  try {
-    const result = await index.upsert({
-      items,
-    });
-    console.log("Text-only update successful");
-    res.status(200).json(result);
-  } catch (error) {
-    console.error("update failed ", error);
-    res.status(500).json(error);
-  }
-});
+//   const index = await client.loadIndex({
+//     indexName,
+//     indexKey,
+//   });
+//   try {
+//     const result = await index.upsert({
+//       items,
+//     });
+//     console.log("Text-only update successful");
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error("update failed ", error);
+//     res.status(500).json(error);
+//   }
+// });
 
 // app.post("/query", async (req, res) => {
 //   const queryContents = req.body.queryContents;

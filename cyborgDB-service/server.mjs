@@ -28,122 +28,122 @@ function getDate() {
   const formattedDate = `${day}/${month}/${year}`;
   return formattedDate;
 }
-app.get("/deleteIndex", async (req, res) => {
-  try {
-    const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-    const index = await client.loadIndex({
-      indexName,
-      indexKey,
-    });
-    const response = await index.deleteIndex();
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+// app.get("/deleteIndex", async (req, res) => {
+//   try {
+//     const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+//     const index = await client.loadIndex({
+//       indexName,
+//       indexKey,
+//     });
+//     const response = await index.deleteIndex();
+//     res.status(200).json(response);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
 
-app.get("/reports-exists", async (req, res) => {
-  try {
-    const indexs = await client.listIndexes();
-    for (const idx of indexs) {
-      if (idx === "reports") {
-        return res.status(200).json({ exist: true });
-      }
-    }
-    return res.status(200).json({ exist: false });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+// app.get("/reports-exists", async (req, res) => {
+//   try {
+//     const indexs = await client.listIndexes();
+//     for (const idx of indexs) {
+//       if (idx === "reports") {
+//         return res.status(200).json({ exist: true });
+//       }
+//     }
+//     return res.status(200).json({ exist: false });
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
 
-app.get("/listIndex", async (req, res) => {
-  try {
-    const indexes = await client.listIndexes();
-    res.status(200).json(indexes);
-  } catch (error) {
-    console.error("Failed to list indexes:", error);
-    res.status(500).json(error);
-  }
-});
+// app.get("/listIndex", async (req, res) => {
+//   try {
+//     const indexes = await client.listIndexes();
+//     res.status(200).json(indexes);
+//   } catch (error) {
+//     console.error("Failed to list indexes:", error);
+//     res.status(500).json(error);
+//   }
+// });
 
-app.post("/createIndex", async (req, res) => {
-  try {
-    if (process.env.indexKeyBase64) {
-      return res.status(409).json({
-        message: "Index already exists. Creation is not allowed again.",
-      });
-    }
-    const indexName = req.body.indexName;
-    const indexKey = client.generateKey();
-    const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
+// app.post("/createIndex", async (req, res) => {
+//   try {
+//     if (process.env.indexKeyBase64) {
+//       return res.status(409).json({
+//         message: "Index already exists. Creation is not allowed again.",
+//       });
+//     }
+//     const indexName = req.body.indexName;
+//     const indexKey = client.generateKey();
+//     const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
 
-    await client.createIndex({
-      indexName,
-      indexKey,
-      indexConfig: {
-        type: "ivf",
-        dimension: 768,
-      },
-      embeddingModel: "sentence-transformers/all-mpnet-base-v2",
-    });
-    console.log("#######################################################");
-    console.log("indexKeyBase64" + indexKeyBase64);
-    console.log("#######################################################");
-    res.status(200).json({
-      message: "Index created successfully",
-      indexKeyBase64,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "index creation failed" });
-  }
-});
+//     await client.createIndex({
+//       indexName,
+//       indexKey,
+//       indexConfig: {
+//         type: "ivf",
+//         dimension: 768,
+//       },
+//       embeddingModel: "sentence-transformers/all-mpnet-base-v2",
+//     });
+//     console.log("#######################################################");
+//     console.log("indexKeyBase64" + indexKeyBase64);
+//     console.log("#######################################################");
+//     res.status(200).json({
+//       message: "Index created successfully",
+//       indexKeyBase64,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "index creation failed" });
+//   }
+// });
 
-app.post("/upsert", async (req, res) => {
-  const user_id = req.body.user_id;
-  const title = req.body.title;
-  const description = req.body.description;
-  const visibility = req.body.visibility;
-  if (
-    user_id === "" ||
-    title === " " ||
-    description === "" ||
-    visibility === ""
-  ) {
-    return res
-      .status(500)
-      .json({ message: "title , description, visibility or user_id is empty" });
-  }
-  const items = [
-    {
-      id: Date.now().toString(),
-      contents: `${title} and ${user_id}`,
-      metadata: {
-        title,
-        inserted_at: getDate(),
-        created_by: user_id,
-        description,
-        visibility,
-      },
-    },
-  ];
-  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+// app.post("/upsert", async (req, res) => {
+//   const user_id = req.body.user_id;
+//   const title = req.body.title;
+//   const description = req.body.description;
+//   const visibility = req.body.visibility;
+//   if (
+//     user_id === "" ||
+//     title === " " ||
+//     description === "" ||
+//     visibility === ""
+//   ) {
+//     return res
+//       .status(500)
+//       .json({ message: "title , description, visibility or user_id is empty" });
+//   }
+//   const items = [
+//     {
+//       id: Date.now().toString(),
+//       contents: `${title} and ${user_id}`,
+//       metadata: {
+//         title,
+//         inserted_at: getDate(),
+//         created_by: user_id,
+//         description,
+//         visibility,
+//       },
+//     },
+//   ];
+//   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
 
-  const index = await client.loadIndex({
-    indexName,
-    indexKey,
-  });
-  try {
-    const result = await index.upsert({
-      items,
-    });
-    console.log("Text-only upsert successful");
-    res.status(200).json(result);
-  } catch (error) {
-    console.error("Upsert failed ", error);
-    res.status(500).json(error);
-  }
-});
+//   const index = await client.loadIndex({
+//     indexName,
+//     indexKey,
+//   });
+//   try {
+//     const result = await index.upsert({
+//       items,
+//     });
+//     console.log("Text-only upsert successful");
+//     res.status(200).json(result);
+//   } catch (error) {
+//     console.error("Upsert failed ", error);
+//     res.status(500).json(error);
+//   }
+// });
 
 // app.post("/update", async (req, res) => {
 //   const user_id = req.body.user_id;

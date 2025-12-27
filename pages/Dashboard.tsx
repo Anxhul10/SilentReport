@@ -63,7 +63,7 @@ export default function Dashboard() {
     if (index === 4 || index === 6) {
       fetch("/api/user/reports/get", {
         method: "POST",
-        body: JSON.stringify({ user_id: userId }),
+        body: JSON.stringify({ userId }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },

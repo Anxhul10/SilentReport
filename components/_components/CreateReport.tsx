@@ -58,7 +58,7 @@ export default function CreateReport({
   const [visibility, setVisibility] = useState(processData(visibility_to_edit));
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
-    fetch("http://localhost:4000/upsert", {
+    fetch("/api/user/reports/upsert", {
       method: "POST",
       body: JSON.stringify({ user_id, title, description, visibility }),
       headers: {

@@ -25,7 +25,7 @@ export default function Anonymous() {
   function handleSubmit() {
     const user_id = "d85ba6c3-7122-43ca-9fce-4cc42a2f6735"; // random value
 
-    fetch("http://localhost:4000/upsert", {
+    fetch("/api/user/reports/upsert", {
       method: "POST",
       body: JSON.stringify({
         user_id,

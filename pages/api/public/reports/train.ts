@@ -10,12 +10,10 @@ const client = new Client({
 const indexName = "reports";
 const indexKeyBase64 = process.env.indexKeyBase64!;
 
-export default async function searchHandler(
-  req: NextApiRequest,
+export default async function trainHandler(
+  _req: NextApiRequest,
   res: NextApiResponse<TrainResponse | { message: string }>,
 ) {
-  const queryContents = req.body.queryContents;
-
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
   const index = await client.loadIndex({ indexName, indexKey });
   try {

@@ -231,7 +231,7 @@ function ViewReport({ record }: { record: Array<IRecordArray> }) {
             description={val.description}
             visibility={val.visibility}
             filter={true}
-            created_at={val.inserted_at}
+            created_at={val.created_at}
           ></ViewReportContainer>
         );
       })}

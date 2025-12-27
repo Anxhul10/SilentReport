@@ -42,7 +42,7 @@ export default async function countHandler(
       }
     }
     res.status(200).json({ report_count, public_count, private_count });
-  } catch (error) {
-    res.status(400).json({ message: `cannot get count ${error}` });
+  } catch (_error) {
+    res.status(400).json({ message: `cannot get count` });
   }
 }

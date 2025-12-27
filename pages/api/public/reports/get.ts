@@ -31,7 +31,7 @@ export default async function searchHandler(
   try {
     const reportIds = (await index.listIds()).ids;
     const reports = await index.get({ ids: reportIds });
-    let public_reports = [];
+    const public_reports = [];
     for (const report of reports) {
       if (report.metadata!.visibility === "PUBLIC") {
         public_reports.push({
@@ -44,7 +44,7 @@ export default async function searchHandler(
       }
     }
     res.status(200).json({ public_reports });
-  } catch (error) {
-    res.status(500).json({ message: `get public reports failed ${error}` });
+  } catch (_error) {
+    res.status(500).json({ message: `get public reports failed` });
   }
 }

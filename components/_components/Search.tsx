@@ -40,7 +40,7 @@ export default function Search({ publicReports }: any) {
             description: t.metadata.description,
             visibility: t.metadata.visibility,
             created_by: t.metadata.created_by,
-            inserted_at: t.metadata.inserted_at,
+            created_at: t.metadata.created_at,
           });
         }
         setSearchData(result);
@@ -117,7 +117,7 @@ export default function Search({ publicReports }: any) {
               <ViewReportContainer
                 key={id}
                 title={val.title}
-                created_at={val.inserted_at}
+                created_at={val.created_at}
                 description={val.description}
                 visibility={val.visibility}
               ></ViewReportContainer>
@@ -136,7 +136,7 @@ export default function Search({ publicReports }: any) {
                 <ViewReportContainer
                   key={id}
                   title={val.title}
-                  created_at={val.inserted_at}
+                  created_at={val.created_at}
                   description={val.description}
                   visibility={val.visibility}
                 ></ViewReportContainer>
@@ -158,7 +158,7 @@ export default function Search({ publicReports }: any) {
                 <ViewReportContainer
                   key={id}
                   title={val.title}
-                  created_at={val.inserted_at}
+                  created_at={val.created_at}
                   description={val.description}
                   visibility={val.visibility}
                 ></ViewReportContainer>

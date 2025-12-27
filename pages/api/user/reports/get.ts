@@ -51,7 +51,7 @@ export default async function getReportsHandler(
       }
     }
     res.status(200).json(user_reports);
-  } catch (error) {
-    res.status(400).json({ message: `cannot get user reports ${error}` });
+  } catch (_error) {
+    res.status(400).json({ message: `cannot get user reports` });
   }
 }

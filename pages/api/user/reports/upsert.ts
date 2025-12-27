@@ -15,9 +15,9 @@ const indexKeyBase64 = process.env.indexKeyBase64!;
 
 function getDate() {
   const today = new Date();
-  let day = today.getDate();
-  let month = today.getMonth() + 1;
-  let year = today.getFullYear();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+  const year = today.getFullYear();
   const dayStr = day < 10 ? "0" + day : day;
   const monthStr = month < 10 ? "0" + month : month;
 

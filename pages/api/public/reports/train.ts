@@ -19,7 +19,7 @@ export default async function trainHandler(
   try {
     const result = await index.train();
     res.status(200).json(result);
-  } catch (error) {
-    res.status(500).json({ message: `train failed ${error}` });
+  } catch (_error) {
+    res.status(500).json({ message: `train failed` });
   }
 }

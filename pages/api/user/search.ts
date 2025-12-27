@@ -29,7 +29,7 @@ export default async function searchHandler(
     });
 
     res.status(200).json(results);
-  } catch (error) {
-    res.status(500).json({ message: `Query failed ${error}` });
+  } catch (_error) {
+    res.status(500).json({ message: `Query failed` });
   }
 }

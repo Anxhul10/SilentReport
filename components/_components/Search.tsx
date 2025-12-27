@@ -23,7 +23,7 @@ export default function Search({ publicReports }: any) {
   }, [publicReports]);
   function runSearch() {
     if (!inputStr) return;
-    fetch("http://localhost:4000/search", {
+    fetch("/api/user/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: inputStr }),
       headers: {
@@ -40,7 +40,7 @@ export default function Search({ publicReports }: any) {
             description: t.metadata.description,
             visibility: t.metadata.visibility,
             created_by: t.metadata.created_by,
-            inserted_at: t.metadata.inserted_at,
+            created_at: t.metadata.created_at,
           });
         }
         setSearchData(result);
@@ -49,13 +49,13 @@ export default function Search({ publicReports }: any) {
   }
   function handleTrain() {
     setTrainL(true);
-    fetch("http://localhost:4000/public/reports/train")
+    fetch("/api/public/reports/train")
       .then((resp) => resp.json())
       .then((data) => {
-        if (data.result.status === "success") {
-          toast.success("trained !!");
+        if (data.status === "success") {
+          toast.success(data.message);
         } else {
-          toast.error("train failed!!");
+          toast.error(data.message);
         }
         setTrainL(false);
       });
@@ -117,7 +117,7 @@ export default function Search({ publicReports }: any) {
               <ViewReportContainer
                 key={id}
                 title={val.title}
-                created_at={val.inserted_at}
+                created_at={val.created_at}
                 description={val.description}
                 visibility={val.visibility}
               ></ViewReportContainer>
@@ -136,7 +136,7 @@ export default function Search({ publicReports }: any) {
                 <ViewReportContainer
                   key={id}
                   title={val.title}
-                  created_at={val.inserted_at}
+                  created_at={val.created_at}
                   description={val.description}
                   visibility={val.visibility}
                 ></ViewReportContainer>
@@ -158,7 +158,7 @@ export default function Search({ publicReports }: any) {
                 <ViewReportContainer
                   key={id}
                   title={val.title}
-                  created_at={val.inserted_at}
+                  created_at={val.created_at}
                   description={val.description}
                   visibility={val.visibility}
                 ></ViewReportContainer>

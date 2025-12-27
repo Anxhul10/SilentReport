@@ -17,7 +17,7 @@ export function SearchBar() {
   const id = useId();
   useEffect(() => {
     if (!input) return;
-    fetch("http://localhost:4000/query", {
+    fetch("/api/user/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: input }),
       headers: {
@@ -34,27 +34,12 @@ export function SearchBar() {
             description: t.metadata.description,
             visibility: t.metadata.visibility,
             created_by: t.metadata.created_by,
-            inserted_at: t.metadata.inserted_at,
+            created_at: t.metadata.created_at,
           });
         }
         setSearchData(result);
         setLoading(false);
       });
-    // fetch("/api/search", {
-    //   method: "POST",
-    //   body: JSON.stringify({ query: input }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.length < 5) {
-    //       setSearchData(data);
-    //     } else {
-    //       setSearchData(data.slice(0, 4));
-    //     }
-    //   });
   }, [input]);
   if (input === "") {
     return (
@@ -105,7 +90,7 @@ export function SearchBar() {
             <Card className="w-full h-auto" key={id}>
               <CardTitle className="ml-5">{val.title}</CardTitle>
               <CardDescription className="flex justify-end mr-4 ml-4">
-                created at - {val.inserted_at}
+                created at - {val.created_at}
               </CardDescription>
             </Card>
           </div>

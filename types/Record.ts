@@ -3,7 +3,7 @@ export interface IRecordArray {
   title: string;
   description: string;
   created_by: string;
-  inserted_at: string;
+  created_at: string;
   visibility: string;
 }
 

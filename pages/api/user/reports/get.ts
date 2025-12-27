@@ -46,6 +46,7 @@ export default async function getReportsHandler(
           visibility: report.metadata!.visibility,
           timeLimit: report.metadata!.timeLimit,
           created_by: user_id,
+          created_at: report.metadata!.created_at,
         });
       }
     }

@@ -181,32 +181,32 @@ app.post("/update", async (req, res) => {
   }
 });
 
-app.post("/query", async (req, res) => {
-  const queryContents = req.body.queryContents;
+// app.post("/query", async (req, res) => {
+//   const queryContents = req.body.queryContents;
 
-  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-  const index = await client.loadIndex({ indexName, indexKey });
-  try {
-    const results = await index.query({
-      queryContents,
-      topK: 5,
-      include: ["distance", "metadata", "contents"],
-    });
+//   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+//   const index = await client.loadIndex({ indexName, indexKey });
+//   try {
+//     const results = await index.query({
+//       queryContents,
+//       topK: 5,
+//       include: ["distance", "metadata", "contents"],
+//     });
 
-    res.status(200).json(results);
-  } catch (error) {
-    console.error("Content search failed:", error);
-    res.status(500).json(error);
-  }
-});
-app.post("/summary", async (req, res) => {
-  const user_id = req.body.user_id;
-  PythonShell.run("./core/langchain/main.py").then((messages) => {
-    console.log(messages);
-    console.log("finished");
-    res.status(200).json({ messages });
-  });
-});
+//     res.status(200).json(results);
+//   } catch (error) {
+//     console.error("Content search failed:", error);
+//     res.status(500).json(error);
+//   }
+// });
+// app.post("/summary", async (req, res) => {
+//   const user_id = req.body.user_id;
+//   PythonShell.run("./core/langchain/main.py").then((messages) => {
+//     console.log(messages);
+//     console.log("finished");
+//     res.status(200).json({ messages });
+//   });
+// });
 // endpoint will be used in view reports section
 // app.post("/user/getReports", async (req, res) => {
 //   const user_id = req.body.user_id;

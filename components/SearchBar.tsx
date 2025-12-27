@@ -17,7 +17,7 @@ export function SearchBar() {
   const id = useId();
   useEffect(() => {
     if (!input) return;
-    fetch("http://localhost:4000/query", {
+    fetch("/api/user/search", {
       method: "POST",
       body: JSON.stringify({ queryContents: input }),
       headers: {

@@ -39,7 +39,7 @@ export default function Dashboard() {
     }
     if (!userId) return;
     if (index === 0) {
-      fetch("http://localhost:4000/user/getReports/count", {
+      fetch("/api/user/reports/count", {
         method: "POST",
         body: JSON.stringify({ userId }),
         headers: {

@@ -235,33 +235,33 @@ app.post("/user/getReports", async (req, res) => {
   }
   res.status(200).json({ reports: user_reports });
 });
-app.post("/user/getReports/count", async (req, res) => {
-  const userId = req.body.userId;
-  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-  const index = await client.loadIndex({
-    indexName,
-    indexKey,
-  });
+// app.post("/user/getReports/count", async (req, res) => {
+//   const userId = req.body.userId;
+//   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+//   const index = await client.loadIndex({
+//     indexName,
+//     indexKey,
+//   });
 
-  const reportIds = (await index.listIds()).ids;
-  const reports = await index.get({ ids: reportIds });
+//   const reportIds = (await index.listIds()).ids;
+//   const reports = await index.get({ ids: reportIds });
 
-  let public_count = 0;
-  let private_count = 0;
-  let report_count = 0;
-  for (const report of reports) {
-    if (report.metadata.created_by === userId) {
-      console.log(report.metadata.visibility);
-      if (report.metadata.visibility === "PUBLIC") {
-        public_count++;
-      } else if (report.metadata.visibility === "PRIVATE") {
-        private_count++;
-      }
-      report_count++;
-    }
-  }
-  res.status(200).json({ report_count, public_count, private_count });
-});
+//   let public_count = 0;
+//   let private_count = 0;
+//   let report_count = 0;
+//   for (const report of reports) {
+//     if (report.metadata.created_by === userId) {
+//       console.log(report.metadata.visibility);
+//       if (report.metadata.visibility === "PUBLIC") {
+//         public_count++;
+//       } else if (report.metadata.visibility === "PRIVATE") {
+//         private_count++;
+//       }
+//       report_count++;
+//     }
+//   }
+//   res.status(200).json({ report_count, public_count, private_count });
+// });
 // app.get("/public/reports/train", async (req, res) => {
 //   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
 //   const index = await client.loadIndex({

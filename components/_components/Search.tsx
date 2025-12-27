@@ -49,13 +49,13 @@ export default function Search({ publicReports }: any) {
   }
   function handleTrain() {
     setTrainL(true);
-    fetch("http://localhost:4000/public/reports/train")
+    fetch("/api/public/reports/train")
       .then((resp) => resp.json())
       .then((data) => {
-        if (data.result.status === "success") {
-          toast.success("trained !!");
+        if (data.status === "success") {
+          toast.success(data.message);
         } else {
-          toast.error("train failed!!");
+          toast.error(data.message);
         }
         setTrainL(false);
       });

@@ -262,15 +262,15 @@ app.post("/user/getReports/count", async (req, res) => {
   }
   res.status(200).json({ report_count, public_count, private_count });
 });
-app.get("/public/reports/train", async (req, res) => {
-  const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-  const index = await client.loadIndex({
-    indexName,
-    indexKey,
-  });
-  const result = await index.train();
-  res.status(200).json({ result });
-});
+// app.get("/public/reports/train", async (req, res) => {
+//   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+//   const index = await client.loadIndex({
+//     indexName,
+//     indexKey,
+//   });
+//   const result = await index.train();
+//   res.status(200).json({ result });
+// });
 // return only public listed reports
 app.get("/getReports/public", async (req, res) => {
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));

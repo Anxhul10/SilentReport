@@ -53,7 +53,7 @@ export default function CreateReport({
   description_to_edit?: string;
   visibility_to_edit?: string;
   update_sub_report?: () => void;
-  record: IRecordArray[];
+  record?: IRecordArray[];
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
   const [loading, setLoading] = useState(false);
@@ -76,7 +76,7 @@ export default function CreateReport({
       .then((data) => {
         setLoading(false);
         if (data.status === "success") {
-          if (record.length === 0) {
+          if (record != undefined && record.length === 0) {
             router.reload();
           }
           toast.success("created report !!");

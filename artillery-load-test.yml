@@ -1,0 +1,159 @@
+config:
+  target: "http://localhost:3000"
+  http:
+    timeout: 600000 # allow long CyborgDB wait (10 min)
+
+  phases:
+    - arrivalCount: 1
+
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: "Single request latency"
+    flow:
+      - post:
+          url: "/api/user/search"
+          json:
+            queryContents: "mental health report"
+# config:
+#   target: "http://localhost:3000"
+
+#   http:
+#     timeout: 30000   # CyborgDB may delay execution
+
+#   phases:
+#     - name: "Warm up"
+#       duration: 60
+#       arrivalRate: 1
+
+#     - name: "Normal load"
+#       duration: 120
+#       arrivalRate: 2
+
+#     - name: "Peak (controlled)"
+#       duration: 60
+#       arrivalRate: 3
+
+#   defaults:
+#     headers:
+#       Content-Type: "application/json"
+
+#   variables:
+#     user_id: "276f4ac8-7b1b-45d3-8689-e0bfd79ed1e4"
+
+# scenarios:
+#   - name: "CyborgDB-backed user workflow"
+#     flow:
+
+#       # -------------------------
+#       # Public APIs
+#       # -------------------------
+#       - get:
+#           url: "/api/public/getReports"
+
+#       - think: 1
+
+#       - get:
+#           url: "/api/public/reports/get"
+
+#       - think: 1
+
+#       - get:
+#           url: "/api/public/reports/train"
+
+#       - think: 2
+
+#       # -------------------------
+#       # Login (logic-only)
+#       # -------------------------
+#       - post:
+#           url: "/api/login"
+#           json:
+#             email: "temp@gmail.com"
+#             password: "temp"
+
+#       - think: 2
+
+#       # -------------------------
+#       # User identity APIs
+#       # -------------------------
+#       - post:
+#           url: "/api/checkAPI"
+#           json:
+#             user_id: "{{ user_id }}"
+
+#       - think: 1
+
+#       - post:
+#           url: "/api/getEmail"
+#           json:
+#             user_id: "{{ user_id }}"
+
+#       - think: 1
+
+#       # -------------------------
+#       # Report listing & counting
+#       # -------------------------
+#       - post:
+#           url: "/api/user/reports/count"
+#           json:
+#             userId: "{{ user_id }}"
+
+#       - think: 1
+
+#       - post:
+#           url: "/api/user/reports/get"
+#           json:
+#             userId: "{{ user_id }}"
+
+#       - think: 2
+
+#       # -------------------------
+#       # Search (CyborgDB)
+#       # -------------------------
+#       - post:
+#           url: "/api/user/search"
+#           json:
+#             queryContents: "anxiety report"
+
+#       - think: 2
+
+#       # -------------------------
+#       # Create / upsert report
+#       # -------------------------
+#       - post:
+#           url: "/api/user/reports/upsert"
+#           json:
+#             user_id: "{{ user_id }}"
+#             title: "Load Test Report"
+#             description: "Testing concurrent report creation under controlled load"
+#             visibility: "PUBLIC"
+
+#       - think: 2
+
+#       # -------------------------
+#       # Summary (LLM + CyborgDB)
+#       # -------------------------
+#       - post:
+#           url: "/api/summary"
+#           json:
+#             reports: "User submitted multiple reports for latency evaluation"
+
+#       - think: 2
+
+#       # -------------------------
+#       # AI Fix APIs
+#       # -------------------------
+#       - post:
+#           url: "/api/fix/title"
+#           json:
+#             title: "this title have bad grammer"
+
+#       - think: 2
+
+#       - post:
+#           url: "/api/fix/description"
+#           json:
+#             description: "this description are not well written"

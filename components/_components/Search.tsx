@@ -16,7 +16,7 @@ export default function Search({ publicReports }: any) {
   const [reportL, setReportL] = useState(true);
   const [searchEmpty, setSearch] = useState(false);
   useEffect(() => {
-    if (publicReports.publicReports.length === undefined) {
+    if (publicReports.publicReports.length === 0) {
       setReportL(true);
     } else {
       setReportL(false);

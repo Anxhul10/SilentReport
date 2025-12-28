@@ -22,7 +22,7 @@ const indexKeyBase64 = process.env.indexKeyBase64!;
 
 export default async function getReportsHandler(
   req: NextApiRequest,
-  res: NextApiResponse<IUserReportsResponse[] | { message: string }>,
+  res: NextApiResponse<IUserReportsResponse[] | { message: string } | []>,
 ) {
   const user_id = req.body.userId;
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
@@ -33,6 +33,9 @@ export default async function getReportsHandler(
 
   try {
     const reportIds = (await index.listIds()).ids;
+    // if(reportIds.length === 0) {
+    //   return res.status(400).json([])
+    // }
     const reports = await index.get({ ids: reportIds });
 
     const user_reports = [];

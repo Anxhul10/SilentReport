@@ -1,13 +1,31 @@
-# Demo Video ( along with installation )
+## 🎥 Demo Video
 
-https://github.com/user-attachments/assets/1327669f-088c-4a9a-aea4-3fd6f70f31b1
+This short demo shows:
+
+- User login and initial empty dashboard state  
+- No existing public or private reports at first launch  
+- Creating both **public** and **private** encrypted reports  
+- Dashboard counters updating in real time  
+- Searching reports and observing visibility-based filtering  
+- Viewing public and private reports in the viewer  
+- Editing a private report and changing its visibility to public  
+- Verifying that newly public reports become searchable  
+- Demonstrating that Supabase stores only encrypted (non-plaintext) data  
+- User logout flow
+
+👉 Watch here:  
+https://github.com/user-attachments/assets/e11d0351-445a-4e71-979b-bd5c00d14375
+
+## supabase snapshot:
+<img width="1916" height="937" alt="Screenshot from 2025-12-29 00-39-50" src="https://github.com/user-attachments/assets/e6ab7741-9213-4596-a4e3-908d94d0bc92" />
+<img width="1916" height="937" alt="Screenshot from 2025-12-29 00-40-29" src="https://github.com/user-attachments/assets/a0bc2f3f-fad4-411d-9ffd-41e1a781dd73" />
+
 
 # SilentReport
 
 **Encrypted Whistleblower System for Healthcare**
 
-SilentReport is a secure whistleblower platform designed to protect highly sensitive healthcare disclosures.  
-It ensures that sensitive data is cryptographically unreadable—even to database administrators—by using **CyborgDB** on top of **Supabase PostgreSQL**.
+SilentReport enables secure, zero-trust whistleblowing where sensitive reports remain encrypted end-to-end — even database administrators cannot read the data.
 
 ---
 
@@ -63,7 +81,7 @@ cyborgdb-service
 npm run g-index
 ```
 
-6. set the env
+5. set the env
 
 ```env
 baseURL=http://localhost:8000
@@ -74,25 +92,116 @@ supabaseUrl=YOUR_SUPABASE_URL
 supabaseKey=YOUR_SUPABASE_KEY
 ```
 
-5. Start the Cyborg API server
+6. Install and run the local LLM (Ollama)
+
+SilentReport uses **Ollama with `qwen2.5:1.5b`** locally for:
+- summarizing reports  
+- improving grammar  
+- generating readable responses  
+
+Install Ollama from:
+https://ollama.com/download
+
+After installation, pull and run the model:
+
+```bash
+ollama run qwen2.5:1.5b
+```
+
+8. run the application
 
 ```
-npm run c-server
-```
-
-> [!NOTE]
-> If you see any errors related to imports types please use node `22.21.1` node version or more.
-
-6. run the application
-
-```
-npm run start
+npm run dev
 ```
 
 > [!NOTE]
 > Ensure the steps 3, 4, 5 are running to run the whole application
 
 ---
+## Benefits of SilentReport
+
+- A practical reference project for developers using **JS/TS SDKs with CyborgDB**
+- Demonstrates how to integrate CyborgDB with **Supabase PostgreSQL**
+- Developers can visually inspect encrypted (ciphertext) data directly in Supabase
+- Protects whistleblower identity using strong cryptographic guarantees
+- Even in the event of a database breach, stored data remains unusable
+
+## Architecture Overview
+
+The system follows an encrypted data lifecycle where plaintext never reaches persistent storage.
+
+```
+User Query
+   ↓
+Encrypted Vector Search
+   ↓
+Relevant Documents
+   ↓
+Ollama LLM
+   ↓
+Answer / Summary
+```
+
+```
+                    ┌────────────────────────┐
+                    │     Your Application   │
+                    │                        │
+                    │  ┌─────────────────┐ │
+                    │  │  CyborgDB SDK   │ │
+                    │  │ (Py / JS / TS / │ │
+                    │  │        Go)      │ │
+                    │  └─────────┬───────┘ │
+                    └────────────┼─────────┘
+                                 │
+                                 ▼
+                        ┌────────────────┐
+                        │    REST API    │
+                        └─────────┬──────┘
+                                  │
+                                  ▼
+                        ┌──────────────────┐
+                        │  CyborgDB Service│
+                        └─────────┬────────┘
+                                  │
+          ┌───────────────────────┼───────────────────────┐
+          │                       │                       │
+   ┌────────────┐         ┌────────────┐         ┌────────────┐
+   │ PostgreSQL │         │   Redis    │         │   Memory   │
+   └────────────┘         └────────────┘         └────────────┘
+          ▲
+          │
+     ┌───────────┐
+     │ Supabase  │
+     └───────────┘
+```
+
+```
+Encrypted Storage → Secure Fetch → Decode → Context Builder → Local LLM
+```
+
+### Benchmark
+Load testing shows that CyborgDB-backed operations exhibit higher latency under sustained load. 
+This behavior is expected on the Free tier, where requests are queued and processed sequentially.
+
+
+Measured latencies ranged from ~40 seconds for early requests up to ~10 minutes under sustained load. Despite increased latency, the system remained stable and processed requests without crashes, demonstrating correct backpressure behavior.
+
+## Benchmark Results
+
+We evaluated system performance using Artillery under three scenarios to understand
+latency behavior when interacting with CyborgDB-backed APIs.
+
+| Test Type | Users | Avg Latency | p95 Latency | Result |
+|----------|-------|-------------|-------------|--------|
+| Single request | 1 | ~45s | ~60s | Success |
+| Low concurrency | 1 every 30s | ~90–200s | ~250s | Stable |
+| Saturation | ≥1/sec | 5–10 min | ~9–10 min | Queue saturation |
+
+### Notes
+- Latency increases due to CyborgDB’s queued execution model.
+- Requests are processed sequentially on the Free tier.
+- Under sustained load, requests wait in queue rather than failing immediately.
+- This demonstrates controlled backpressure rather than instability.
 
 ## 🔍 How SilentReport Works
 
@@ -114,11 +223,15 @@ Even database administrators cannot read the stored data.
 
 ---
 
-## Notes
+## Why SilentReport Matters
 
-- Never expose API keys or index keys
-- Restart services after changing environment variables
-- Keep `.env.local` private
+Healthcare whistleblowers face serious risks if their identity or reports are exposed.
+SilentReport demonstrates how modern cryptography and encrypted vector search can:
+
+- Protect sensitive disclosures
+- Prevent insider data access
+- Enable safe querying without revealing plaintext
+- Serve as a reference architecture for privacy-first systems
 
 ---
 

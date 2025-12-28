@@ -25,7 +25,7 @@ type ApiResponse = {
 
 export default async function getReportsHandler(
   _req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>,
+  res: NextApiResponse<ApiResponse | { message: string }>,
 ) {
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
   const index = await client.loadIndex({
@@ -33,18 +33,22 @@ export default async function getReportsHandler(
     indexKey,
   });
 
-  const reportIds = (await index.listIds()).ids;
-  const reports = await index.get({ ids: reportIds });
-  const public_reports = [];
-  for (const report of reports) {
-    if (report.metadata!.visibility === "PUBLIC") {
-      public_reports.push({
-        title: report.metadata!.title,
-        description: report.metadata!.description,
-        visibility: report.metadata!.visibility,
-        timeLimit: report.metadata!.timeLimit,
-      });
+  try {
+    const reportIds = (await index.listIds()).ids;
+    const reports = await index.get({ ids: reportIds });
+    const public_reports = [];
+    for (const report of reports) {
+      if (report.metadata!.visibility === "PUBLIC") {
+        public_reports.push({
+          title: report.metadata!.title,
+          description: report.metadata!.description,
+          visibility: report.metadata!.visibility,
+          timeLimit: report.metadata!.timeLimit,
+        });
+      }
     }
+    res.status(200).json({ public_reports });
+  } catch (error) {
+    res.status(500).json({ message: `cannot get reports ${error}` });
   }
-  res.status(200).json({ public_reports });
 }

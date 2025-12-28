@@ -13,6 +13,13 @@ export default async function createReport(
 ) {
   try {
     const data = req.body.reports;
+    if (data.length === 0) {
+      return res.status(200).json({
+        summary: "No summary generated yet.",
+        keyTheme: "No key themes available.",
+        notes: "No notes generated because there is no data yet.",
+      });
+    }
     let text = "";
     for (const item of data) {
       text += "title (" + item.title + ")" + "description (" + item.title + ")";

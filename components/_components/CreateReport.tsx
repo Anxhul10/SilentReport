@@ -11,7 +11,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { InputGroupTextarea, InputGroup } from "@/components/ui/input-group";
-
+import { useRouter } from "next/router";
 import { Label } from "@/components/ui/label";
 import Toogle from "@/components/_components/Toggle";
 import { useState } from "react";
@@ -26,6 +26,8 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { type IRecordArray } from "@/types/Record";
+
 function processData(data: string | undefined): string {
   if (data === undefined) {
     return "";
@@ -41,6 +43,7 @@ export default function CreateReport({
   description_to_edit,
   visibility_to_edit,
   update_sub_report,
+  record,
 }: {
   setIndex: (index: number) => void;
   header: string;
@@ -50,6 +53,7 @@ export default function CreateReport({
   description_to_edit?: string;
   visibility_to_edit?: string;
   update_sub_report?: () => void;
+  record?: IRecordArray[];
 }) {
   const [title, setTitle] = useState(processData(title_to_edit));
   const [loading, setLoading] = useState(false);
@@ -58,6 +62,7 @@ export default function CreateReport({
     processData(description_to_edit),
   );
   const [visibility, setVisibility] = useState(processData(visibility_to_edit));
+  const router = useRouter();
   function handleSubmit() {
     const user_id = localStorage.getItem("user_id");
     fetch("/api/user/reports/upsert", {
@@ -71,6 +76,9 @@ export default function CreateReport({
       .then((data) => {
         setLoading(false);
         if (data.status === "success") {
+          if (record != undefined && record.length === 0) {
+            router.reload();
+          }
           toast.success("created report !!");
           if (update_sub_report !== undefined) {
             update_sub_report();

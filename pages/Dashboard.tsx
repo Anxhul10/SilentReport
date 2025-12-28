@@ -59,9 +59,7 @@ export default function Dashboard() {
           setPublicReports(data.public_reports);
         });
     }
-    if (index !== 4) return;
-
-    if (index === 4 || index === 6) {
+    if (index === 4) {
       fetch("/api/user/reports/get", {
         method: "POST",
         body: JSON.stringify({ userId }),
@@ -76,19 +74,31 @@ export default function Dashboard() {
           setUserReport(data.length);
           setSubReportL(false);
         });
-      if (summary.length > 0) return;
-      fetch("/api/summary", {
+    }
+    if (index === 6) {
+      fetch("/api/user/reports/get", {
         method: "POST",
-        body: JSON.stringify({ reports: record }),
+        body: JSON.stringify({ userId }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => response.json())
         .then((data) => {
-          setSummary([data]);
+          return fetch("/api/summary", {
+            method: "POST",
+            body: JSON.stringify({ reports: data }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+        })
+        .then((response) => response.json())
+        .then((summaryData) => {
+          setSummary([summaryData]);
           setSummaryL(false);
-        });
+        })
+        .catch(console.error);
     }
   }, [index]);
 
@@ -101,6 +111,7 @@ export default function Dashboard() {
   // 3. Create Report
   // 4. View Report
   // 5. API
+  // 6. summary
   if (index === 2) {
     return (
       <PageLayout fullPage={true} setIndex={setIndex}>
@@ -110,6 +121,7 @@ export default function Dashboard() {
   } else if (index === 3) {
     return (
       <CreateReport
+        record={record}
         update_sub_report={update_sub_report}
         edit={false}
         header={"Create Report"}

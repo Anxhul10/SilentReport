@@ -18,7 +18,8 @@
     "start": "next start -p 3005",
     "lint": "eslint",
     "tsx": "tsx",
-    "g-index": "npm run tsx core/cyborgdb/createIdx.ts"
+    "g-index": "npm run tsx core/cyborgdb/createIdx.ts",
+    "benchmark": "npx artillery run artillery-load-test.yml"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -46,6 +47,7 @@
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-table": "^8.21.3",
+    "artillery": "^2.0.21",
     "changeset": "^0.2.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

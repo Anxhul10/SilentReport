@@ -14,14 +14,10 @@ export default function Search({ publicReports }: any) {
   const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
   const [reportL, setReportL] = useState(true);
-  const [isEmpty, setEmpty] = useState(false);
   const [searchEmpty, setSearch] = useState(false);
   useEffect(() => {
     if (publicReports.publicReports.length === 0) {
       setReportL(true);
-      setTimeout(() => {
-        setEmpty(true);
-      }, 1000);
     } else {
       setReportL(false);
     }
@@ -116,9 +112,7 @@ export default function Search({ publicReports }: any) {
           </p>
         </div>
       ) : null}
-      {isEmpty ? (
-        <div className="m-5"> no public reports yet</div>
-      ) : searchData.length === 0 ? (
+      {searchData.length === 0 ? (
         reportL ? (
           <div className="flex space-x-1.5 m-5">
             <Spinner />

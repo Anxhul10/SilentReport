@@ -14,9 +14,16 @@ export default function Search({ publicReports }: any) {
   const [trainL, setTrainL] = useState(false);
   const [loading, setLoading] = useState(false);
   const [reportL, setReportL] = useState(true);
+  const [isEmpty, setEmpty] = useState(false);
+  const [searchEmpty, setSearch] = useState(false);
   useEffect(() => {
     if (publicReports.publicReports.length === 0) {
       setReportL(true);
+      setTimeout(() => {
+        if (publicReports.publicReports.length === 0) {
+          setEmpty(true);
+        }
+      }, 1000);
     } else {
       setReportL(false);
     }
@@ -44,6 +51,9 @@ export default function Search({ publicReports }: any) {
           });
         }
         setSearchData(result);
+        if (searchData.length === 0) {
+          setSearch(true);
+        }
         setLoading(false);
       });
   }
@@ -101,8 +111,16 @@ export default function Search({ publicReports }: any) {
             your query helps improve accuracy over time.
           </p>
         </div>
+      ) : searchEmpty ? (
+        <div className="flex space-x-1.5 m-5">
+          <p className="text-muted-foreground text-sm">
+            Sorry, no matched data
+          </p>
+        </div>
       ) : null}
-      {searchData.length === 0 ? (
+      {isEmpty ? (
+        <div className="m-5"> no public reports yet</div>
+      ) : searchData.length === 0 ? (
         reportL ? (
           <div className="flex space-x-1.5 m-5">
             <Spinner />

@@ -15,9 +15,9 @@ export default async function createReport(
     const data = req.body.reports;
     if (data.length === 0) {
       return res.status(200).json({
-        summary: "No data available to generate a summary.",
-        keyTheme: "No data available.",
-        notes: "No data available.",
+        summary: "No summary generated yet.",
+        keyTheme: "No key themes available.",
+        notes: "No notes generated because there is no data yet.",
       });
     }
     let text = "";

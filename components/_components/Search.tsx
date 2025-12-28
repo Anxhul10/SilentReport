@@ -20,9 +20,7 @@ export default function Search({ publicReports }: any) {
     if (publicReports.publicReports.length === 0) {
       setReportL(true);
       setTimeout(() => {
-        if (publicReports.publicReports.length === 0) {
-          setEmpty(true);
-        }
+        setEmpty(true);
       }, 1000);
     } else {
       setReportL(false);

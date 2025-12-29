@@ -63,8 +63,12 @@ cd SilentReport
 ```
 npm install
 ```
+3. Create a Supabase project
+Create a Supabase project and get the project name and database password.
+Go to Connect → Connection string
+Copy the Postgres connection parameters
 
-3. setup cyborgdb-service ( important )
+4. setup cyborgdb-service ( important )
 
 ```
 export CYBORGDB_DB_TYPE=postgres
@@ -72,16 +76,17 @@ export CYBORGDB_DB_TYPE=postgres
 export CYBORGDB_CONNECTION_STRING="host=db.<your-project>.supabase.co port=5432 dbname=postgres user=postgres password=<YOUR_PASSWORD> sslmode=require"
 
 export CYBORGDB_API_KEY="your api key"
-cyborgdb-service
+
 ```
 
-4. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
+5. ```cyborgdb-service```
+6. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
 
 ```
 npm run g-index
 ```
 
-5. set the env
+7. set the env
 
 ```env
 baseURL=http://localhost:8000
@@ -92,7 +97,7 @@ supabaseUrl=YOUR_SUPABASE_URL
 supabaseKey=YOUR_SUPABASE_KEY
 ```
 
-6. Install and run the local LLM (Ollama)
+8. Install and run the local LLM (Ollama)
 
 SilentReport uses **Ollama with `qwen2.5:1.5b`** locally for:
 
@@ -109,7 +114,7 @@ After installation, pull and run the model:
 ollama run qwen2.5:1.5b
 ```
 
-8. run the application
+9. run the application
 
 ```
 npm run dev

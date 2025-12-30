@@ -1,11 +1,6 @@
 import "dotenv/config";
 import { Client } from "cyborgdb";
 
-const client = new Client({
-  baseUrl: process.env.baseURL ?? "",
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 interface IUpsert {
   status: string;
   message?: string;

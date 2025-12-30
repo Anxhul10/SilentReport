@@ -12,11 +12,6 @@ interface IUserReportsResponse {
   created_at?: JsonValue;
 }
 
-const client = new Client({
-  baseUrl: process.env.baseURL!,
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 const indexName = "reports";
 const indexKeyBase64 = process.env.indexKeyBase64!;
 
@@ -26,6 +21,10 @@ export default async function getReportsHandler(
 ) {
   const user_id = req.body.userId;
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const client = new Client({
+    baseUrl: process.env.baseURL!,
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   const index = await client.loadIndex({
     indexName,
     indexKey,

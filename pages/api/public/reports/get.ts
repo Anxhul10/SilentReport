@@ -13,11 +13,6 @@ interface IRes {
   public_reports: IGet[];
 }
 
-const client = new Client({
-  baseUrl: process.env.baseURL!,
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 const indexName = "reports";
 const indexKeyBase64 = process.env.indexKeyBase64!;
 
@@ -26,6 +21,10 @@ export default async function searchHandler(
   res: NextApiResponse<IRes | { message: string }>,
 ) {
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   const index = await client.loadIndex({ indexName, indexKey });
 
   try {

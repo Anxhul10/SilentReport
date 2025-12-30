@@ -63,10 +63,11 @@ cd SilentReport
 ```
 npm install
 ```
+
 3. Create a Supabase project
-Create a Supabase project and get the project name and database password.
-Go to Connect → Connection string
-Copy the Postgres connection parameters
+   Create a Supabase project and get the project name and database password.
+   Go to Connect → Connection string
+   Copy the Postgres connection parameters
 
 4. setup cyborgdb-service ( important )
 
@@ -79,7 +80,7 @@ export CYBORGDB_API_KEY="your api key"
 
 ```
 
-5. ```cyborgdb-service```
+5. `cyborgdb-service`
 6. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
 
 ```

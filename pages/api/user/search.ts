@@ -2,11 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Client } from "cyborgdb";
 import { QueryResponse } from "cyborgdb";
 
-const client = new Client({
-  baseUrl: process.env.baseURL!,
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 const indexName = "reports";
 const indexKeyBase64 = process.env.indexKeyBase64!;
 
@@ -17,6 +12,10 @@ export default async function searchHandler(
   const queryContents = req.body.queryContents;
 
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   const index = await client.loadIndex({ indexName, indexKey });
   try {
     const results = await index.query({

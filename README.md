@@ -1,3 +1,7 @@
+## Installation
+👉 Watch here:  
+https://github.com/user-attachments/assets/31a28a69-9774-4c3c-a59a-b0d6bbb1d4c2
+
 ## 🎥 Demo Video
 
 This short demo shows:
@@ -13,8 +17,10 @@ This short demo shows:
 - Demonstrating that Supabase stores only encrypted (non-plaintext) data
 - User logout flow
 
-👉 Watch here:  
-https://github.com/user-attachments/assets/e11d0351-445a-4e71-979b-bd5c00d14375
+👉 Watch here:( **Fetch through cyborgdb takes time so that part is skipped**)
+https://github.com/user-attachments/assets/854ac275-f2ac-4210-9cb6-0f97a25d88f5
+
+
 
 ## supabase snapshot:
 

@@ -1,12 +1,11 @@
 import "dotenv/config";
 import { Client, type HealthResponse } from "cyborgdb";
 
-const client = new Client({
-  baseUrl: process.env.baseURL ?? "",
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 export async function getHealth(): Promise<HealthResponse | undefined> {
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   try {
     const health: HealthResponse = await client.getHealth();
     return health;

@@ -5,13 +5,14 @@ interface IIndex {
   message: string;
   indexKeyBase64: string;
 }
-const client = new Client({
-  baseUrl: process.env.baseURL ?? "",
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
+
 export async function createIdx(
   indexName: string,
 ): Promise<IIndex | undefined> {
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   const indexKey: Uint8Array = client.generateKey();
   const indexKeyBase64 = Buffer.from(indexKey).toString("base64");
   try {

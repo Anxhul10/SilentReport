@@ -1,12 +1,11 @@
 import "dotenv/config";
 import { Client } from "cyborgdb";
 
-const client = new Client({
-  baseUrl: process.env.baseURL ?? "",
-  apiKey: process.env.CYBORGDB_API_KEY,
-});
-
 export async function listIdx(): Promise<Array<string> | undefined> {
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   try {
     const indexes = await client.listIndexes();
     if (indexes.length === 0) {

@@ -27,7 +27,10 @@ export async function upsert(
   items: IItems[],
 ): Promise<IUpsert | undefined> {
   const indexKey = Uint8Array.from(Buffer.from(indexKeyBase64, "base64"));
-
+  const client = new Client({
+    baseUrl: process.env.baseURL ?? "",
+    apiKey: process.env.CYBORGDB_API_KEY,
+  });
   const index = await client.loadIndex({
     indexName,
     indexKey,

@@ -81,21 +81,24 @@ export CYBORGDB_API_KEY="your api key"
 ```
 
 5. `cyborgdb-service`
-6. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
 
-```
-npm run g-index
-```
-
-7. set the env
+6. set the env
 
 ```env
 baseURL=http://localhost:8000
 CYBORGDB_API_KEY=API_KEY
 // On the first run, CyborgDB generates an `indexKeyBase64`
-indexKeyBase64=YOUR_KEY_HERE
 supabaseUrl=YOUR_SUPABASE_URL
 supabaseKey=YOUR_SUPABASE_KEY
+```
+7. Run this to create index( It will log `indexKeyBase64` which is needed in .env )
+
+```
+npm run g-index
+```
+**set env**
+```
+indexKeyBase64=YOUR_KEY_HERE
 ```
 
 8. Install and run the local LLM (Ollama)
@@ -115,10 +118,15 @@ After installation, pull and run the model:
 ollama run qwen2.5:1.5b
 ```
 
-9. run the application
+9. build the application
 
 ```
-npm run dev
+npm run build
+```
+
+10. start the app in production
+```
+npm run start
 ```
 
 > [!NOTE]

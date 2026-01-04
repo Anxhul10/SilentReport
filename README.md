@@ -257,11 +257,3 @@ SilentReport demonstrates how modern cryptography and encrypted vector search ca
 - Serve as a reference architecture for privacy-first systems
 
 ---
-
-## License
-
-MIT License (or specify otherwise)
-
----
-
-**SilentReport – Silence protected by cryptography.**

@@ -24,3 +24,6 @@ export async function query(
     console.error("Content search failed:", error);
   }
 }
+
+const res = await query(process.env.indexKeyBase64!, 'reports', 'Patient')
+console.log(JSON.stringify(res));
